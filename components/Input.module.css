@@ -1,0 +1,11 @@
+.self {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  padding: 1.125rem 1.75rem;
+  font-size: 1.125rem;
+  background-color: rgba(126, 126, 126, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 1); */
+}
