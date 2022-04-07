@@ -1,0 +1,16 @@
+.self {
+
+}
+
+.skins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.headline {
+  font-family: 'Black Han Sans';
+  font-size: 3rem;
+  font-weight: normal;
+  color: rgb(15, 25, 35);
+}
