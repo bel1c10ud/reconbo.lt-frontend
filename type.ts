@@ -47,3 +47,8 @@ export interface SkinDataType {
   'streamedVideo'?: string,
   'assetPath': string
 }
+
+export interface AuthObjType {
+  access_token: undefined|string
+  expiry_timestamp: undefined|number,
+}

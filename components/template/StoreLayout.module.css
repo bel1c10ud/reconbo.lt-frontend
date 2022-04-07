@@ -1,5 +1,8 @@
 .self {
-
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
 .skins {
@@ -12,5 +15,5 @@
   font-family: 'Black Han Sans';
   font-size: 3rem;
   font-weight: normal;
-  color: rgb(15, 25, 35);
+  color: var(--text-black);
 }

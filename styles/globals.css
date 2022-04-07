@@ -1,12 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
 
+:root {
+  --text-black: rgb(15, 25, 35);
+  --bg-color: rgb(249 249 249)
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #f9f9f9;
+}
+
+body {
+  background-color: var(--bg-color);
 }
 
 a {

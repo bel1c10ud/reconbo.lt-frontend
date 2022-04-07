@@ -54,14 +54,19 @@ export default async function handler(
       }
 
       const riotTokenObj = GetRiotTokenFromURI(uri);
+      const expiryTimestamp = new Date(riotTokenObj.requestedDate as string).getTime() + (Number(riotTokenObj.expires_in) * 1000)
 
-      res.setHeader('set-cookie', `access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`);
+      res.setHeader('set-cookie', [`access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`, `expiry_timestamp=${expiryTimestamp}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`]);
 
       return res.status(200).json({
         type: authRes.type,
         initialResponse: initRes,
         authorizationResponse: authRes,
-        riotToken: { ...riotTokenObj }
+        riotToken: { ...riotTokenObj },
+        authObj: {
+          access_token: riotTokenObj.access_token,
+          expiry_timestamp: expiryTimestamp
+        }
       })
 
     } else if(authRes.type === 'multifactor') {
@@ -88,13 +93,18 @@ export default async function handler(
     }
 
     const riotTokenObj = GetRiotTokenFromURI(uri);
+    const expiryTimestamp = new Date(riotTokenObj.requestedDate as string).getTime() + (Number(riotTokenObj.expires_in) * 1000)
 
-    res.setHeader('set-cookie', `access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`);
+    res.setHeader('set-cookie', [`access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`, `expiry_timestamp=${expiryTimestamp}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`]);
 
     return res.status(200).json({
       type: multiRes.type,
       multifactorResponse: multiRes,
-      riotToken: { ...riotTokenObj }
+      riotToken: { ...riotTokenObj },
+      authObj: {
+        access_token: riotTokenObj.access_token,
+        expiry_timestamp: expiryTimestamp
+      }
     })
 
   } else {

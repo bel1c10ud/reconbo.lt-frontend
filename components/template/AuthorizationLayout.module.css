@@ -16,6 +16,7 @@
 .headline {
   font-family: 'Black Han Sans';
   font-size: 3rem;
+  color: var(--text-black);
 }
 
 .self > form {

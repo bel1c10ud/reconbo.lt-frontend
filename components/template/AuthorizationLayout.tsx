@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import style from './AuthorizationLayout.module.css';
 
-import { accessTokenAtom } from '../../recoil';
+import { authObjAtom } from '../../recoil';
 
 import Input from '../Input';
 import Button from '../Button';
@@ -22,7 +22,7 @@ export default function AuthorizationLayout() {
   const [process, setProcess] = useState<'AUTH'|'MULTI'>('AUTH')
   const [isProcess, setIsprocess] = useState(false);
 
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+  const [authObj, setAuthObj] = useRecoilState(authObjAtom);
 
   async function reqAuth(username: string, password: string) {
     setIsprocess(true);
@@ -42,7 +42,10 @@ export default function AuthorizationLayout() {
 
       if(res.data.type === 'response') {
         if(res.data.riotToken['access_token']) { 
-          setAccessToken(res.data.riotToken['access_token']);
+          setAuthObj({
+            access_token: res.data.authObj['access_token'],
+            expiry_timestamp: res.data.authObj['expiry_timestamp']
+          })
           router.push('/');
         } 
         else { 
@@ -80,7 +83,10 @@ export default function AuthorizationLayout() {
       });
 
       if(res.data.type === 'response' && res.data.riotToken['access_token']) {
-        setAccessToken(res.data.riotToken['access_token']);
+        setAuthObj({
+          access_token: res.data.authObj['access_token'],
+          expiry_timestamp: res.data.authObj['expiry_timestamp']
+        })
         router.push('/');
       }
 

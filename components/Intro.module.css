@@ -1,5 +1,5 @@
 .self {
-
+  
 }
 
 .headline {
@@ -9,8 +9,10 @@
   font-weight: normal;
   line-height: 1em;
   margin-left: -0.125rem;
+  color: var(--text-black);
 }
 
 .description {
-  
+  margin: 0.5em 0;
+  color: rgb(56 62 58);
 }
