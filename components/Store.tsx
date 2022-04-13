@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { StoreDataType } from '../type';
+import { useRecoilState } from 'recoil';
+import { skinsDataAtom, contentTiersDataAtom, offersDataAtom } from '../recoil';
+import { StoreDataType, SkinType, ContentTierType } from '../type';
 import StoreLayout from './template/StoreLayout';
 
 
@@ -9,10 +11,23 @@ export default function Store(props: {
 }) {
   const [storeData, setStoreData] = useState<Error|StoreDataType|undefined>(undefined);
 
+  const [skinsData, setSkinsData] = useRecoilState(skinsDataAtom);
+  const [contentTiersData, setContentTiersData] = useRecoilState(contentTiersDataAtom);
+  const [offersData, setOffersData] = useRecoilState(offersDataAtom);
+
   function initFetch() {
-    reqStorefront(props.access_token).then(res => {
-      setStoreData(res.data);
-    }).catch(() => setStoreData(undefined));
+    reqAsync(props.access_token)
+    .then(res => {
+      setStoreData(res.storefront);
+      setOffersData(res.offers);
+    })
+    .catch(error => {
+      setStoreData(error);
+      setOffersData(error);
+    });
+
+    reqSkins().then(res => setSkinsData(res.data.data)).catch(error => setSkinsData(error));
+    reqContentTiers().then(res => setContentTiersData(res.data.data)).catch(error => setContentTiersData(error));
   }
 
   useEffect(initFetch, [])
@@ -48,11 +63,11 @@ async function reqEntitlements(access_token: string) {
   }
 }
 
-async function reqPuuid(access_token: string ) {
+async function reqPuuid(access_token: string) {
   try {
     const res = await axios({
       method: 'GET',
-      url: '/api/riot/global/userinfo',
+      url: '/rewrite/auth-riotgames/userinfo',
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
@@ -68,18 +83,81 @@ async function reqPuuid(access_token: string ) {
   }
 }
 
-async function reqStorefront(access_token: string) {
-  const entitlements = await reqEntitlements(access_token);
-  const puuid = await reqPuuid(access_token);
+async function reqStorefront(access_token: string, entitlements: string, puuid: string) {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: `/rewrite/riot-pvp/kr/storefront/${puuid}`,
+      headers: {
+        'X-Riot-Entitlements-JWT': entitlements,
+        'Authorization': `Bearer ${access_token}`
+      }
+    });
   
+    if(res.data) {
+      return res.data
+    } else {
+      return new Error('not found storefront from api!');
+    }
+  } catch(error) {
+    return error
+  }
+
+}
+
+async function reqSkins() {
   const res = await axios({
     method: 'GET',
-    url: `/api/riot/kr/storefront/${puuid}`,
-    headers: {
-      'X-Riot-Entitlements-JWT': entitlements,
-      'Authorization': `Bearer ${access_token}`
+    url: 'https://valorant-api.com/v1/weapons/skins',
+    params: {
+      'language': 'ko-KR'
     }
-  });
+  })
+
+  return res;
+}
+
+async function reqOffers(access_token: string, entitlements: string) {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: `/rewrite/riot-pvp/kr/offers`,
+      headers: {
+        'X-Riot-Entitlements-JWT': entitlements,
+        'Authorization': `Bearer ${access_token}`
+      }
+    });
+
+    if(res.data?.Offers) {
+      return res.data.Offers
+    } else {
+      return new Error('not found offers from api!')
+    } 
+
+  } catch(error) {
+    return error
+  }
+}
+
+async function reqContentTiers() {
+  const res = await axios({
+    method: 'GET',
+    url: 'https://valorant-api.com/v1/contenttiers',
+  })
 
   return res
+}
+
+async function reqAsync(access_token: string) {
+  const entitlements = await reqEntitlements(access_token);
+  const puuid = await reqPuuid(access_token);
+
+  const resStorefront = await reqStorefront(access_token, entitlements, puuid);
+  const resOffers = await reqOffers(access_token, entitlements);
+
+  return {
+    storefront: resStorefront,
+    offers: resOffers
+  }
+
 }

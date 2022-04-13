@@ -2,7 +2,8 @@
 
 :root {
   --text-black: rgb(15, 25, 35);
-  --bg-color: rgb(249 249 249)
+  --bg-color: rgb(249 249 249);
+  --global-padding: 1.5rem;
 }
 
 html,

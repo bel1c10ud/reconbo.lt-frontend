@@ -8,11 +8,15 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/api/riot/global/userinfo',
+        source: '/rewrite/auth-riotgames/userinfo',
         destination: 'https://auth.riotgames.com/userinfo',
       },
       {
-        source: '/api/riot/:reegion/storefront/:puuid',
+        source: '/rewrite/riot-pvp/:reegion/offers',
+        destination: 'https://pd.:reegion.a.pvp.net/store/v1/offers/',
+      },
+      {
+        source: '/rewrite/riot-pvp/:reegion/storefront/:puuid',
         destination: 'https://pd.:reegion.a.pvp.net/store/v2/storefront/:puuid',
       }
     ]

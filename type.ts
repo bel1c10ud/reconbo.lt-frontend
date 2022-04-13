@@ -21,7 +21,9 @@ export interface BonusStoreOfferType {
   'BonusOfferID': string,
   'Offer': OfferType,
   'DiscountPercent': number,
-  'DiscountCosts': object,
+  'DiscountCosts': {
+    "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": number
+  },
   'IsSeen': boolean
 }
 
@@ -29,7 +31,7 @@ export interface OfferType {
   'OfferID': string,
   'IsDirectPurchase': boolean,
   'StartDate': string,
-  'Cost': object,
+  'Cost': any,
   'Rewards': OfferRewardType[]
 }
 
@@ -39,7 +41,7 @@ export interface OfferRewardType {
   'Quantity': number
 }
 
-export interface SkinDataType {
+export interface SkinLevelType {
   'uuid': string,
   'displayName': string,
   'levelItem': unknown,
@@ -48,7 +50,48 @@ export interface SkinDataType {
   'assetPath': string
 }
 
+export interface SkinChromaType {
+  'uuid': string,
+  'displayName': string,
+  'displayIcon': string,
+  'assetPath': string,
+  'fullRender': string,
+  'streamedVideo'?: string
+  'swatch': string,
+}
+
 export interface AuthObjType {
   access_token: undefined|string
   expiry_timestamp: undefined|number,
+}
+
+export interface SkinType {
+  'uuid': string,
+  'contentTierUuid': string,
+  'themeUuid': string,
+  'displayName': string,
+  'displayIcon': string,
+  'wallpaper'? : string,
+  'assetPath': string,
+  'levels': SkinLevelType[]
+  'chromas': SkinChromaType[]
+}
+
+export interface ContentTierType {
+  'uuid': string,
+  'rank': number,
+  'devName': string,
+  'displayIcon': string,
+  'assetPath': string,
+  'highlightColor': string,
+  'juiceCost': number,
+  'juiceValue': number,
+}
+
+
+export interface DiscountType {
+  discountCosts: {
+    "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": number
+  },
+  discountPercent: number
 }
