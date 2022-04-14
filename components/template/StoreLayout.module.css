@@ -12,8 +12,28 @@
 }
 
 .headline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   font-family: 'Black Han Sans';
   font-size: 3rem;
   font-weight: normal;
   color: var(--text-black);
+  line-height: 1em;
+  margin: 1rem 0;
+}
+
+.title {
+}
+
+.countdown {
+  text-align: right;
+  font-size: 1.75rem;
+  color: rgb(183 183 183);
+  line-height: 1em;
+}
+
+.countdown .label {
+  font-size: .875rem;
+  margin-right: 0.25rem;
 }

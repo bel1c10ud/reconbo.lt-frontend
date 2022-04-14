@@ -10,7 +10,8 @@ export interface StoreDataType {
 }
 
 export interface SkinsPanelLayoutType {
-  'SingleItemOffers': string[]
+  'SingleItemOffers': string[],
+  'SingleItemOffersRemainingDurationInSeconds': number
 }
 
 export interface BonusStoreType {
