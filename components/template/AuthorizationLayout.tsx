@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import style from './AuthorizationLayout.module.css';
 
@@ -41,7 +41,7 @@ export default function AuthorizationLayout() {
       });
 
       if(res.data.type === 'response') {
-        if(res.data.riotToken['access_token']) { 
+        if(res.data.authObj['access_token']) { 
           setAuthObj({
             access_token: res.data.authObj['access_token'],
             expiry_timestamp: res.data.authObj['expiry_timestamp']
@@ -62,7 +62,7 @@ export default function AuthorizationLayout() {
       }
 
     } catch(error) {
-      alert(error);
+      alert((error as AxiosError).response?.data.message);
     }
     setIsprocess(false);
   }
@@ -82,7 +82,7 @@ export default function AuthorizationLayout() {
         }
       });
 
-      if(res.data.type === 'response' && res.data.riotToken['access_token']) {
+      if(res.data.type === 'response' && res.data.authObj['access_token']) {
         setAuthObj({
           access_token: res.data.authObj['access_token'],
           expiry_timestamp: res.data.authObj['expiry_timestamp']
@@ -91,6 +91,8 @@ export default function AuthorizationLayout() {
       }
 
     } catch(error) {        
+      console.log((error as AxiosError).response);
+      alert((error as AxiosError).response?.data.message);
       setPrevSession('');
       if(window.confirm("2fa fail, try again?")) {
         setCode('');
