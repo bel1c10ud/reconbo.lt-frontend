@@ -8,6 +8,7 @@ import style from './IndexLayout.module.css';
 import Intro from '../Intro';
 import Button from '../Button';
 import Store from '../Store';
+import Footer from '../Footer';
 import Link from 'next/link';
 
 export default function IndexLayout() {
@@ -19,8 +20,8 @@ export default function IndexLayout() {
     return (
       <div className={style.self}>
         <Button onClick={() => router.push('/api/clear')}>로그아웃</Button>
-        <li><Link href="/about">이 프로젝트의 동작 방식에 대하여</Link></li>
         <Store access_token={authObj.access_token} />
+        <Footer />
       </div>
     )
   } else {
@@ -28,7 +29,7 @@ export default function IndexLayout() {
       <div className={style.self}>
         <Intro />
         <Button onClick={() => router.push('/authorization')}>로그인</Button>
-        <li><Link href="/about">이 프로젝트의 동작 방식에 대하여</Link></li>
+        <Footer />
       </div>
     )
   }
