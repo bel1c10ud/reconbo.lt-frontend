@@ -14,8 +14,8 @@
 }
 
 .headline {
-  font-family: 'Black Han Sans';
   font-size: 3rem;
+  font-weight: 900;
   color: var(--text-black);
 }
 

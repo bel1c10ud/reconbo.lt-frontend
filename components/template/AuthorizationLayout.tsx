@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRouter } from 'next/router';
 
 import axios, { AxiosError } from 'axios';
 
 import style from './AuthorizationLayout.module.css';
 
-import { authObjAtom } from '../../recoil';
+import { authObjAtom, regionAtom } from '../../recoil';
 
 import Input from '../Input';
 import Button from '../Button';
+import RegionSelect from '../RegionSelect';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function AuthorizationLayout() {
   const [isProcess, setIsprocess] = useState(false);
 
   const [authObj, setAuthObj] = useRecoilState(authObjAtom);
+  const region = useRecoilValue(regionAtom);
 
   async function reqAuth(username: string, password: string) {
     setIsprocess(true);
@@ -115,8 +117,9 @@ export default function AuthorizationLayout() {
 
   return (
     <div className={style.self}>
-      <div className={style.headline}>로그인</div>
+      <div className={style.headline}>LOGIN</div>
       <form className={!(process === 'AUTH') ? style.hidden: undefined} onSubmit={e => e.preventDefault()}>
+        <RegionSelect />
         <Input type='text' name='username' placeholder='Username' 
         value={username} 
         onChange={e => setUsername(e.target.value)} 
@@ -129,9 +132,9 @@ export default function AuthorizationLayout() {
         />
         <Button 
         onClick={onClickAuth} 
-        disabled={isProcess || username.trim().length === 0 || password.trim().length === 0}
+        disabled={isProcess || username.trim().length === 0 || password.trim().length === 0 || region === undefined}
         >
-          로그인
+          Login
         </Button>
       </form>
       <form className={!(process === 'MULTI') ? style.hidden: undefined} onSubmit={e => e.preventDefault()} >
@@ -142,7 +145,7 @@ export default function AuthorizationLayout() {
         <Button onClick={onClickMulti} 
         disabled={prevSession.trim().length === 0 || code.trim().length === 0 }
         >
-          제출
+          Submit
         </Button>
       </form>
     </div>

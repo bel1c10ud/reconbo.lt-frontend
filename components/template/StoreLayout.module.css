@@ -1,5 +1,5 @@
 .self {
-  margin-top: 3rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -13,11 +13,11 @@
 
 .headline {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem;
-  font-family: 'Black Han Sans';
   font-size: 3rem;
-  font-weight: normal;
+  font-weight: 900;
   color: var(--text-black);
   line-height: 1em;
   margin: 1rem 0;

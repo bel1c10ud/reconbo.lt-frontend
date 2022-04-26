@@ -3,10 +3,9 @@
 }
 
 .headline {
-  font-family: 'Black Han Sans';
   font-size: 3.5rem;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 900;
   line-height: 1em;
   margin-left: -0.125rem;
   color: var(--text-black);

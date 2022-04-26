@@ -2,12 +2,15 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { skinsDataAtom, contentTiersDataAtom, offersDataAtom } from '../recoil';
-import { StoreDataType, SkinType, ContentTierType } from '../type';
+import { StoreDataType } from '../type';
+import { RegionCode, LanguageCode } from '../options';
 import StoreLayout from './template/StoreLayout';
 
 
 export default function Store(props: {
-  access_token: string
+  access_token: string,
+  region: RegionCode,
+  language: LanguageCode
 }) {
   const [storeData, setStoreData] = useState<Error|StoreDataType|undefined>(undefined);
 
@@ -16,7 +19,7 @@ export default function Store(props: {
   const [offersData, setOffersData] = useRecoilState(offersDataAtom);
 
   function initFetch() {
-    reqAsync(props.access_token)
+    reqAsync(props.access_token, props.region)
     .then(res => {
       setStoreData(res.storefront);
       setOffersData(res.offers);
@@ -26,11 +29,11 @@ export default function Store(props: {
       setOffersData(error);
     });
 
-    reqSkins().then(res => setSkinsData(res.data.data)).catch(error => setSkinsData(error));
+    reqSkins(props.language).then(res => setSkinsData(res.data.data)).catch(error => setSkinsData(error));
     reqContentTiers().then(res => setContentTiersData(res.data.data)).catch(error => setContentTiersData(error));
   }
 
-  useEffect(initFetch, [])
+  useEffect(initFetch, [props.region, props.language])
 
   if(storeData === undefined) {
     return <div>loding...</div>
@@ -83,11 +86,11 @@ async function reqPuuid(access_token: string) {
   }
 }
 
-async function reqStorefront(access_token: string, entitlements: string, puuid: string) {
+async function reqStorefront(access_token: string, entitlements: string, puuid: string, region: RegionCode) {
   try {
     const res = await axios({
       method: 'GET',
-      url: `/rewrite/riot-pvp/kr/storefront/${puuid}`,
+      url: `/rewrite/riot-pvp/${region}/storefront/${puuid}`,
       headers: {
         'X-Riot-Entitlements-JWT': entitlements,
         'Authorization': `Bearer ${access_token}`
@@ -105,12 +108,12 @@ async function reqStorefront(access_token: string, entitlements: string, puuid: 
 
 }
 
-async function reqSkins() {
+async function reqSkins(language: LanguageCode) {
   const res = await axios({
     method: 'GET',
     url: 'https://valorant-api.com/v1/weapons/skins',
     params: {
-      'language': 'ko-KR'
+      'language': language
     }
   })
 
@@ -148,11 +151,11 @@ async function reqContentTiers() {
   return res
 }
 
-async function reqAsync(access_token: string) {
+async function reqAsync(access_token: string, region: RegionCode) {
   const entitlements = await reqEntitlements(access_token);
   const puuid = await reqPuuid(access_token);
 
-  const resStorefront = await reqStorefront(access_token, entitlements, puuid);
+  const resStorefront = await reqStorefront(access_token, entitlements, puuid, region);
   const resOffers = await reqOffers(access_token, entitlements);
 
   return {

@@ -33,7 +33,7 @@ function Daily(props: {
   return (
     <div className={style['daily']}>
       <div className={style.headline}>
-        <div className={style['title']}>오늘의 상점</div>
+        <div className={style['title']}>DAILY</div>
         <div className={style['countdown']}>
           <span>
           <CountDown seconds={props.skinsPanelLayout.SingleItemOffersRemainingDurationInSeconds - seconds} />
@@ -53,7 +53,7 @@ function NightMarket(props: {
   return (
     <div className={style['night-market']}>
     <div className={style.headline}>
-      <div className={style['title']}>야시장</div>
+      <div className={style['title']}>NIGHT MARKET</div>
     </div>
       <div className={style.skins}>
 { props.bonusOffers.map( (bonusOffer) => {
