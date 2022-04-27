@@ -4,19 +4,19 @@
   padding: 0;
   margin: 0;
 
-  color: #ffffff;
-  font-weight: bold;
-  background-color: #f94655;
+  color: var(--white);
+  font-weight: 700;
+  background-color: var(--primary-color);
   font-size: 1.125rem;
   min-width: 18rem;
   padding: 1.125rem 1.75rem;
 }
 
 .self:disabled {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--grey500);
 }
 
 .self:hover {
   transition: 250ms ease-in-out;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--grey500);
 }

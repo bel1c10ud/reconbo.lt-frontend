@@ -11,6 +11,7 @@ import { authObjAtom, regionAtom } from '../../recoil';
 import Input from '../Input';
 import Button from '../Button';
 import RegionSelect from '../RegionSelect';
+import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -119,6 +120,14 @@ export default function AuthorizationLayout() {
     <div className={style.self}>
       <div className={style.headline}>LOGIN</div>
       <form className={!(process === 'AUTH') ? style.hidden: undefined} onSubmit={e => e.preventDefault()}>
+{ region === undefined && (
+        <Callout>
+          <CalloutTitle>ℹ️ Please select region and language</CalloutTitle>
+          <CalloutBody>
+            If the region setting is incorrect, the in-game store information cannot be fetched.
+          </CalloutBody>
+        </Callout>
+)}
         <RegionSelect />
         <Input type='text' name='username' placeholder='Username' 
         value={username} 
@@ -138,6 +147,9 @@ export default function AuthorizationLayout() {
         </Button>
       </form>
       <form className={!(process === 'MULTI') ? style.hidden: undefined} onSubmit={e => e.preventDefault()} >
+        <Callout>
+          <CalloutTitle>ℹ️ Please enter your multifactor verification code</CalloutTitle>
+        </Callout>
         <Input type='text' name='code' placeholder='Multifactor Code' 
         value={code} 
         onChange={e => setCode(e.target.value)} 

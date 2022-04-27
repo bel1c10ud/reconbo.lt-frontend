@@ -11,6 +11,7 @@ import Store from '../Store';
 import Footer from '../Footer';
 import RegionSelect from '../RegionSelect';
 import LanguageSelect from '../LanguageSelect';
+import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 
 export default function IndexLayout() {
   const router = useRouter();
@@ -23,8 +24,21 @@ export default function IndexLayout() {
     return (
       <div className={style.self}>
 { region && language ? 
-        <Store access_token={authObj.access_token} region={region} language={language} /> 
-        : <div>Please select a region and Language</div>
+        <>
+          <Store access_token={authObj.access_token} region={region} language={language} />
+          <Callout>
+            <CalloutTitle>ℹ️ Is there any difference with the in-game store?</CalloutTitle>
+            <CalloutBody>
+              If the region setting is incorrect, the in-game store information cannot be fetched.
+            </CalloutBody>
+          </Callout>
+        </>
+        : <Callout>
+            <CalloutTitle>ℹ️ Please select region and language</CalloutTitle>
+            <CalloutBody>
+              If the region setting is incorrect, the in-game store information cannot be fetched.
+            </CalloutBody>
+          </Callout>
 }        
         <div className={style['options']}>
           <RegionSelect />

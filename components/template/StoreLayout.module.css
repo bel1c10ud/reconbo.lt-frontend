@@ -18,7 +18,7 @@
   gap: 0.5rem;
   font-size: 3rem;
   font-weight: 900;
-  color: var(--text-black);
+  color: var(--grey900);
   line-height: 1em;
   margin: 1rem 0;
 }
@@ -29,7 +29,7 @@
 .countdown {
   text-align: right;
   font-size: 1.75rem;
-  color: rgb(183 183 183);
+  color: var(--grey600);
   line-height: 1em;
 }
 
