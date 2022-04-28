@@ -16,7 +16,7 @@ import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 export default function IndexLayout() {
   const router = useRouter();
 
-  const authObj = useRecoilValue(authObjAtom)
+  const authObj = useRecoilValue(authObjAtom);
   const region = useRecoilValue(regionAtom);
   const language = useRecoilValue(languageAtom);
 

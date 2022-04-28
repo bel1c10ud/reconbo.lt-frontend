@@ -12,6 +12,7 @@ import Input from '../Input';
 import Button from '../Button';
 import RegionSelect from '../RegionSelect';
 import Callout, { CalloutTitle, CalloutBody } from '../Callout';
+import { RegionCode } from '../../options';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function AuthorizationLayout() {
   const [authObj, setAuthObj] = useRecoilState(authObjAtom);
   const region = useRecoilValue(regionAtom);
 
-  async function reqAuth(username: string, password: string) {
+  async function reqAuth(username: string, password: string, region: RegionCode) {
     setIsprocess(true);
     try {
       const res = await axios({
@@ -39,7 +40,8 @@ export default function AuthorizationLayout() {
         data: {
           type: 'auth',
           username: username,
-          password: password
+          password: password,
+          regionCode: region
         }
       });
 
@@ -70,7 +72,7 @@ export default function AuthorizationLayout() {
     setIsprocess(false);
   }
 
-  async function reqMulti(prevSession: string, code: string) {
+  async function reqMulti(prevSession: string, code: string, region: RegionCode) {
     try {
       const res = await axios({
         method: 'POST',
@@ -81,7 +83,8 @@ export default function AuthorizationLayout() {
         data: {
           type: 'multifactor',
           previousSession: prevSession,
-          code: code
+          code: code,
+          regionCode: region
         }
       });
 
@@ -99,20 +102,26 @@ export default function AuthorizationLayout() {
       setPrevSession('');
       if(window.confirm("2fa fail, try again?")) {
         setCode('');
-        reqAuth(username, password);
+        reqAuth(username, password, region);
       }
     }
   }
 
   async function onClickAuth() {
-    reqAuth(username, password);
+    if(isProcess) {
+      alert('The request is being processed.')
+    } else if(username.trim().length === 0 || password.trim().length === 0 || region === undefined) {
+      alert('The input value is incorrect.');
+    } else {
+      reqAuth(username, password, region);
+    }
   }
 
   async function onClickMulti() {
-    if(prevSession !== undefined) {
-      reqMulti(prevSession, code);
+    if(prevSession === undefined || region === undefined) {
+      alert('');
     } else {
-      alert('invalid previous session!');
+      reqMulti(prevSession, code, region);
     }
   }
 

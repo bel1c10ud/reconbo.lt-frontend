@@ -77,7 +77,11 @@ export default async function handler(
       const riotTokenObj = GetRiotTokenFromURI(uri);
       const expiryTimestamp = new Date(riotTokenObj.requestedDate as string).getTime() + (Number(riotTokenObj.expires_in) * 1000)
 
-      res.setHeader('set-cookie', [`access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`, `expiry_timestamp=${expiryTimestamp}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`]);
+      res.setHeader('set-cookie', [
+        `access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`, 
+        `expiry_timestamp=${expiryTimestamp}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`,
+        `region_code=${req.body.regionCode?? ''}; Path=/; Max-age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`
+      ]);
 
       return res.status(200).json({
         type: authRes.data.type,
@@ -136,7 +140,11 @@ export default async function handler(
     const riotTokenObj = GetRiotTokenFromURI(uri);
     const expiryTimestamp = new Date(riotTokenObj.requestedDate as string).getTime() + (Number(riotTokenObj.expires_in) * 1000)
 
-    res.setHeader('set-cookie', [`access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`, `expiry_timestamp=${expiryTimestamp}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`]);
+    res.setHeader('set-cookie', [
+      `access_token=${riotTokenObj.access_token}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`, 
+      `expiry_timestamp=${expiryTimestamp}; Path=/; Max-Age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`,
+      `region_code=${req.body.regionCode?? ''}; Path=/; Max-age=${riotTokenObj.expires_in}; HttpOnly; SameSite=Strict;`
+    ]);
 
     return res.status(200).json({
       type: multiRes.data.type,
