@@ -10,3 +10,7 @@
   color: var(--grey900);
   background-color: var(--grey200);
 }
+
+.self::placeholder {
+  color: var(--grey600);
+}

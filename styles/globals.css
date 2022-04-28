@@ -1,25 +1,25 @@
 :root {
   --grey50: rgb(255, 255, 255);
-  --grey100: rgb(245, 245, 245);
-  --grey200: rgb(238, 238, 238);
-  --grey300: rgb(224, 224, 224);
-  --grey400: rgb(189, 189, 189);
-  --grey500: rgb(158, 158, 158);
-  --grey600: rgb(117, 117, 117);
-  --grey700: rgb(97, 97, 97);
-  --grey800: rgb(66, 66, 66);
-  --grey900: rgb(33, 33, 33);
+  --grey100: rgb(250, 250, 250);
+  --grey200: rgb(245, 245, 245);
+  --grey300: rgb(212, 212, 212);
+  --grey400: rgb(163, 163, 163);
+  --grey500: rgb(115, 115, 115);
+  --grey600: rgb(82, 82, 82);
+  --grey700: rgb(49, 49, 49);
+  --grey800: rgb(31, 31, 31);
+  --grey900: rgb(23, 23, 23);
 
-  --greyOpacity50: rgba(33, 33, 33, 0.02);
-  --greyOpacity100: rgba(33, 33, 33, 0.05);
-  --greyOpacity200: rgba(33, 33, 33, 0.1);
-  --greyOpacity300: rgba(33, 33, 33, 0.18);
-  --greyOpacity400: rgba(33, 33, 33, 0.31);
-  --greyOpacity500: rgba(33, 33, 33, 0.46);
-  --greyOpacity600: rgba(33, 33, 33, 0.58);
-  --greyOpacity700: rgba(33, 33, 33, 0.7);
-  --greyOpacity800: rgba(33, 33, 33, 0.8);
-  --greyOpacity900: rgba(33, 33, 33, 0.91);
+  --greyOpacity50: rgba(23, 23, 23, 0.02);
+  --greyOpacity100: rgba(23, 23, 23, 0.05);
+  --greyOpacity200: rgba(23, 23, 23, 0.1);
+  --greyOpacity300: rgba(23, 23, 23, 0.18);
+  --greyOpacity400: rgba(23, 23, 23, 0.31);
+  --greyOpacity500: rgba(23, 23, 23, 0.46);
+  --greyOpacity600: rgba(23, 23, 23, 0.58);
+  --greyOpacity700: rgba(23, 23, 23, 0.7);
+  --greyOpacity800: rgba(23, 23, 23, 0.8);
+  --greyOpacity900: rgba(23, 23, 23, 0.91);
 
   --white: rgba(255, 255, 255, 1);
   --black: #000;
@@ -35,16 +35,16 @@
   --whiteOpacity800: rgba(255, 255, 255, 0.89);
   --whiteOpacity900: rgba(255, 255, 255, 1);
 
-  --blackOpacity50: rgba(33, 33, 33, 0.02);
-  --blackOpacity100: rgba(33, 33, 33, 0.05);
-  --blackOpacity200: rgba(33, 33, 33, 0.1);
-  --blackOpacity300: rgba(33, 33, 33, 0.18);
-  --blackOpacity400: rgba(33, 33, 33, 0.31);
-  --blackOpacity500: rgba(33, 33, 33, 0.46);
-  --blackOpacity600: rgba(33, 33, 33, 0.58);
-  --blackOpacity700: rgba(33, 33, 33, 0.7);
-  --blackOpacity800: rgba(33, 33, 33, 0.8);
-  --blackOpacity900: rgba(33, 33, 33, 0.91);
+  --blackOpacity50: rgba(23, 23, 23, 0.02);
+  --blackOpacity100: rgba(23, 23, 23, 0.05);
+  --blackOpacity200: rgba(23, 23, 23, 0.1);
+  --blackOpacity300: rgba(23, 23, 23, 0.18);
+  --blackOpacity400: rgba(23, 23, 23, 0.31);
+  --blackOpacity500: rgba(23, 23, 23, 0.46);
+  --blackOpacity600: rgba(23, 23, 23, 0.58);
+  --blackOpacity700: rgba(23, 23, 23, 0.7);
+  --blackOpacity800: rgba(23, 23, 23, 0.8);
+  --blackOpacity900: rgba(23, 23, 23, 0.91);
 
   --primary-color: rgb(249, 70, 85);
   --anchor-color: rgb(39, 102, 218);
@@ -53,20 +53,20 @@
   --deluxe-tier-color: rgba(0, 149, 135, 0.75);
   --premium-tier-color: rgba(209, 84, 141, 0.75);
   --select-tier-color: rgba(90, 159, 226, 0.75);
-  --ultra-tier-color: rgba(239, 235, 101, 0.75);
+  --ultra-tier-color: rgba(195, 163, 19, 0.75);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --grey50: rgb(33, 33, 33);
-    --grey100: rgb(66, 66, 66);
-    --grey200: rgb(97, 97, 97);
-    --grey300: rgb(117, 117, 117);
-    --grey400: rgb(158, 158, 158);
-    --grey500: rgb(189, 189, 189);
-    --grey600: rgb(224, 224, 224);
-    --grey700: rgb(238, 238, 238);
-    --grey800: rgb(245, 245, 245);
+    --grey50: rgb(23, 23, 23);
+    --grey100: rgb(31, 31, 31);
+    --grey200: rgb(49, 49, 49);
+    --grey300: rgb(82, 82, 82);
+    --grey400: rgb(115, 115, 115);
+    --grey500: rgb(163, 163, 163);
+    --grey600: rgb(212, 212, 212);
+    --grey700: rgb(245, 245, 245);
+    --grey800: rgb(250, 250, 250);
     --grey900: rgb(255, 255, 255);
 
     --greyOpacity50: rgba(255, 255, 255, 0.05);

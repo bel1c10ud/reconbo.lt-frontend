@@ -29,7 +29,7 @@
 .countdown {
   text-align: right;
   font-size: 1.75rem;
-  color: var(--grey600);
+  color: var(--grey400);
   line-height: 1em;
 }
 

@@ -4,25 +4,26 @@
   border-radius: 0;
   padding: 0;
   margin: 0;
-  
-  padding-left: 1.515rem;
+
 
   padding: 1.125rem 1.75rem;
+  padding-left: 1.515rem;
+
   font-size: 1.125rem;
   color: var(--grey900);
   background-color: var(--grey200);
 }
 
 .self .placeholder {
-  color: var(--grey500);
+  color: var(--grey400);
 }
 
 .self[data-not-selected] {
-  color: var(--grey500);
+  color: var(--grey600);
 }
 
 .self[data-not-selected]:focus-visible {
-  color: var(--grey500);
+  color: var(--grey600);
 }
 
 .self[data-not-selected]:focus-visible option {
@@ -30,5 +31,5 @@
 }
 
 .self[data-not-selected]:focus-visible option.placeholder {
-  color: var(--grey500);
+  color: var(--grey400);
 }

@@ -1,4 +1,5 @@
 .self {
+  position: relative;
   background: none;
   border: 0;
   padding: 0;
@@ -9,14 +10,25 @@
   background-color: var(--primary-color);
   font-size: 1.125rem;
   min-width: 18rem;
+}
+
+.overlay {
+  position: absolute;  
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  position: relative;
   padding: 1.125rem 1.75rem;
 }
 
-.self:disabled {
-  background-color: var(--grey500);
+
+.self:hover .overlay {
+  transition: 250ms ease-in-out;
+  background-color: var(--blackOpacity100);
 }
 
-.self:hover {
-  transition: 250ms ease-in-out;
-  background-color: var(--grey500);
+.self:disabled .overlay {
+  background-color: var(--grey300);
 }

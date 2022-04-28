@@ -11,8 +11,9 @@ export default function Select(props: {
   options: SelectOptionType[],
   value?: string,
   defaultValue?: string,
-  placeholder?: string
-  onChange?: React.ChangeEventHandler<HTMLSelectElement>
+  placeholder?: string,
+  onChange?: React.ChangeEventHandler<HTMLSelectElement>,
+  disabled?: boolean
 }) {
   const [value, setValue] = useState<string>(props.value?.trim() ?? props.defaultValue?.trim() ?? '');
 
@@ -34,6 +35,7 @@ export default function Select(props: {
     value={value}
     onChange={updateValue}
     { ...( value.length > 0 ? { 'data-selected': '' }: { 'data-not-selected': '' } ) }
+    disabled={props.disabled}
     >
       <option 
       className={style['placeholder']} 

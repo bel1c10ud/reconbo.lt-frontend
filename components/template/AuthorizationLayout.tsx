@@ -120,15 +120,13 @@ export default function AuthorizationLayout() {
     <div className={style.self}>
       <div className={style.headline}>LOGIN</div>
       <form className={!(process === 'AUTH') ? style.hidden: undefined} onSubmit={e => e.preventDefault()}>
-{ region === undefined && (
         <Callout>
-          <CalloutTitle>ℹ️ Please select region and language</CalloutTitle>
+          <CalloutTitle>ℹ️ Please select a region for your account.</CalloutTitle>
           <CalloutBody>
             If the region setting is incorrect, the in-game store information cannot be fetched.
           </CalloutBody>
         </Callout>
-)}
-        <RegionSelect />
+        <RegionSelect disabled={isProcess} />
         <Input type='text' name='username' placeholder='Username' 
         value={username} 
         onChange={e => setUsername(e.target.value)} 

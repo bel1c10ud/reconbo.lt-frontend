@@ -12,7 +12,8 @@ export default function Button(props: {
     onClick={props.onClick}
     disabled={props.disabled}
     >
-      {props.children}
+      <div className={style['overlay']}></div>
+      <div className={style['label']}>{props.children}</div>
     </button>
   )
 }

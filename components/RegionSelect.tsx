@@ -4,7 +4,9 @@ import { regionAtom } from "../recoil";
 import Select from "./Select";
 import { regionOptions, RegionCode } from "../options";
 
-export default function RegionSelect() {
+export default function RegionSelect(props: {
+  disabled?: boolean
+}) {
   const [region, setRegion] = useRecoilState(regionAtom);
 
   function updateRegion(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -17,6 +19,6 @@ export default function RegionSelect() {
   }
 
   return (
-    <Select name='region' options={regionOptions} value={region} placeholder='Region' onChange={updateRegion} />
+    <Select name='region' options={regionOptions} value={region} placeholder='Region' onChange={updateRegion} disabled={props.disabled} />
   )
 }
