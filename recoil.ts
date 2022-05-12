@@ -34,3 +34,13 @@ export const offersDataAtom = atom<undefined|OfferType[]|Error>({
   key: 'offersDataAtom',
   default: undefined
 });
+
+export const isPopupAtom = atom<boolean>({
+  key: 'isPopupAtom',
+  default: false
+});
+
+export const popupComponentAtom = atom<((props?: any) => JSX.Element)|undefined>({
+  key: 'popupComponentAtom',
+  default: undefined
+});

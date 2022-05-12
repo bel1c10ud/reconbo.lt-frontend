@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { skinsDataAtom, contentTiersDataAtom, offersDataAtom } from '../recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { skinsDataAtom, contentTiersDataAtom, offersDataAtom, isPopupAtom, popupComponentAtom } from '../recoil';
 import { ContentTierType, OfferType, SkinType, DiscountType } from '../type';
 import style from './Skin.module.css';
+import VideoPopup from './VideoPopup';
 
 interface SkinDataType {
   skin: SkinType,
@@ -123,9 +124,22 @@ function SkinLayout(props: {
 }) {
   const name = props.skinData.skin.levels[props.skinData.levelIndex ?? 0].displayName;
   const imageSrc = props.skinData.skin.levels[props.skinData.levelIndex ?? 0].displayIcon;
+  const [isPopup, setIsPopup] = useRecoilState(isPopupAtom);
+  const [popupComponent, setPopupComponent] = useRecoilState(popupComponentAtom);
+
+  function onClickSkin() {
+    if(isPopup) {
+      setPopupComponent(undefined);
+    }
+
+    if(props.skinData?.skin?.levels?.length > 0 && props.skinData.skin.levels[0].streamedVideo) {
+      setPopupComponent(() => <VideoPopup src={props.skinData.skin.levels[0].streamedVideo} />);
+      setIsPopup(true);
+    }
+  }
 
   return (
-    <div className={style.self} data-tier={props.skinData.contentTier?.devName}>
+    <div className={style.self} data-tier={props.skinData.contentTier?.devName} onClick={onClickSkin}>
       <div className={style.ratio}>
         <div className={style.content}>
           <div className={style.image}>
