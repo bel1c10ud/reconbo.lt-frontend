@@ -6,13 +6,14 @@ import axios, { AxiosError } from 'axios';
 
 import style from './AuthorizationLayout.module.css';
 
-import { authObjAtom, regionAtom } from '../../recoil';
+import { authObjAtom, regionAtom, languageAtom } from '../../recoil';
 
 import Input from '../Input';
 import Button from '../Button';
 import RegionSelect from '../RegionSelect';
 import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 import { RegionCode } from '../../options';
+import { i18nMessage } from '../../i18n';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -27,6 +28,7 @@ export default function AuthorizationLayout() {
 
   const [authObj, setAuthObj] = useRecoilState(authObjAtom);
   const region = useRecoilValue(regionAtom);
+  const language = useRecoilValue(languageAtom)?? 'en-US';
 
   async function reqAuth(username: string, password: string, region: RegionCode) {
     setIsprocess(true);
@@ -127,12 +129,14 @@ export default function AuthorizationLayout() {
 
   return (
     <div className={style.self}>
-      <div className={style.headline}>LOGIN</div>
+      <div className={style.headline}>
+        {i18nMessage['LOGIN'][language]}
+      </div>
       <form className={!(process === 'AUTH') ? style.hidden: undefined} onSubmit={e => e.preventDefault()}>
         <Callout>
-          <CalloutTitle>ℹ️ Please select a region for your account.</CalloutTitle>
+          <CalloutTitle>ℹ️ {i18nMessage['PLEASE_SELECT_REGION'][language]}</CalloutTitle>
           <CalloutBody>
-            If the region setting is incorrect, the in-game store information cannot be fetched.
+            {i18nMessage['IF_REGION_INCORRECT'][language]}
           </CalloutBody>
         </Callout>
         <RegionSelect disabled={isProcess} />
@@ -150,12 +154,12 @@ export default function AuthorizationLayout() {
         onClick={onClickAuth} 
         disabled={isProcess || username.trim().length === 0 || password.trim().length === 0 || region === undefined}
         >
-          Login
+           {i18nMessage['LOGIN'][language]}
         </Button>
       </form>
       <form className={!(process === 'MULTI') ? style.hidden: undefined} onSubmit={e => e.preventDefault()} >
         <Callout>
-          <CalloutTitle>ℹ️ Please enter your multifactor verification code</CalloutTitle>
+          <CalloutTitle>ℹ️ {i18nMessage['PLEASE_ENTER_VERIFICATION_CODE'][language]}</CalloutTitle>
         </Callout>
         <Input type='text' name='code' placeholder='Multifactor Code' 
         value={code} 
@@ -164,7 +168,7 @@ export default function AuthorizationLayout() {
         <Button onClick={onClickMulti} 
         disabled={prevSession.trim().length === 0 || code.trim().length === 0 }
         >
-          Submit
+          {i18nMessage['CONFIRM'][language]}
         </Button>
       </form>
     </div>

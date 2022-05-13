@@ -12,6 +12,7 @@ import Footer from '../Footer';
 import RegionSelect from '../RegionSelect';
 import LanguageSelect from '../LanguageSelect';
 import Callout, { CalloutTitle, CalloutBody } from '../Callout';
+import { i18nMessage } from '../../i18n';
 
 export default function IndexLayout() {
   const router = useRouter();
@@ -27,9 +28,9 @@ export default function IndexLayout() {
         <>
           <Store access_token={authObj.access_token} region={region} language={language} />
           <Callout>
-            <CalloutTitle>ℹ️ Is there any difference with the in-game store?</CalloutTitle>
+            <CalloutTitle>ℹ️ {i18nMessage['IS_WRONG_STORE_INFORMATION'][language]}</CalloutTitle>
             <CalloutBody>
-              If the region setting is incorrect, the in-game store information cannot be fetched.
+              {i18nMessage['IF_REGION_INCORRECT'][language]}
             </CalloutBody>
           </Callout>
         </>
@@ -44,19 +45,19 @@ export default function IndexLayout() {
           <RegionSelect />
           <LanguageSelect />
         </div>
-        <Button onClick={() => router.push('/api/clear')}>Logout</Button>
+        <Button onClick={() => router.push('/api/clear')}>{i18nMessage['LOGOUT'][language?? 'en-US']}</Button>
         <Footer />
       </div>
     )
   } else {
     return (
       <div className={style.self}>
-        <Intro />
+        <Intro language={language?? 'en-US'} />
         <div className={style['options']}>
           <RegionSelect />
           <LanguageSelect />
         </div>
-        <Button onClick={() => router.push('/authorization')}>Login</Button>
+        <Button onClick={() => router.push('/authorization')}>{i18nMessage['LOGIN'][language?? 'en-US']}</Button>
         <Footer />
       </div>
     )

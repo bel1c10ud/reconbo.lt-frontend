@@ -12,7 +12,7 @@ export default function Callout(props: {
 }
 
 export function CalloutTitle(props: {
-  children?: string
+  children?: string|string[]
 }) {
   return (
     <div className={style['callout-title']}>{props.children}</div>

@@ -10,27 +10,31 @@ export default function LanguageSelect() {
   function updateLanguage(e: React.ChangeEvent<HTMLSelectElement>) {
     if(e.currentTarget.value) {
       setLanguage(e.currentTarget.value as LanguageCode)
+      window.localStorage.setItem('language', e.currentTarget.value as LanguageCode);
     }
   }
 
   useEffect(function initLang() {
-    if(navigator) {
-      const clientLang = navigator.language;
-      const langs = languageOptions.map(lang => lang.value);
+    const langs = languageOptions.map(lang => lang.value);
+    const localLang: string|undefined|null = window.localStorage.getItem('language');
+    const clientLang = navigator.language;
 
-      if(clientLang) {
-        const findLang = langs.find(lang => lang === clientLang) as undefined|LanguageCode;
-
-        if(findLang) {
-          setLanguage(findLang)
+    if((localLang !== undefined && localLang !== null) && langs.find(lang => lang === localLang)) {
+      setLanguage(localLang as LanguageCode);
+    } else {
+      if(navigator) {
+        if(clientLang) {
+          if(langs.find(lang => lang === clientLang)) {
+            setLanguage(clientLang as LanguageCode)
+          } else {
+            setLanguage('en-US');
+          }
         } else {
           setLanguage('en-US');
         }
       } else {
         setLanguage('en-US');
       }
-    } else {
-      setLanguage('en-US');
     }
   }, [])
 
