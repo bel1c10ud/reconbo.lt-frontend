@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import { BonusStoreOfferType, SkinsPanelLayoutType, StoreDataType } from '../../type';
-import Skin from '../Skin';
-import style from './StoreLayout.module.css';
 
-export default function StoreLayout(props: {
-  storeData: StoreDataType
+import Skin from '../Skin';
+
+import style from './StoreFront.module.css';
+import { BonusStoreOfferType, SkinsPanelLayoutType, StoreDataType } from '../../type';
+import { LanguageCode, RegionCode } from '../../options';
+
+export default function StoreFront(props: {
+  storeData: StoreDataType,
+  region?: RegionCode,
+  language?: LanguageCode
 }) {
   return (
     <div className={style.self}>
@@ -52,9 +57,9 @@ function NightMarket(props: {
 }) {
   return (
     <div className={style['night-market']}>
-    <div className={style.headline}>
-      <div className={style['title']}>NIGHT MARKET</div>
-    </div>
+      <div className={style.headline}>
+        <div className={style['title']}>NIGHT MARKET</div>
+      </div>
       <div className={style.skins}>
 { props.bonusOffers.map( (bonusOffer) => {
     if(bonusOffer.Offer.Rewards.length === 1 && bonusOffer.Offer.Rewards[0].ItemID) {

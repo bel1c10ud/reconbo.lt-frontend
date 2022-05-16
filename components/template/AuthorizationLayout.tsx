@@ -14,6 +14,7 @@ import RegionSelect from '../RegionSelect';
 import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 import { RegionCode } from '../../options';
 import { i18nMessage } from '../../i18n';
+import Head from 'next/head';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -128,6 +129,10 @@ export default function AuthorizationLayout() {
   }
 
   return (
+  <>
+    <Head>
+      <title>{i18nMessage['LOGIN'][language]}</title>
+    </Head>
     <div className={style.self}>
       <div className={style.headline}>
         {i18nMessage['LOGIN'][language]}
@@ -172,5 +177,6 @@ export default function AuthorizationLayout() {
         </Button>
       </form>
     </div>
+  </>
   )
 }

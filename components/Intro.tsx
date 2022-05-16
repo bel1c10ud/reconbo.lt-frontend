@@ -7,7 +7,7 @@ export default function Intro(props: {
 }) {
   return (
     <div className={style.self}>
-      <div className={style.headline}>reconbo.lt</div>
+      <div className={style.headline}>Reconbo.lt</div>
       <div className={style.description}>{i18nMessage['YOU_CAN_CHECK_STORE'][props.language]}</div>
     </div>
   )

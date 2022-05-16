@@ -1,15 +1,20 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+
+import StoreFront from './template/StoreFront';
+import Callout, { CalloutBody, CalloutTitle } from './Callout';
+
 import { skinsDataAtom, contentTiersDataAtom, offersDataAtom } from '../recoil';
 import { StoreDataType } from '../type';
 import { RegionCode, LanguageCode } from '../options';
-import StoreLayout from './template/StoreLayout';
+import { i18nMessage } from '../i18n';
+import StoreFrontSkeleton from './template/StoreFrontSkeleton';
 
 
 export default function Store(props: {
   access_token: string,
-  region: RegionCode,
+  region: RegionCode|undefined,
   language: LanguageCode
 }) {
   const [storeData, setStoreData] = useState<Error|StoreDataType|undefined>(undefined);
@@ -19,15 +24,17 @@ export default function Store(props: {
   const [offersData, setOffersData] = useRecoilState(offersDataAtom);
 
   function initFetch() {
-    reqAsync(props.access_token, props.region)
-    .then(res => {
-      setStoreData(res.storefront);
-      setOffersData(res.offers);
-    })
-    .catch(error => {
-      setStoreData(error);
-      setOffersData(error);
-    });
+    if(props.region) {
+      reqAsync(props.access_token, props.region)
+      .then(res => {
+        setStoreData(res.storefront);
+        setOffersData(res.offers);
+      })
+      .catch(error => {
+        setStoreData(error);
+        setOffersData(error);
+      });
+    }
 
     reqSkins(props.language).then(res => setSkinsData(res.data.data)).catch(error => setSkinsData(error));
     reqContentTiers().then(res => setContentTiersData(res.data.data)).catch(error => setContentTiersData(error));
@@ -35,12 +42,33 @@ export default function Store(props: {
 
   useEffect(initFetch, [props.region, props.language])
 
-  if(storeData === undefined) {
-    return <div>loding...</div>
+  if(props.region === undefined) {
+    return (
+      <>
+        <Callout>
+          <CalloutTitle>ℹ️ {i18nMessage['PLEASE_SELECT_REGION'][props.language]}</CalloutTitle>
+          <CalloutBody>
+            {i18nMessage['IF_REGION_INCORRECT'][props.language]}
+          </CalloutBody>
+        </Callout>
+      </>
+    )
+  } else if(storeData === undefined) {
+    return <StoreFrontSkeleton />
   } else if(storeData.constructor === Error) {
     return <div>error</div>
   } else {
-    return <StoreLayout storeData={storeData as StoreDataType} />
+    return (
+      <>
+        <StoreFront storeData={storeData as StoreDataType} />
+        <Callout>
+          <CalloutTitle>ℹ️ {i18nMessage['IS_WRONG_STORE_INFORMATION'][props.language?? 'en-US']}</CalloutTitle>
+          <CalloutBody>
+            {i18nMessage['IF_REGION_INCORRECT'][props.language?? 'en-US']}
+          </CalloutBody>
+        </Callout>
+      </>
+    )
   }
 }
 

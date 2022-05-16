@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { authObjAtom, regionAtom, languageAtom } from './../../recoil';
 
@@ -11,8 +11,9 @@ import Store from '../Store';
 import Footer from '../Footer';
 import RegionSelect from '../RegionSelect';
 import LanguageSelect from '../LanguageSelect';
-import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 import { i18nMessage } from '../../i18n';
+
+import Head from 'next/head';
 
 export default function IndexLayout() {
   const router = useRouter();
@@ -21,45 +22,26 @@ export default function IndexLayout() {
   const region = useRecoilValue(regionAtom);
   const language = useRecoilValue(languageAtom);
 
-  if(authObj.access_token !== undefined && (authObj.expiry_timestamp !== undefined && authObj.expiry_timestamp > Date.now())) {
-    return (
-      <div className={style.self}>
-{ region && language ? 
-        <>
-          <Store access_token={authObj.access_token} region={region} language={language} />
-          <Callout>
-            <CalloutTitle>ℹ️ {i18nMessage['IS_WRONG_STORE_INFORMATION'][language]}</CalloutTitle>
-            <CalloutBody>
-              {i18nMessage['IF_REGION_INCORRECT'][language]}
-            </CalloutBody>
-          </Callout>
-        </>
-        : <Callout>
-            <CalloutTitle>ℹ️ Please select region and language</CalloutTitle>
-            <CalloutBody>
-              If the region setting is incorrect, the in-game store information cannot be fetched.
-            </CalloutBody>
-          </Callout>
-}        
+  return (
+    <>
+      <Head>
+        <title>Reconbo.lt</title>
+      </Head>
+      <div className={style['self']}>
+{ (authObj.access_token !== undefined && (authObj.expiry_timestamp !== undefined && authObj.expiry_timestamp > Date.now()))  ? 
+        <Store access_token={authObj.access_token} region={region} language={language ?? 'en-US'} />
+        : <Intro language={language?? 'en-US'} />
+}
         <div className={style['options']}>
           <RegionSelect />
           <LanguageSelect />
         </div>
-        <Button onClick={() => router.push('/api/clear')}>{i18nMessage['LOGOUT'][language?? 'en-US']}</Button>
+{ (authObj.access_token !== undefined && (authObj.expiry_timestamp !== undefined && authObj.expiry_timestamp > Date.now())) ? 
+        <Button onClick={() => router.push('/api/clear')}>{i18nMessage['LOGOUT'][language?? 'en-US']}</Button> 
+        : <Button onClick={() => router.push('/authorization')}>{i18nMessage['LOGIN'][language?? 'en-US']}</Button>
+}
         <Footer />
       </div>
-    )
-  } else {
-    return (
-      <div className={style.self}>
-        <Intro language={language?? 'en-US'} />
-        <div className={style['options']}>
-          <RegionSelect />
-          <LanguageSelect />
-        </div>
-        <Button onClick={() => router.push('/authorization')}>{i18nMessage['LOGIN'][language?? 'en-US']}</Button>
-        <Footer />
-      </div>
-    )
-  }
+    </>
+  )
 }
