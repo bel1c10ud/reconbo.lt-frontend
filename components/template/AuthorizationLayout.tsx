@@ -15,6 +15,7 @@ import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 import { RegionCode } from '../../options';
 import { i18nMessage } from '../../i18n';
 import Head from 'next/head';
+import LanguageSelect from '../LanguageSelect';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -176,6 +177,9 @@ export default function AuthorizationLayout() {
           {i18nMessage['CONFIRM'][language]}
         </Button>
       </form>
+      <div className={style['language']}>
+        <LanguageSelect />
+      </div>
     </div>
   </>
   )
