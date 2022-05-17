@@ -14,6 +14,11 @@ export const i18nMessage = {
     'ko-KR': '확인',
     'ja-JP': '確認'
   },
+  'ERROR': {
+    'en-US': 'ERROR',
+    'ko-KR': '에러',
+    'ja-JP': 'ERROR'
+  },
   'YOU_CAN_CHECK_STORE': {
     'en-US': 'You can check my store without launching the game.',
     'ko-KR': '게임을 실행하지 않고 내 상점을 확인할 수 있습니다.',

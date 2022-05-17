@@ -20,7 +20,7 @@ export function CalloutTitle(props: {
 }
 
 export function CalloutBody(props: {
-  children?: string
+  children?: string|string[]
 }) {
   return (
     <div className={style['callout-body']}>{props.children}</div>

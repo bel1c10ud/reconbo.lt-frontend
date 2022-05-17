@@ -56,7 +56,14 @@ export default function Store(props: {
   } else if(storeData === undefined) {
     return <StoreFrontSkeleton />
   } else if(storeData.constructor === Error) {
-    return <div>error</div>
+    return (
+      <>
+        <Callout>
+          <CalloutTitle>ℹ️ {i18nMessage['ERROR'][props.language]}</CalloutTitle>
+          <CalloutBody>Store Reqest {i18nMessage['ERROR'][props.language]}</CalloutBody>
+        </Callout>
+      </>
+    )
   } else {
     return (
       <>
@@ -148,11 +155,11 @@ async function reqSkins(language: LanguageCode) {
   return res;
 }
 
-async function reqOffers(access_token: string, entitlements: string) {
+async function reqOffers(access_token: string, entitlements: string, region: RegionCode) {
   try {
     const res = await axios({
       method: 'GET',
-      url: `/rewrite/riot-pvp/kr/offers`,
+      url: `/rewrite/riot-pvp/${region}/offers`,
       headers: {
         'X-Riot-Entitlements-JWT': entitlements,
         'Authorization': `Bearer ${access_token}`
@@ -184,7 +191,7 @@ async function reqAsync(access_token: string, region: RegionCode) {
   const puuid = await reqPuuid(access_token);
 
   const resStorefront = await reqStorefront(access_token, entitlements, puuid, region);
-  const resOffers = await reqOffers(access_token, entitlements);
+  const resOffers = await reqOffers(access_token, entitlements, region);
 
   return {
     storefront: resStorefront,
