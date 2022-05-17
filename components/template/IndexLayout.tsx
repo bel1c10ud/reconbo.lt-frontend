@@ -33,7 +33,6 @@ export default function IndexLayout() {
         : <Intro language={language?? 'en-US'} />
 }
         <div className={style['options']}>
-          <RegionSelect />
           <LanguageSelect />
         </div>
 { (authObj.access_token !== undefined && (authObj.expiry_timestamp !== undefined && authObj.expiry_timestamp > Date.now())) ? 
