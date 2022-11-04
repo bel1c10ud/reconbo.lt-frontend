@@ -1,4 +1,4 @@
-export type LanguageCode = 'en-US'|'ko-KR'|'ja-JP';
+import { LanguageCode, RegionCode } from "./type";
 
 export interface LanguageOption {
   value: LanguageCode,
@@ -20,7 +20,7 @@ export const languageOptions: LanguageOption[] = [
   }
 ];
 
-export type RegionCode = 'na'|'eu'|'ap'|'kr';
+
 
 export interface RegionOption {
   value: RegionCode,

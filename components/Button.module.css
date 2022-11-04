@@ -5,11 +5,16 @@
   padding: 0;
   margin: 0;
 
-  color: var(--white);
   font-weight: 700;
-  background-color: var(--primary-color);
+  color: var(--white);
+  background-color: var(--grey500);
   font-size: 1.125rem;
   min-width: 18rem;
+}
+
+.primary {
+  color: var(--white);
+  background-color: var(--primary-color);
 }
 
 .overlay {

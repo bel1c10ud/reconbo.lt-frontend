@@ -1,15 +1,7 @@
 .self {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+
 }
 
-.skins {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-}
 
 .headline {
   display: flex;
@@ -23,17 +15,14 @@
   margin: 1rem 0;
 }
 
-.title {
-}
-
 .countdown {
   text-align: right;
   font-size: 1.75rem;
   color: var(--grey400);
-  line-height: 1em;
 }
 
-.countdown .label {
-  font-size: .875rem;
-  margin-right: 0.25rem;
+.skins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
 }

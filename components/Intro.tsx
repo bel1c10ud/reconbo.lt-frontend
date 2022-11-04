@@ -1,6 +1,6 @@
 import style from './Intro.module.css';
 import { i18nMessage } from '../i18n';
-import { LanguageCode } from '../options';
+import { LanguageCode } from '../type';
 
 export default function Intro(props: {
   language: LanguageCode

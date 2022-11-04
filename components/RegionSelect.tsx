@@ -3,7 +3,8 @@ import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authObjAtom, regionAtom } from "../recoil";
 import Select from "./Select";
-import { regionOptions, RegionCode } from "../options";
+import type { RegionCode } from '../type';
+import { regionOptions} from "../options";
 
 export default function RegionSelect(props: {
   disabled?: boolean
@@ -31,7 +32,7 @@ async function reqRegion(regionCode: RegionCode) {
   try {
     const res = await axios({
       method: 'POST',
-      url: '/api/region',
+      url: '/rewrite/api/region',
       data: { 
         type: 'update',
         regionCode: regionCode 

@@ -1,18 +1,28 @@
 export const i18nMessage = {
   'LOGIN': {
-    'en-US': 'LOGIN',
+    'en-US': 'Login',
     'ko-KR': '로그인',
     'ja-JP': 'ログインする'
   },
   'LOGOUT': {
-    'en-US': 'LOGOUT',
+    'en-US': 'Logout',
     'ko-KR': '로그아웃',
     'ja-JP': 'ログアウト'
   },
   'CONFIRM': {
-    'en-US': 'CONFIRM',
+    'en-US': 'Confirm',
     'ko-KR': '확인',
     'ja-JP': '確認'
+  },
+  'CLOSE': {
+    'en-US': 'Close',
+    'ko-KR': '닫기',
+    'ja-JP': '閉じる'
+  },
+  'DETAIL': {
+    'en-US': 'Detail',
+    'ko-KR': '자세히',
+    'ja-JP': '詳細'
   },
   'ERROR': {
     'en-US': 'ERROR',
@@ -43,5 +53,20 @@ export const i18nMessage = {
     'en-US': 'Is there something wrong with the store information?',
     'ko-KR': '상점 정보에 이상이 있나요?',
     'ja-JP': '店舗情報に問題がありますか？'
+  },
+  'LOGIN_IS_REQUIRED': {
+    'en-US' : 'Login is required.',
+    'ko-KR' : '로그인이 필요합니다.',
+    'ja-JP' : 'ログインが必要です。',
+  },
+  'GET_ADDITIONAL_INFORMATION' : {
+    'en-US' : 'Login is required to get additional information.',
+    'ko-KR' : '추가 정보를 가져오려면 로그인이 필요합니다.',
+    'ja-JP' : '追加情報を取得するにはログインが必要です。',
+  },
+  'THIS_INFORMATION_MAY_NOT_BE_ACCURATE': {
+    'en-US' : 'This information may not be accurate.',
+    'ko-KR' : '이 정보는 정확하지 않을 수 있습니다.',
+    'ja-JP' : 'この情報は正確ではない可能性があります。',
   }
 }

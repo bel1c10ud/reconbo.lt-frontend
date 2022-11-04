@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRouter } from 'next/router';
 
@@ -6,16 +6,17 @@ import axios, { AxiosError } from 'axios';
 
 import style from './AuthorizationLayout.module.css';
 
-import { authObjAtom, regionAtom, languageAtom } from '../../recoil';
+import { authObjAtom, regionAtom, languageAtom, showSpinnerAtom } from '../../recoil';
 
 import Input from '../Input';
 import Button from '../Button';
 import RegionSelect from '../RegionSelect';
 import Callout, { CalloutTitle, CalloutBody } from '../Callout';
-import { RegionCode } from '../../options';
+import { RegionCode } from '../../type';
 import { i18nMessage } from '../../i18n';
 import Head from 'next/head';
 import LanguageSelect from '../LanguageSelect';
+import TextInput from '../TextInput';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -25,19 +26,34 @@ export default function AuthorizationLayout() {
   const [prevSession, setPrevSession] = useState('');
   const [code, setCode] = useState('');
 
-  const [process, setProcess] = useState<'AUTH'|'MULTI'>('AUTH')
+  const [process, setProcess] = useState<'AUTH'|'MULTI'>('AUTH');
   const [isProcess, setIsprocess] = useState(false);
+
+  const [showSpinner, setShowSpinner] = useRecoilState(showSpinnerAtom);
 
   const [authObj, setAuthObj] = useRecoilState(authObjAtom);
   const region = useRecoilValue(regionAtom);
   const language = useRecoilValue(languageAtom)?? 'en-US';
+
+  useEffect(() => {
+    const regionEl: HTMLSelectElement|null = document.querySelector('select[name="region"]');
+    const codeEl: HTMLInputElement|null = document.querySelector('input[name="code"]');
+
+    if(process === 'AUTH') regionEl?.focus();
+    else if(process === 'MULTI') codeEl?.focus();
+  }, [process])
+
+  useEffect(() => {
+    if(isProcess) setShowSpinner(true);
+    else setShowSpinner(false);
+  }, [isProcess])
 
   async function reqAuth(username: string, password: string, region: RegionCode) {
     setIsprocess(true);
     try {
       const res = await axios({
         method: 'POST',
-        url: '/api/auth',
+        url: `/rewrite/${region}/api/auth`,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -80,7 +96,7 @@ export default function AuthorizationLayout() {
     try {
       const res = await axios({
         method: 'POST',
-        url: '/api/auth',
+        url: `/rewrite/${region}/api/auth`,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -146,12 +162,12 @@ export default function AuthorizationLayout() {
           </CalloutBody>
         </Callout>
         <RegionSelect disabled={isProcess} />
-        <Input type='text' name='username' placeholder='Username' 
+        <TextInput type='text' name='username' placeholder='Username' 
         value={username} 
         onChange={e => setUsername(e.target.value)} 
         disabled={isProcess}
         />
-        <Input type='password' name='password' placeholder='Password' 
+        <TextInput type='password' name='Password' placeholder='Password' 
         value={password} 
         onChange={e => setPassword(e.target.value)}
         disabled={isProcess}

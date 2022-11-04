@@ -1,13 +1,4 @@
-interface RiotTokenResponseType {
-  'access_token': string,
-  "scope": string,
-  "iss": string,
-  "id_token": string,
-  "token_type": string,
-  "session_state": string,
-  "expires_in": string,
-  "requestedDate": string
-}
+import { RiotTokenResponseType, AuthObjType, RegionCode, ExternalAPI, LanguageCode } from './type';
 
 
 export function GetRiotTokenFromURI(uri: string): Partial<RiotTokenResponseType> {
@@ -34,4 +25,25 @@ export function cookieStrParser(str: string): object[] {
   })
 
   return cookies;
+}
+
+export function isValidAuth(authObj: Omit<AuthObjType, 'isValid'>): boolean {
+  const now = Date.now();
+
+  if(authObj.access_token === undefined) return false;
+  if(authObj.access_token.trim().length<1) return false;
+  if(authObj.expiry_timestamp === undefined) return false;
+  if(authObj.expiry_timestamp<= now) return false;
+
+  return true;
+}
+
+const swrFetcher = (key: any) => fetch(key).then(res => res.json());
+
+export const swr = {
+  fetcher: swrFetcher,
+  options: {
+    revalidateOnFocus: false,
+  },
+  test: () => {}
 }

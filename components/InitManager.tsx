@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { RegionCode, RegionOption, regionOptions } from '../options';
+import type { RegionCode } from '../type';
+import { RegionOption, regionOptions, languageOptions } from '../options';
 
-import { authObjAtom, regionAtom } from '../recoil';
+import { authObjAtom, languageAtom, regionAtom } from '../recoil';
 
-import type { CookieType } from '../type';
+import type { CookieType, LanguageCode } from '../type';
+import { useAuth } from '../hooks';
 
 export default function InitManager(props: {
   cookies: CookieType[];
 }) {
   const [authObj, setAuthObj] = useRecoilState(authObjAtom);
   const [region, setRegion] = useRecoilState(regionAtom);
+  const [language, setLanguage] = useRecoilState(languageAtom);
 
   useEffect(function initAuth() {
     const accessTokenCookie: CookieType|undefined = props.cookies && props.cookies.find(cookie => cookie.name === 'access_token');
@@ -35,6 +38,30 @@ export default function InitManager(props: {
       setRegion(regionCodeCookie.value as RegionCode)
     }
   }, []);
+
+  useEffect(function initLang() {
+    const langs = languageOptions.map(lang => lang.value);
+    const localLang: string|undefined|null = window.localStorage.getItem('language');
+    const clientLang = navigator.language;
+
+    if((localLang !== undefined && localLang !== null) && langs.find(lang => lang === localLang)) {
+      setLanguage(localLang as LanguageCode);
+    } else {
+      if(navigator) {
+        if(clientLang) {
+          if(langs.find(lang => lang === clientLang)) {
+            setLanguage(clientLang as LanguageCode)
+          } else {
+            setLanguage('en-US');
+          }
+        } else {
+          setLanguage('en-US');
+        }
+      } else {
+        setLanguage('en-US');
+      }
+    }
+  }, [])
 
   return null
 }

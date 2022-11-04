@@ -1,15 +1,13 @@
+import '../styles/globals.css'
 import App from 'next/app'
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { RecoilRoot} from 'recoil';
-
-import '../styles/globals.css'
-import { cookieStrParser } from '../utility';
-
 import type { AppContext, AppProps } from 'next/app'
-import type { CookieType } from './../type';
+import type { CookieType } from '../type';
 import InitManager from '../components/InitManager';
-import PopupLayer from '../components/PopupLayer';
-import { useEffect } from 'react';
+import Overlay from '../components/Overlay';
+import { cookieStrParser } from '../utility';
 import * as gtag from './../gtag';
 
 interface CustomAppProps extends AppProps{ 
@@ -33,7 +31,7 @@ function MyApp({ Component, pageProps, cookies }: CustomAppProps) {
     <RecoilRoot>
       <InitManager cookies={cookies} />
       <Component {...pageProps} />
-      <PopupLayer />
+      <Overlay />
     </RecoilRoot>
   )
 }

@@ -1,0 +1,66 @@
+.self {
+  width: calc(100% / 2 - 0.25rem);
+  max-width: calc(100% / 2);
+  overflow: hidden;
+  background-color: var(--grey50);
+}
+
+.ratio {
+  position: relative;
+  width: 100%;
+  padding-top: 120%;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: .75rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  font-weight: 500;
+  line-height: 1.25em;
+  color: var(--white);
+  background-color: var(--blackOpacity400);
+}
+
+.name {
+  height: 1rem;
+  margin: .125rem 0;
+  width: 10rem;
+  background-color: var(--grey400);
+}
+
+.value {
+  height: .875rem;
+  margin: calc((1.25rem - 0.875rem) / 2) 0;
+  width: 5rem;
+  background-color: var(--grey400);
+}

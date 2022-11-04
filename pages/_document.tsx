@@ -1,4 +1,3 @@
-import { NEXT_DATA } from 'next/dist/shared/lib/utils';
 import { Html, Head, Main, NextScript, DocumentProps } from 'next/document'
 import { GA_TRACKING_ID } from '../gtag'
 

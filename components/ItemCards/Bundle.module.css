@@ -1,0 +1,67 @@
+.self {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton {
+  background-color: var(--grey200);
+}
+
+.ratio {
+  width: 100%;
+  height: 0px;
+  margin-top: 48%;
+}
+
+.wrap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.self img {
+  max-width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: var(--global-padding);
+  color: var(--white);
+  text-shadow: 0 0 2px black;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 900;
+}
+
+.sub-title {
+  /* font-weight: 400; */
+}
+
+.extra-desc {
+  font-size: 0.75rem;
+}
+
+.detail-button {
+  position: absolute;
+  bottom: var(--global-padding);
+  right: var(--global-padding);
+
+  border: 0;
+  border-radius: 0;
+  padding: .75rem 1.75rem;
+
+  /* font-size: 1.125rem; */
+  font-weight: 900;
+  line-height: 1em;
+
+  color: var(--white);
+  background-color: var(--primary-color);
+
+  cursor: pointer;
+}

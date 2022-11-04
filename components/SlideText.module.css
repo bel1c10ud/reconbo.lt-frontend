@@ -1,0 +1,27 @@
+.self {
+  overflow-x: hidden;
+}
+
+.text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.text[data-slide='true'] {
+  animation-name: slide;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-duration: 10s;
+  animation-delay: 2s;
+}
+
+@keyframes slide {
+  0% {
+    margin-left: 0px;
+  }
+
+  20% {
+    margin-left: 0px;
+  }
+}

@@ -1,26 +1,25 @@
+import style from './IndexLayout.module.css';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-
-import { authObjAtom, regionAtom, languageAtom } from './../../recoil';
-
-import style from './IndexLayout.module.css';
-
+import { useAuth } from '../../hooks';
 import Intro from '../Intro';
-import Button from '../Button';
-import Store from '../Store';
-import Footer from '../Footer';
-import RegionSelect from '../RegionSelect';
 import LanguageSelect from '../LanguageSelect';
-import { i18nMessage } from '../../i18n';
-
+import Footer from '../Footer';
 import Head from 'next/head';
+import { languageAtom } from './../../recoil';
+import LoginButton from '../LoginButton';
 
 export default function IndexLayout() {
   const router = useRouter();
+  const auth = useAuth();
+  const lang = useRecoilValue(languageAtom);
 
-  const authObj = useRecoilValue(authObjAtom);
-  const region = useRecoilValue(regionAtom);
-  const language = useRecoilValue(languageAtom);
+  useEffect(() => {
+    if(auth.isValid) {
+      router.push('/store');
+    }
+  }, [auth.isValid])
 
   return (
     <>
@@ -28,17 +27,11 @@ export default function IndexLayout() {
         <title>Reconbo.lt</title>
       </Head>
       <div className={style['self']}>
-{ (authObj.access_token !== undefined && (authObj.expiry_timestamp !== undefined && authObj.expiry_timestamp > Date.now()))  ? 
-        <Store access_token={authObj.access_token} region={region} language={language ?? 'en-US'} />
-        : <Intro language={language?? 'en-US'} />
-}
+        <Intro language={lang?? 'en-US'} />
         <div className={style['options']}>
           <LanguageSelect />
         </div>
-{ (authObj.access_token !== undefined && (authObj.expiry_timestamp !== undefined && authObj.expiry_timestamp > Date.now())) ? 
-        <Button onClick={() => router.push('/api/clear')}>{i18nMessage['LOGOUT'][language?? 'en-US']}</Button> 
-        : <Button onClick={() => router.push('/authorization')}>{i18nMessage['LOGIN'][language?? 'en-US']}</Button>
-}
+        <LoginButton />
         <Footer />
       </div>
     </>

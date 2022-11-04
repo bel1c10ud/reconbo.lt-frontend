@@ -1,0 +1,31 @@
+.self {
+  /* display: flex; */
+}
+
+.buttons {
+  display: flex;
+  margin-top: .5rem;
+}
+
+.prev-button, .next-button, .index {
+  appearance: none;
+  border: 0;
+  background: 0;
+  margin: 0;
+  padding: 0;
+
+  padding: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--grey900);
+}
+
+.prev-button, .next-button {
+  color: var(--white);
+  background-color: var(--grey400);
+}
+
+.index {
+  background-color: var(--grey200);
+  padding: 1rem 2rem;
+}
