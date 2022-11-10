@@ -13,7 +13,7 @@ export default function VideoPopup(props : {
   return (
     <div className={style['self']}>
 { isPopup && <video src={props.src} controls onClick={(e) => e.stopPropagation()} /> }
-      <Button onClick={() => setIsPopup(false)}>{i18nMessage['CLOSE'][lang ?? 'en-US']}</Button>
+      <Button large secondary onClick={() => setIsPopup(false)}>{i18nMessage['CLOSE'][lang ?? 'en-US']}</Button>
     </div>
   )
 }

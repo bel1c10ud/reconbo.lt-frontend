@@ -148,7 +148,7 @@ export default function AuthorizationLayout() {
   return (
   <>
     <Head>
-      <title>{i18nMessage['LOGIN'][language]}</title>
+      <title>Reconbo.lt | {i18nMessage['LOGIN'][language]}</title>
     </Head>
     <div className={style.self}>
       <div className={style.headline}>
@@ -175,6 +175,7 @@ export default function AuthorizationLayout() {
         <Button 
         onClick={onClickAuth} 
         disabled={isProcess || username.trim().length === 0 || password.trim().length === 0 || region === undefined}
+        primary large
         >
            {i18nMessage['LOGIN'][language]}
         </Button>
@@ -189,6 +190,7 @@ export default function AuthorizationLayout() {
         />
         <Button onClick={onClickMulti} 
         disabled={prevSession.trim().length === 0 || code.trim().length === 0 }
+        primary large
         >
           {i18nMessage['CONFIRM'][language]}
         </Button>

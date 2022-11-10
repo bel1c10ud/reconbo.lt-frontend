@@ -4,6 +4,7 @@ import Callout, { CalloutTitle } from './Callout';
 import { useRecoilValue } from 'recoil';
 import { languageAtom } from '../recoil';
 import { i18nMessage } from './../i18n';
+import Button from './Button';
 
 interface DetailPriceProps {
   data?: { 
@@ -20,14 +21,14 @@ export default function DetailPrice(props: DetailPriceProps) {
       <IsNotAccurate />
   ) : null
 }
-      <div className={style['self']}>
+      <Button secondary large>
 { props.data ? (
     `${props.data.value} ${props.data.currencyType}`
   ) : (
     '...'
   )
 }
-      </div>
+      </Button>
     </div>
   )
 }

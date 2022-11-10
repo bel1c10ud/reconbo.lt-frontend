@@ -123,8 +123,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  padding: .5rem;
-  font-weight: 500;
-  color: var(--white);
-  background-color: var(--blackOpacity600);
+  margin: 1rem 1.125rem;
+  font-weight: 600;
+  color: var(--grey400);
 }

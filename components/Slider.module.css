@@ -16,16 +16,21 @@
 
   padding: 1rem;
   font-family: inherit;
-  font-weight: 500;
-  color: var(--grey900);
+  font-weight: 700;
+  color: var(--grey600);
 }
 
 .prev-button, .next-button {
   color: var(--white);
-  background-color: var(--grey400);
+  background-color: var(--grey300);
 }
 
 .index {
   background-color: var(--grey200);
   padding: 1rem 2rem;
+}
+
+.index .divider {
+  font-size: 0.5rem;
+  margin: 0 .25rem;
 }

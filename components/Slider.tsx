@@ -41,7 +41,7 @@ export default function Slider(props: SliderProps) {
       </div>
       <div className={style['buttons']}>
         <button className={style['prev-button']} onClick={() => updateIndex('prev', length)}>◂</button>
-        <button className={style['index']}>{index+1} / {length}</button>
+        <button className={style['index']}>{index+1} <span className={style['divider']}>/</span> {length}</button>
         <button className={style['next-button']} onClick={() => updateIndex('next', length)}>▸</button>
       </div>
     </div>

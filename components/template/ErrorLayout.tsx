@@ -29,7 +29,7 @@ export default function ErrorLayout(props: ErrorLayoutProps) {
           <div className={style['stack-body']}>{props.error.stack ?? '...'}</div>
         </div>
 ): null }
-        <Button onClick={() => { router.push('/')}}>{i18nMessage['CLOSE'][lang?? 'en-US']}</Button>
+        <Button primary large onClick={() => { router.push('/')}}>{i18nMessage['CLOSE'][lang?? 'en-US']}</Button>
       </div>
     </>
   )

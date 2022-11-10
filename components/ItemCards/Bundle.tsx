@@ -8,6 +8,7 @@ import { ClientAPI, ExternalAPI } from '../../type';
 import style from './Bundle.module.css';
 import { useClientAPI, useExternalAPI } from '../../hooks';
 import { i18nMessage } from '../../i18n';
+import Button from '../Button';
 
 interface BundleComponentProps {
   uuid: string
@@ -68,10 +69,12 @@ function BundleLayout(props: BundleLayoutCompomentProps) {
           <div className={style['extra-desc']}>{props.externalAPIBundleData.extraDescription}</div>
 ) : null}
 { props.detailButton && (
-          <button className={style['detail-button']} 
-          onClick={() => goBundleDetail(props.externalAPIBundleData.uuid)}>
-            { i18nMessage['DETAIL'][lang?? 'en-US'] }
-          </button>
+            <div className={style['detail-button']}>
+              <Button secondary small
+              onClick={() => goBundleDetail(props.externalAPIBundleData.uuid)}>
+                { i18nMessage['DETAIL'][lang?? 'en-US'] }
+              </Button>
+            </div>
 )}
 
         </div>

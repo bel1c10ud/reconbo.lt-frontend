@@ -15,8 +15,8 @@ export default function LoginButton() {
   return (
     <>
 { auth.isValid ? 
-      <Button onClick={() => router.push(`/rewrite/${region ?? 'kr'}/api/clear`)}>{i18nMessage['LOGOUT'][language?? 'en-US']}</Button> 
-    : <Button onClick={() => router.push('/authorization')}>{i18nMessage['LOGIN'][language?? 'en-US']}</Button>
+      <Button primary large onClick={() => router.push(`/rewrite/${region ?? 'kr'}/api/clear`)}>{i18nMessage['LOGOUT'][language?? 'en-US']}</Button> 
+    : <Button primary large onClick={() => router.push('/authorization')}>{i18nMessage['LOGIN'][language?? 'en-US']}</Button>
 }
     </>
   )

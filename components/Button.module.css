@@ -7,33 +7,43 @@
 
   font-weight: 700;
   color: var(--white);
-  background-color: var(--grey500);
-  font-size: 1.125rem;
-  min-width: 18rem;
+  border: 0.25rem solid var(--whiteOpacity300);
 }
 
-.primary {
-  color: var(--white);
-  background-color: var(--primary-color);
-}
+.large { font-size: 1.125rem; }
+.medium { font-size: 1rem; }
+.small { font-size: .875rem; }
 
-.overlay {
+.self { background-color: var(--grey400); }
+.self.primary { background-color: var(--primary-color); }
+.self.secondary { background-color: var(--secondary-color); }
+.self:disabled { background-color: var(--grey300); }
+
+.self:hover { cursor: pointer; }
+.self:disabled:hover { cursor: inherit; }
+
+.self .overlay {
   position: absolute;  
   width: 100%;
   height: 100%;
 }
-
-.label {
-  position: relative;
-  padding: 1.125rem 1.75rem;
-}
-
 
 .self:hover .overlay {
   transition: 250ms ease-in-out;
   background-color: var(--blackOpacity100);
 }
 
-.self:disabled .overlay {
-  background-color: var(--grey300);
+.self:disabled:hover .overlay {
+  background-color: inherit;
 }
+
+.self .label {
+  position: relative;
+  padding: .75rem 2.25rem ;
+}
+
+.large .label { padding: 1rem 3rem; }
+.medium .label { padding: .75rem 2.25rem; }
+.small .label { padding: .5rem 1.5rem; }
+
+
