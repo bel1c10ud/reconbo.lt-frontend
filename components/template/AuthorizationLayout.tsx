@@ -68,6 +68,7 @@ export default function AuthorizationLayout() {
       if(res.data.type === 'response') {
         if(res.data.authObj['access_token']) { 
           setAuthObj({
+            isInit: true,
             access_token: res.data.authObj['access_token'],
             expiry_timestamp: res.data.authObj['expiry_timestamp']
           })
@@ -110,6 +111,7 @@ export default function AuthorizationLayout() {
 
       if(res.data.type === 'response' && res.data.authObj['access_token']) {
         setAuthObj({
+          isInit: true,
           access_token: res.data.authObj['access_token'],
           expiry_timestamp: res.data.authObj['expiry_timestamp']
         })

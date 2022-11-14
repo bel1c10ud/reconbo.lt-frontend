@@ -52,8 +52,8 @@
 }
 
 .self[data-item-type='skin'][data-category='melee' i]  .image > img {
-  width: 80%; 
-  transform: none;
+  width: 130%; 
+  transform: rotate(65deg);
 }
 
 .self[data-item-type='spray'] .image > img,

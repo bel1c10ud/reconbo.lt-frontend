@@ -3,7 +3,7 @@ import { useMemo, MouseEventHandler } from 'react';
 import style from './Button.module.css';
 
 export default function Button(props: {
-  children?: string,
+  children?: any|any[],
   className?: string,
   onClick?: MouseEventHandler<HTMLButtonElement>,
   disabled?: boolean,

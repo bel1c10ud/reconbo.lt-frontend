@@ -14,10 +14,10 @@ export default function StorePage() {
   const clientAPIStore = useClientAPI<ClientAPI.Store>('store');
 
   useEffect(() => { // redirect root
-    if(!auth.isValid) {
-      router.push('/');
+    if(auth.isInit && !auth.isValid) {
+      router.push('/');console.log(auth)
     }
-  }, [auth.isValid, router])
+  }, [auth.isValid])
 
 
   if(clientAPIStore.error) return <ErrorLayout error={clientAPIStore.error} />

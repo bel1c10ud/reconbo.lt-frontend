@@ -36,7 +36,6 @@ export function RequiredLoginCallout() {
   return (
     <Callout>
       <CalloutTitle>ℹ️ { i18nMessage['LOGIN_IS_REQUIRED'][lang ?? 'en-US'] }</CalloutTitle>
-      <CalloutBody>{ i18nMessage['GET_ADDITIONAL_INFORMATION'][lang ?? 'en-US'] }</CalloutBody>
     </Callout>
   )
 }

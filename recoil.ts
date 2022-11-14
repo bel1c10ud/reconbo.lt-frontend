@@ -16,6 +16,7 @@ export const regionAtom = atom<undefined|RegionCode>({
 export const authObjAtom = atom<Omit<AuthObjType, 'isValid'>>({
   key: 'authObjAtom',
   default: {
+    isInit: false,
     access_token: undefined,
     expiry_timestamp: undefined
   }

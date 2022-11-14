@@ -1,0 +1,51 @@
+.self {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 37.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--global-padding);
+  gap: 1rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1.5em;
+  margin: 0;
+}
+
+.tab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.tab > div {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--grey400);
+  border-bottom: 3px solid rgba(255, 255, 255, 0);
+  padding: .25rem;
+}
+
+.tab > div[data-selected='true'] {
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.items-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.limit {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}

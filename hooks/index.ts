@@ -173,8 +173,8 @@ export function useAuth() {
   const authObj = useRecoilValue(authObjAtom);
 
   const obj = {
+    ...authObj,
     isValid: isValidAuth(authObj),
-    ...authObj
   }
 
   return obj

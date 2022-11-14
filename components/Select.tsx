@@ -43,7 +43,6 @@ export default function Select(props: {
       required={props.required}
       >
         <Placeholder label={props.placeholder} />
-        {/* <option value=''>-</option> */}
         <Options data={props.options} />
       </select>
       <div className={style['overlay']}>

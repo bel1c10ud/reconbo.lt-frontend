@@ -26,9 +26,12 @@ export default function InitManager(props: {
       && (expiryTimestampCookie && Number(expiryTimestampCookie.value) > Date.now())
     ) {
       setAuthObj({
+        isInit: true,
         access_token: accessTokenCookie.value,
         expiry_timestamp: Number(expiryTimestampCookie.value)
       })
+    } else {
+      setAuthObj({ ...authObj, isInit: true });
     }
 
     if(

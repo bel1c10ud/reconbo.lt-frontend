@@ -29,6 +29,16 @@ export const i18nMessage = {
     'ko-KR': '에러',
     'ja-JP': 'ERROR'
   },
+  'GO_TO_STORE': {
+    'en-US' : 'Go to Store',
+    'ko-KR' : '상점으로 이동',
+    'ja-JP' : '店に行きます',
+  },
+  'LIST_OF_ITEMS': {
+    'en-US' : 'List of Items',
+    'ko-KR' : '아이템 목록',
+    'ja-JP' : 'アイテムリスト',
+  },
   'YOU_CAN_CHECK_STORE': {
     'en-US': 'You can check my store without launching the game.',
     'ko-KR': '게임을 실행하지 않고 내 상점을 확인할 수 있습니다.',

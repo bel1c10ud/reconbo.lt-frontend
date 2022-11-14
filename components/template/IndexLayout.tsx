@@ -1,5 +1,4 @@
 import style from './IndexLayout.module.css';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { useAuth } from '../../hooks';
@@ -9,17 +8,14 @@ import Footer from '../Footer';
 import Head from 'next/head';
 import { languageAtom } from './../../recoil';
 import LoginButton from '../LoginButton';
+import Hr from '../Hr';
+import { RequiredLoginCallout } from '../Callout';
+import { i18nMessage } from '../../i18n';
 
 export default function IndexLayout() {
   const router = useRouter();
   const auth = useAuth();
   const lang = useRecoilValue(languageAtom);
-
-  useEffect(() => {
-    if(auth.isValid) {
-      router.push('/store');
-    }
-  }, [auth.isValid])
 
   return (
     <>
@@ -28,6 +24,19 @@ export default function IndexLayout() {
       </Head>
       <div className={style['self']}>
         <Intro language={lang?? 'en-US'} />
+{ auth.isInit && auth.isValid ? (
+      <>
+        <div className={style['anchors']}>
+          <div className={style['anchor']} onClick={() => router.push('/store')}>{'> '}{i18nMessage['GO_TO_STORE'][lang ?? 'en-US']}</div>
+          <div className={style['anchor']} onClick={() => router.push('/items')}>{'> '}{i18nMessage['LIST_OF_ITEMS'][lang ?? 'en-US']}</div>
+        </div>
+        <Hr />
+      </>
+        ) : (
+      <>
+        <RequiredLoginCallout />
+      </>
+)}
         <div className={style['options']}>
           <LanguageSelect />
         </div>

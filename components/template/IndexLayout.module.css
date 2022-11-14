@@ -19,3 +19,19 @@
   gap: 0.5rem;
   flex-direction: column;
 }
+
+.anchors {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.anchor {
+  font-size: 1.125rem;
+  font-weight: 900;
+  color: var(--anchor-color);
+}
+
+.anchor:hover {
+  cursor: pointer;
+}

@@ -5,6 +5,7 @@ export interface CookieType {
 }
 
 export interface AuthObjType {
+  isInit?: boolean,
   access_token: undefined|string
   expiry_timestamp: undefined|number
   isValid: boolean
@@ -12,15 +13,6 @@ export interface AuthObjType {
 
 // External API(valorant-api.com) Response Data Type
 export namespace ExternalAPI {
-  export enum Key {
-    'skins',
-    'contentTiers',
-    'sprays',
-    'playerTitles',
-    'playerCards',
-    'bundles',
-    'buddies',
-  }
 
   export enum Endpoint {
     skins = 'https://valorant-api.com/v1/weapons/skins',
@@ -29,7 +21,8 @@ export namespace ExternalAPI {
     playerTitles = 'https://valorant-api.com/v1/playertitles',
     playerCards = 'https://valorant-api.com/v1/playercards',
     bundles = 'https://valorant-api.com/v1/bundles',
-    buddies = 'https://valorant-api.com/v1/buddies'
+    buddies = 'https://valorant-api.com/v1/buddies',
+    weapons = 'https://valorant-api.com/v1/weapons'
   }
 
   export interface Response<T> {
@@ -167,7 +160,64 @@ export namespace ExternalAPI {
     uuid: string,
     verticalPromoImage: string,
   }
+
+  export interface ShopData {
+    cost: number,
+    category: string,
+    categoryText: string,
+    gridPosition: any,
+    canBeTrashed: Boolean,
+    image: string|null,
+    newImage: string|null,
+    newImage2: string|null,
+    assetPath: string
+  }
+
+  export interface WeaponADSStats {
+    zoomMultiplier: number,
+    fireRate: number,
+    runSpeedMultiplier: number,
+    burstCount: number,
+    firstBulletAccuracy: number
+  }
+
+  export interface WeaponDamageRange {
+    rangeStartMeters: number,
+    rangeEndMeters: number,
+    headDamage: number,
+    bodyDamage: number,
+    legDamage: number,
+  }
+
+  export interface WeaponStats {
+    fireRate: number,
+    magazineSize: number,
+    runSpeedMultiplier:number,
+    equipTimeSeconds: number,
+    reloadTimeSeconds: number,
+    firstBulletAccuracy: number,
+    shotgunPelletCount: number,
+    wallPenetration: string,
+    feature: string,
+    fireMode: string|null,
+    altFireType: string,
+    adsStats: WeaponADSStats,
+    altShotgunStats: string|null,
+    airBurstStats: string|null,
+    damageRanges: WeaponDamageRange[]
+  }
   
+  export interface Weapon {
+    uuid: string,
+    displayName: string,
+    category: string,
+    defaultSkinUuid: string,
+    killStreamIcon: string,
+    assetPath: string,
+    weaponStats: WeaponStats,
+    shopData: ShopData,
+    skins: Skin[]
+  }
 }
 
 // Valorant Client API Data Type
