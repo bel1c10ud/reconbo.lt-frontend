@@ -36,16 +36,35 @@
 }
 
 .items-wrap {
+  --items-gap: 0.75rem;
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: var(--items-gap);
 }
 
-.limit {
+.items-wrap > div {
+  --count: 2;
+  width: calc((100% - (var(--items-gap) * (var(--count) - 1))) / var(--count));
+}
+
+@media (min-width: 45rem) {
+  .items-wrap > div { --count: 3; }
+}
+
+@media (min-width: 60rem) {
+  .items-wrap > div { --count: 4; }
+}
+
+.items-wrap > .limit {
   display: flex;
   flex-direction: column;
   gap: .5rem;
   width: 100%;
-  justify-content: center;
+  align-items: center;
   margin-top: 1rem;
+}
+
+.limit > button {
+  width: calc(37.5rem - (var(--global-padding) * 2));
+  max-width: 100%;
 }

@@ -17,6 +17,7 @@ import LanguageSelect from '../LanguageSelect';
 import LoginButton from '../LoginButton';
 import Footer from '../Footer';
 import { useRouter } from 'next/router';
+import Bleed from '../Bleed';
 
 const categoryOption: { label: string, value: keyof typeof ExternalAPI.Endpoint }[] = [
   { label: 'Weapon Skin', value: 'weapons' }, 
@@ -38,12 +39,12 @@ interface ItemsLayoutProps {
   limit?: number
 }
 
-export default function ItemsLayout(props: ItemsLayoutProps) {console.log(props)
+export default function ItemsLayout(props: ItemsLayoutProps) {
   const router = useRouter();
 
   const [itemType, setItemType] = useState(() => props.type ? props.type : categoryOption[0].value);
   const [filter, setFilter] = useState(props.filter ?? 'all');
-  const [pageSize, setPageSize] = useState(6);
+  const [pageSize, setPageSize] = useState(12);
   const [limit, setLimit] = useState(props.limit && props.limit>pageSize ? props.limit: pageSize);
 
   const filterRegex = useMemo(() => {
@@ -132,22 +133,24 @@ export default function ItemsLayout(props: ItemsLayoutProps) {console.log(props)
         />
 ):null}
         <Hr />
-        <div className={style['items-wrap']}>
+        <Bleed>
+          <div className={style['items-wrap']}>
 { data.error ? <ItemCardError /> : null }
 { data.isLoading ? Array.apply(null, Array(limit)).map((el, i) => <ItemCardSkeleton key={i} />) : null }
 { data.data ? data.data.slice(0, limit).map(data => {
-  if(itemType === 'weapons') return <Skin key={data.uuid} uuid={data.uuid} />
-  if(itemType === 'sprays') return <Spray key={data.uuid} uuid={data.uuid} />
-  if(itemType === 'buddies') return <Buddy key={data.uuid} uuid={data.uuid} />
-  if(itemType === 'playerCards') return <PlayerCard key={data.uuid} uuid={data.uuid} />
-  if(itemType === 'playerTitles') return <PlayerTitle key={data.uuid} uuid={data.uuid} />
+    if(itemType === 'weapons') return <Skin key={data.uuid} uuid={data.uuid} />
+    if(itemType === 'sprays') return <Spray key={data.uuid} uuid={data.uuid} />
+    if(itemType === 'buddies') return <Buddy key={data.uuid} uuid={data.uuid} />
+    if(itemType === 'playerCards') return <PlayerCard key={data.uuid} uuid={data.uuid} />
+    if(itemType === 'playerTitles') return <PlayerTitle key={data.uuid} uuid={data.uuid} />
 }) : null }
 { (data.data?.length ?? 0) > limit ? (
-          <div className={style['limit']}>
-            <Button onClick={() => setLimit(limit+pageSize)} large>{limit} / {data.data?.length ?? '?'}</Button>
-          </div>
+            <div className={style['limit']}>
+              <Button onClick={() => setLimit(limit+pageSize)} large>{limit} / {data.data?.length ?? '?'}</Button>
+            </div>
 ) : null }
-        </div>
+          </div>
+        </Bleed>
         <Hr />
         <LanguageSelect />
         <LoginButton />

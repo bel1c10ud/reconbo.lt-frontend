@@ -118,8 +118,7 @@ export default function AuthorizationLayout() {
         router.push('/');
       }
 
-    } catch(error) {        
-      console.log((error as AxiosError).response);
+    } catch(error) {
       alert((error as AxiosError).response?.data.message);
       setPrevSession('');
       if(window.confirm("2fa fail, try again?")) {

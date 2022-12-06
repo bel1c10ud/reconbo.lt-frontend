@@ -76,3 +76,7 @@
   gap: .5rem;
 }
 
+.bundle-components > div {
+  width: calc((100% - 0.5rem) / 2);
+}
+

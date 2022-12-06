@@ -39,7 +39,6 @@ export default function SlideText(props: SlideTextProps) {
     const callback = () => {
       if(!timer) {
         timer = setTimeout(() => { 
-          console.log('resize');
           setResize(Date.now());
           timer = null 
         }, 500)

@@ -1,6 +1,9 @@
 .self {
-  width: calc(100% / 2 - 0.25rem);
-  max-width: calc(100% / 2);
+  /* display: flex;
+  flex-direction: column;
+  flex: auto auto auto;
+  align-self: flex-start; */
+  width: 15rem;
   overflow: hidden;
   background-color: var(--grey50);
 }

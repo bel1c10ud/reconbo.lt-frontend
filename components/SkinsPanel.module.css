@@ -26,3 +26,7 @@
   flex-wrap: wrap;
   gap: .5rem;
 }
+
+.skins > div {
+  width: calc((100% - 0.5rem) / 2);
+}
