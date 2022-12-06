@@ -15,8 +15,11 @@ import LoginButton from '../LoginButton';
 import Hr from '../Hr';
 import { useMemo } from 'react';
 
-import DetailPrice from '../DetailPrice';
 import ItemCardSkeleton from '../ItemCards/ItemCardSkeleton';
+import ItemCardError from '../ItemCards/ItemCardError';
+import { IsNotAccurate } from '../Callout';
+import Price from '../Price';
+import Button from '../Button';
 
 interface BundleDetailLayoutProps {
   auth: AuthObjType,
@@ -63,7 +66,12 @@ export default function BundleDetailLayout(props: BundleDetailLayoutProps) {
         <div className={style['bundle-info']}>
           <div className={style['bundle-info-title']}>PRICE</div>
 { props.auth.isValid ? (
-            <DetailPrice data={price} isNotAccurate/>
+          <>
+            <IsNotAccurate />
+            <Button className={style['bundle-price']} secondary medium>
+              <Price bundleOffers={props.clientAPIBundleData?.Items} />
+            </Button>
+          </>
         ) : (
             <RequiredLoginCallout />
 ) }
@@ -107,11 +115,7 @@ function BundleComponents(props: BundleComponentsProps) {
         let bundleOffer = undefined;
 
         if(item.hasOwnProperty('BasePrice') && item.hasOwnProperty('DiscountPercent') && item.hasOwnProperty('DiscountPercent')) {
-          bundleOffer = {
-            BasePrice: item.BasePrice,
-            DiscountPercent: item.DiscountPercent,
-            DiscountedPrice: item.DiscountedPrice,
-          };
+          bundleOffer = item;
         }
 
         switch(item.Item.ItemTypeID) {
@@ -126,41 +130,11 @@ function BundleComponents(props: BundleComponentsProps) {
           case 'de7caa6b-adf7-4588-bbd1-143831e786c6':
             return <PlayerTitle key={item.Item.ItemID} uuid={item.Item.ItemID} />
           default:
-            return <div key={item.Item.ItemID}>unkown</div>
+            return <ItemCardError key={item.Item.ItemID} error={new Error('Unknown type item')} />
         }
 }) }
       </div>
     )
   }
-//   return (
-//     <div className={style['bundle-components-items']}>
-// { props.clientAPIBundleData.Items.map(item => {
-//   let bundleOffer = undefined;
-
-//   if(item.hasOwnProperty('BasePrice') && item.hasOwnProperty('DiscountPercent') && item.hasOwnProperty('DiscountPercent')) {
-//     bundleOffer = {
-//       BasePrice: item.BasePrice,
-//       DiscountPercent: item.DiscountPercent,
-//       DiscountedPrice: item.DiscountedPrice,
-//     };
-//   }
-
-//   switch(item.Item.ItemTypeID) {
-//     case 'e7c63390-eda7-46e0-bb7a-a6abdacd2433':
-//       return <Skin key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-//     case 'd5f120f8-ff8c-4aac-92ea-f2b5acbe9475':
-//       return <Spray key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-//     case 'dd3bf334-87f3-40bd-b043-682a57a8dc3a':
-//       return <Buddy key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-//     case '3f296c07-64c3-494c-923b-fe692a4fa1bd':
-//       return <PlayerCard key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-//     case 'de7caa6b-adf7-4588-bbd1-143831e786c6':
-//       return <PlayerTitle key={item.Item.ItemID} uuid={item.Item.ItemID} />
-//     default:
-//       return <div key={item.Item.ItemID}>unkown</div>
-//   }
-// }) }
-//     </div>
-//   )
 }
 

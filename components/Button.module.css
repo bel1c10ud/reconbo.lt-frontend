@@ -35,12 +35,22 @@
   background-color: var(--blackOpacity100);
 }
 
+.self[data-no-action=''] .overlay {
+  background-color: inherit;
+}
+
+.self[data-no-action=''] {
+  cursor: initial;
+}
+
 .self:disabled:hover .overlay {
   background-color: inherit;
 }
 
 .self .label {
   position: relative;
+  /* width: 100%;
+  display: inherit; */
   padding: .75rem 2.25rem ;
 }
 

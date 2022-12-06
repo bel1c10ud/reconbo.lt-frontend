@@ -113,6 +113,12 @@
   height: 100%;
 }
 
+.price {
+  display: flex;
+  flex-direction: row;
+  gap: .25rem;  
+}
+
 /* discount */
 .discount {
   width: 100%;
@@ -127,3 +133,4 @@
   font-weight: 600;
   color: var(--grey400);
 }
+

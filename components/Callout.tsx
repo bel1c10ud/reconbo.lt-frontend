@@ -39,3 +39,13 @@ export function RequiredLoginCallout() {
     </Callout>
   )
 }
+
+export function IsNotAccurate() {
+  const lang = useRecoilValue(languageAtom);
+
+  return (
+    <Callout>
+      <CalloutTitle>ℹ️ { i18nMessage['THIS_INFORMATION_MAY_NOT_BE_ACCURATE'][lang ?? 'en-US'] }</CalloutTitle>
+    </Callout>
+  )
+}

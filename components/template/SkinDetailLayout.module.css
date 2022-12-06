@@ -90,6 +90,12 @@
   line-height: 1em;
 }
 
+.price > div {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
 .chromas, .levels {
   display: flex;
   flex-direction: row;

@@ -64,6 +64,12 @@
   font-weight: 900;
 }
 
+.bundle-price > div {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
 .bundle-components {
   display: flex;
   flex-wrap: wrap;

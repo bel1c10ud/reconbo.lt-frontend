@@ -16,6 +16,7 @@ import Hr from '../Hr';
 import LanguageSelect from '../LanguageSelect';
 import LoginButton from '../LoginButton';
 import Footer from '../Footer';
+import { useRouter } from 'next/router';
 
 const categoryOption: { label: string, value: keyof typeof ExternalAPI.Endpoint }[] = [
   { label: 'Weapon Skin', value: 'weapons' }, 
@@ -26,75 +27,93 @@ const categoryOption: { label: string, value: keyof typeof ExternalAPI.Endpoint 
 ];
 
 const weaponOption = [
-  { label: 'All', value: 'all'},
-  // { label: 'Guns', value: 'guns'},
-  // { label: 'Melee', value: ''},
-  // { label: 'Sidearm', value: ''},
-  // { label: 'SMG', value: ''},
-  // { label: 'Assault Rifle', value: ''},
-  // { label: 'Sniper Rifle', value: ''},
-  // { label: 'Heavy Weapon', value: ''},
+  { label: 'All', value: 'all'}
 ];
 
-type DataType = (ExternalAPI.Weapon|ExternalAPI.Buddy|ExternalAPI.Spray|ExternalAPI.PlayerCard|ExternalAPI.PlayerTitle)[]
+type DataType = (ExternalAPI.Weapon|ExternalAPI.Buddy|ExternalAPI.Spray|ExternalAPI.PlayerCard|ExternalAPI.PlayerTitle)[];
 
-export default function ItemsLayout() {
-  const [category, setCategory] = useState(categoryOption[0].value);
-  const [weaponFilter, setWeaponFilter] = useState('all');
+interface ItemsLayoutProps {
+  type?: keyof typeof ExternalAPI.Endpoint
+  filter?: string
+  limit?: number
+}
 
-  const size = 6;
-  const [limit, setLimit] = useState(size);
+export default function ItemsLayout(props: ItemsLayoutProps) {console.log(props)
+  const router = useRouter();
 
-  const fetch = useExternalAPI<DataType>(category);
+  const [itemType, setItemType] = useState(() => props.type ? props.type : categoryOption[0].value);
+  const [filter, setFilter] = useState(props.filter ?? 'all');
+  const [pageSize, setPageSize] = useState(6);
+  const [limit, setLimit] = useState(props.limit && props.limit>pageSize ? props.limit: pageSize);
 
-  const weapons = useMemo(() => {
-    const obj = { error: undefined, data: undefined, isLoading: false };
-    if(fetch.error) return { ...obj, error: fetch.error }
-    if(fetch.isLoading) return { ...obj, isLoading: true }
-    if(fetch.data) {
-      const data = fetch.data.map(el => {
-        const assetPathArr =  el.assetPath.split('/');
-        let value = '';
-        if(assetPathArr[3] === 'Guns') value = assetPathArr[5];
-        if(assetPathArr[3] === 'Melee') value = 'Melee';
-        return { label: el.displayName, value: value }
-      });
-      return { ...obj, data: data }
+  const filterRegex = useMemo(() => {
+    if(itemType === 'weapons') {
+      if(filter === 'all') return new RegExp('', 'ig');
+      else return new RegExp(`\/${filter}\/`, 'ig');
     }
-    else return { ...obj, error: new Error('not found weapon data') }
-  }, [fetch])
+    // ...
+    else return new RegExp('', 'ig');
+  }, [itemType, filter]);
 
-  const weaponFilterRegex = useMemo(() => {
-    if(weaponFilter === 'all') return new RegExp('', 'ig');
-    else return new RegExp(`\/${weaponFilter}\/`, 'ig');
-  }, [weaponFilter]);
+  const query = useMemo(() => {
+    let obj = {};
+    obj = { ...obj, 'type': itemType };
+    if(itemType === 'weapons') obj = { ...obj, 'filter': filter };
+    if(limit > pageSize) obj = { ...obj, 'limit': limit };
+    return obj
+  }, [itemType, filter, limit]);
+
+  const fetch = useExternalAPI<DataType>(itemType);
 
   const data = useMemo(() => {
     const obj = { error: undefined, data: undefined, isLoading: false };
     if(fetch.error) return { ...obj, error: fetch.error };
     if(fetch.isLoading) return { ...obj, isLoading: true };
     if(fetch.data) {
-      if(category === 'weapons') {
+      if(itemType === 'weapons') {
         let arr: ExternalAPI.Skin[] = [];
-        (fetch.data as ExternalAPI.Weapon[]).forEach(weapon => weapon.skins.forEach(skin => arr = [ ...arr, skin ]))
-        return { ...obj, data: arr.filter(el => el.assetPath.match(weaponFilterRegex)) }
+        (fetch.data as ExternalAPI.Weapon[]).forEach(weapon => weapon.skins.forEach(skin => arr = [ ...arr, skin ]));
+        arr = arr.filter(el => {
+          return el.assetPath.match(filterRegex) && el.themeUuid!==ExternalAPI.ThemeUuid.Random && el.themeUuid!==ExternalAPI.ThemeUuid.Standard
+        });
+        return { ...obj, data: arr }
       } else {
         return { ...obj, data: fetch.data }
       }
     } else return { ...obj, error: new Error('not found items data') }
-  }, [category, fetch])
+  }, [itemType, fetch]);
+  const weapons = useMemo(() => {
+    if(itemType === 'weapons') {
+      const obj = { error: undefined, data: undefined, isLoading: false };
+      if(fetch.error) return { ...obj, error: fetch.error }
+      if(fetch.isLoading) return { ...obj, isLoading: true }
+      if(fetch.data) {
+        const data = fetch.data.map(el => {
+          const assetPathArr =  el.assetPath.split('/');
+          let value = '';
+          if(assetPathArr[3] === 'Guns') value = assetPathArr[5];
+          if(assetPathArr[3] === 'Melee') value = 'Melee';
+          return { label: el.displayName, value: value }
+        });
+        return { ...obj, data: data }
+      }
+      else return { ...obj, error: new Error('not found weapon data') }
+    }
+  }, [itemType, fetch]);
 
-  const updateCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const updateItemType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if(e.currentTarget.value) 
-      setCategory(e.currentTarget.value as keyof typeof ExternalAPI.Endpoint);
+      setItemType(e.currentTarget.value as keyof typeof ExternalAPI.Endpoint);
   };
 
-  const updateWeaponFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const updateFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if(e.currentTarget.value) 
-      setWeaponFilter(e.currentTarget.value);
+      setFilter(e.currentTarget.value);
   };
 
-  useEffect(() => setLimit(size), [category, weaponFilter]);
+  useEffect(() => setLimit(pageSize), [itemType, filter]);
+  useEffect(() => setLimit(props.limit && props.limit>pageSize ? props.limit : pageSize), []);
+  useEffect(() => { router.push({ query: query }, undefined, { scroll: false }); }, [query]);
 
   return (
     <>
@@ -103,13 +122,13 @@ export default function ItemsLayout() {
       </Head>
       <div className={style['self']}>
         <div className={style['title']}>ITEMS</div>
-        <Select name='category' options={categoryOption} value={category} placeholder='Category' onChange={updateCategory} />
-{ category === 'weapons' ? (
+        <Select name='category' options={categoryOption} value={itemType} placeholder='Category' onChange={updateItemType} />
+{ itemType === 'weapons' ? (
         <Select name='weapon' 
-        options={[...weaponOption, ...weapons.data ?? []]} 
+        options={[...weaponOption, ...weapons?.data ?? []]} 
         placeholder='Weapon' 
-        value={weaponFilter} 
-        onChange={updateWeaponFilter}
+        value={filter} 
+        onChange={updateFilter}
         />
 ):null}
         <Hr />
@@ -117,15 +136,15 @@ export default function ItemsLayout() {
 { data.error ? <ItemCardError /> : null }
 { data.isLoading ? Array.apply(null, Array(limit)).map((el, i) => <ItemCardSkeleton key={i} />) : null }
 { data.data ? data.data.slice(0, limit).map(data => {
-  if(category === 'weapons') return <Skin uuid={data.uuid} />
-  if(category === 'sprays') return <Spray uuid={data.uuid} />
-  if(category === 'buddies') return <Buddy uuid={data.uuid} />
-  if(category === 'playerCards') return <PlayerCard uuid={data.uuid} />
-  if(category === 'playerTitles') return <PlayerTitle uuid={data.uuid} />
+  if(itemType === 'weapons') return <Skin key={data.uuid} uuid={data.uuid} />
+  if(itemType === 'sprays') return <Spray key={data.uuid} uuid={data.uuid} />
+  if(itemType === 'buddies') return <Buddy key={data.uuid} uuid={data.uuid} />
+  if(itemType === 'playerCards') return <PlayerCard key={data.uuid} uuid={data.uuid} />
+  if(itemType === 'playerTitles') return <PlayerTitle key={data.uuid} uuid={data.uuid} />
 }) : null }
 { (data.data?.length ?? 0) > limit ? (
           <div className={style['limit']}>
-            <Button onClick={() => setLimit(limit+size)} large>{limit} / {data.data?.length ?? '?'}</Button>
+            <Button onClick={() => setLimit(limit+pageSize)} large>{limit} / {data.data?.length ?? '?'}</Button>
           </div>
 ) : null }
         </div>

@@ -2,9 +2,8 @@ import { useState, MouseEvent, MouseEventHandler, useMemo } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { isPopupAtom, popupComponentAtom } from '../../recoil';
-import Image from 'next/image';
 
-import { AuthObjType, ClientAPI, ExternalAPI } from '../../type';
+import { AsyncData, AuthObjType, ClientAPI, ExternalAPI } from '../../type';
 
 import Head from 'next/head';
 import VideoPopup from '../VideoPopup';
@@ -12,10 +11,11 @@ import LanguageSelect from '../LanguageSelect';
 import LoginButton from '../LoginButton';
 import Footer from '../Footer';
 import Hr from '../Hr';
+import Button from '../Button';
+import Price from '../Price';
 
 import style from './SkinDetailLayout.module.css';
 import { RequiredLoginCallout } from '../Callout';
-import DetailPrice from '../DetailPrice';
 
 interface SkinDetailLayoutProps {
   auth: AuthObjType,
@@ -24,28 +24,13 @@ interface SkinDetailLayoutProps {
     levelIndex?: number,
     chromaIndex?: number,
     contentTier?: ExternalAPI.ContentTier,
-    offer?: ClientAPI.Offer
+    offer?: AsyncData<ClientAPI.Offer>
   }
 }
 
 export default function SkinDetailLayout(props: SkinDetailLayoutProps) {
   const [chromaIndex, setChromaIndex] = useState(props.data.chromaIndex?? 0);
   const [levelIndex, setLevelIndex] = useState(props.data.levelIndex?? 0);
-
-  const price = useMemo(() => {
-    if(props.data.offer?.Cost) {
-      if(props.data.offer.Cost[ClientAPI.CurrencyType.VP]) 
-        return { 
-          currencyType: "VP" as keyof typeof ClientAPI.CurrencyType, 
-          value: props.data.offer.Cost[ClientAPI.CurrencyType.VP] as number
-        }
-      else return undefined
-    } else {
-      return undefined
-    }
-
-    
-  }, [props.data.offer?.Cost]);
 
   const previewImage = useMemo(() => {
     if(props.data.externalAPISkin.chromas[chromaIndex].displayIcon) {
@@ -89,7 +74,9 @@ export default function SkinDetailLayout(props: SkinDetailLayoutProps) {
         <div className={style['option']}>
           <div className={style['option-label']}>PRICE</div>
 { props.auth.isValid ? (
-          <DetailPrice data={price} />
+          <Button className={style['price']} secondary medium>
+            <Price offer={props.data.offer} />
+          </Button>
         ) : (
           <RequiredLoginCallout />
 ) }

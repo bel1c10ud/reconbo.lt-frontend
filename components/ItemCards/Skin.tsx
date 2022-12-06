@@ -6,24 +6,15 @@ import { useClientAPI, useExternalAPI } from '../../hooks';
 import ItemCardSkeleton from './ItemCardSkeleton';
 import SlideText from '../SlideText';
 import ItemCardError from './ItemCardError';
-import { Cost, Discount } from './ItemCard';
+import { Discount } from './ItemCard';
+import Price from '../Price';
 import Link from 'next/link';
-import { ExternalAPI, ClientAPI } from '../../type';
-
-interface SkinDataType {
-  externalAPISkin?: ExternalAPI.Skin,
-  levelIndex?: number,
-  chromaIndex?: number,
-  contentTier?: ExternalAPI.ContentTier,
-  offer?: ClientAPI.Offer,
-  bonusStoreOffer?: Partial<ClientAPI.BonusStoreOffer>,
-  bundleOffer?: Pick<ClientAPI.Item, "BasePrice"|"DiscountPercent"|"DiscountedPrice">
-}
+import { ExternalAPI, ClientAPI, AsyncData } from '../../type';
 
 interface SkinProps {
   uuid: string,
-  bonusStoreOffer?: Partial<ClientAPI.BonusStoreOffer>,
-  bundleOffer?: Pick<ClientAPI.Item, "BasePrice"|"DiscountPercent"|"DiscountedPrice">
+  bonusStoreOffer?: ClientAPI.BonusStoreOffer,
+  bundleOffer?: ClientAPI.Item
 }
 
 export default function Skin(props: SkinProps) {
@@ -89,16 +80,28 @@ export default function Skin(props: SkinProps) {
   const clientAPIOffer = useMemo(() => {
     const obj = { data: undefined, error: undefined, isLoading: false };
 
-    if(clientAPIOffers.error) return { ...obj, error: clientAPIOffers }
+    if(clientAPIOffers.error) return { ...obj, error: clientAPIOffers.error }
     else if(clientAPIOffers.isLoading) return { ...obj, isLoading: true }
     else if(clientAPIOffers.data) {
-      return {
-        ...obj,
-        data: clientAPIOffers.data.Offers.find((offer: any) => offer.OfferID === props.uuid)
+      if(externalAPISkin.error) return { ...obj, error: externalAPISkin.error }
+      else if(externalAPISkin.isLoading) return { ...obj, isLodaing: true }
+      else if(externalAPISkin.data) {
+        const uuid = externalAPISkin.data.externalAPISkin?.levels[externalAPISkin.data.levelIndex ?? 0].uuid;
+        const data = clientAPIOffers.data.Offers.find((offer: ClientAPI.Offer) => {
+          if(offer.OfferID === uuid ) 
+            return true
+          else {
+            const reward = offer.Rewards.find(reward => reward.ItemID === uuid);
+            if(reward && offer.Rewards.length === 1) return true
+          }
+        });
+
+        return { ...obj, data: data }
       }
+      else return { ...obj, error: new Error('Not found skin from External API') }
     }
-    return { ...obj, error: new Error('Not found offer') }
-  }, [props.uuid, clientAPIOffers]);
+    return { ...obj, error: new Error('Not found offers from Client API') }
+  }, [props.uuid, clientAPIOffers, externalAPISkin.data]);
 
   if(externalAPISkin.error) return <ItemCardError error={externalAPISkin.error} />
   else if(externalAPISkin.isLoading || !externalAPISkin.data) return <ItemCardSkeleton />
@@ -107,12 +110,22 @@ export default function Skin(props: SkinProps) {
       <SkinLayout data={{
         ...externalAPISkin.data,
         contentTier: externalAPIContentTier.data,
-        offer: clientAPIOffer.data,
+        offer: clientAPIOffer,
         bonusStoreOffer: props.bonusStoreOffer,
         bundleOffer: props.bundleOffer
         }}  
       />
     )
+}
+
+interface SkinDataType {
+  externalAPISkin?: ExternalAPI.Skin,
+  levelIndex?: number,
+  chromaIndex?: number,
+  contentTier?: ExternalAPI.ContentTier,
+  offer?: AsyncData<ClientAPI.Offer>
+  bonusStoreOffer?: ClientAPI.BonusStoreOffer,
+  bundleOffer?: ClientAPI.Item
 }
 
 interface SkinLayoutProps {
@@ -124,35 +137,6 @@ function SkinLayout(props: SkinLayoutProps) {
 
   const name = props.data.externalAPISkin?.levels[props.data.levelIndex ?? 0].displayName;
   const imageSrc = props.data.externalAPISkin?.levels[props.data.levelIndex ?? 0].displayIcon;
-
-  const cost = useMemo(() => {
-    if(props.data.bundleOffer) {
-      return props.data.bundleOffer.BasePrice
-    } else {
-      return props.data.offer?.Cost['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741']
-    }
-  }, [props.data.offer, props.data.bundleOffer])
-
-
-  const discountCost = useMemo(() => {
-    if(props.data.bonusStoreOffer?.DiscountCosts) {
-      return props.data.bonusStoreOffer.DiscountCosts['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741'];
-    } else {
-      return undefined;
-    }
-  }, [props.data.bonusStoreOffer?.DiscountCosts]);
-
-  const discountedPrice = useMemo(() => props.data.bundleOffer?.DiscountedPrice, [props.data.bundleOffer?.DiscountedPrice]);
-
-  const discountPercent = useMemo(() => {
-    if(props.data.bonusStoreOffer) {
-      return props.data.bonusStoreOffer.DiscountPercent;
-    } else if(props.data.bundleOffer) {
-      return props.data.bundleOffer.DiscountPercent * 100;
-    } else {
-      return undefined
-    }
-  }, [props.data.bonusStoreOffer, props.data.bundleOffer]);
 
   const detailURI = useMemo(function onClickSkin() {
     if(props.data?.externalAPISkin) {
@@ -227,14 +211,16 @@ function SkinLayout(props: SkinLayoutProps) {
                 <div className={style['content-tier']}>
                   <img alt={`${props.data.contentTier?.devName?? 'unknown'} tier`} src={props.data.contentTier?.displayIcon} />
                 </div>
-                <Cost 
-                cost={Number(cost)} 
-                discountCost={discountCost}
-                discountedPrice={discountedPrice}
-                />
+                <div className={style['price']}>                
+                  <Price 
+                  offer={props.data.offer}
+                  bonusStoreOffer={props.data.bonusStoreOffer}
+                  bundleOffer={props.data.bundleOffer} 
+                  />
+                </div>
               </div>
             </div>
-            <Discount percent={discountPercent} />
+            <Discount bundleOffer={props.data.bundleOffer} bonusStoreOffer={props.data.bonusStoreOffer} />
           </div>
         </div>
       </div>

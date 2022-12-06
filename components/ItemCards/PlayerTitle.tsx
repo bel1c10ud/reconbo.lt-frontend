@@ -1,14 +1,15 @@
 import style from './ItemCard.module.css';
 import { useMemo } from 'react';
 import { useExternalAPI } from '../../hooks';
-import { Cost, Discount } from './ItemCard';
+import { Discount } from './ItemCard';
+import Price from '../Price';
 import ItemCardSkeleton from './ItemCardSkeleton';
 import SlideText from '../SlideText';
 import { ExternalAPI, ClientAPI } from '../../type';
 
 interface PlayerTitleProps {
   uuid: string,
-  bundleOffer?: Pick<ClientAPI.Item, "BasePrice"|"DiscountPercent"|"DiscountedPrice">
+  bundleOffer?: ClientAPI.Item
 }
 
 export default function PlayerTitle(props: PlayerTitleProps) {
@@ -34,14 +35,10 @@ export default function PlayerTitle(props: PlayerTitleProps) {
 
 interface PlayerTitleLayoutProps {
   data: ExternalAPI.PlayerTitle,
-  bundleOffer?: Pick<ClientAPI.Item, "BasePrice"|"DiscountPercent"|"DiscountedPrice">
+  bundleOffer?: ClientAPI.Item
 }
 
 function PlayerTitleLayout(props: PlayerTitleLayoutProps) {
-  const cost = useMemo(() => props.bundleOffer?.BasePrice, [props.bundleOffer?.BasePrice]);
-  const discountedPrice = useMemo(() => props.bundleOffer?.DiscountedPrice, [props.bundleOffer?.DiscountedPrice]);
-  const discountPercent = useMemo(() => props.bundleOffer?.DiscountPercent && props.bundleOffer?.DiscountPercent * 100, [props.bundleOffer?.DiscountPercent]);
-
   return (
     <div className={style['self']} data-item-type='player-title'>
     <div className={style['ratio']}>
@@ -53,13 +50,10 @@ function PlayerTitleLayout(props: PlayerTitleLayoutProps) {
           <div className={style.info}>
             <SlideText>{props.data.displayName}</SlideText>
             <div className={style['value']}>
-              <Cost 
-              cost={cost} 
-              discountedPrice={discountedPrice}
-              />
+              <Price bundleOffer={props.bundleOffer} />
             </div>
           </div>
-{ discountPercent !== undefined && <Discount percent={discountPercent} />}
+          <Discount bundleOffer={props.bundleOffer} />
         </div>
       </div>
     </div>

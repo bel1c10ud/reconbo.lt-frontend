@@ -15,9 +15,9 @@ export default function StorePage() {
 
   useEffect(() => { // redirect root
     if(auth.isInit && !auth.isValid) {
-      router.push('/');console.log(auth)
+      router.push('/');
     }
-  }, [auth.isValid])
+  }, [auth])
 
 
   if(clientAPIStore.error) return <ErrorLayout error={clientAPIStore.error} />

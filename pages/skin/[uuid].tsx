@@ -17,7 +17,7 @@ export default function SkinDetail() {
   const externalAPIContentTiers = useExternalAPI<ExternalAPI.ContentTier[]>('contentTiers')
 
   const externalAPISkin = useMemo(() => {
-    let obj = { data: undefined, error: undefined, isLoading: false };
+    const obj = { data: undefined, error: undefined, isLoading: false };
 
     if(externalAPISkins.error) return { ...obj, error: externalAPISkins.error }
     else if(externalAPISkins.isLoading) return { ...obj, isLoading: true }
@@ -59,11 +59,22 @@ export default function SkinDetail() {
   }, [externalAPISkin, externalAPIContentTiers])
 
   const offer = useMemo(() => {
-    if(externalAPISkin.data && offers.data !== undefined) {
-      return offers.data.Offers.find((offer: any) => offer.OfferID == externalAPISkin.data.skin.levels[0].uuid)
+    const obj = { data: undefined, error: undefined, isLoading: false };
+    if(externalAPISkin.error) return { ...obj, error: externalAPISkin.error }
+    else if(externalAPISkin.isLoading) return { ...obj, isLoading: true }
+    else if(externalAPISkin.data) {
+      if(offers.error) return { ...obj, error: offers.error }
+      else if(offers.isLoading) return { ...obj, isLoading: true }
+      else if(offers.data) {
+        return { 
+          ...obj, 
+          data: offers.data.Offers.find((offer: any) => offer.OfferID == externalAPISkin.data.skin.levels[0].uuid)
+        }
+      }
+      else return { ...obj, error: new Error('Not found offer from Client API') }
     }
-    return undefined
-  }, [externalAPISkin, offers]);
+    else return { ...obj, error: new Error('Not found skin from External API') }
+  }, [externalAPISkin, offers])
 
   if(typeof uuid === 'undefined') return <div>not found uuid!</div>
 

@@ -11,6 +11,12 @@ export interface AuthObjType {
   isValid: boolean
 }
 
+export interface AsyncData<Type> {
+  error: any | Error | undefined,
+  data: Type | undefined,
+  isLoading: boolean
+}
+
 // External API(valorant-api.com) Response Data Type
 export namespace ExternalAPI {
 
@@ -23,6 +29,11 @@ export namespace ExternalAPI {
     bundles = 'https://valorant-api.com/v1/bundles',
     buddies = 'https://valorant-api.com/v1/buddies',
     weapons = 'https://valorant-api.com/v1/weapons'
+  }
+
+  export enum ThemeUuid {
+    Standard = '5a629df4-4765-0214-bd40-fbb96542941f',
+    Random = '0d7a5bfb-4850-098e-1821-d989bbfd58a8'
   }
 
   export interface Response<T> {
@@ -42,7 +53,7 @@ export namespace ExternalAPI {
     uuid: string
     displayName: string
     isHiddenIfNotOwned: boolean
-    themeUuid: string
+    themeUuid: ThemeUuid|string
     displayIcon: string
     assetPath: string
     levels: BuddyLevel[]
@@ -52,7 +63,7 @@ export namespace ExternalAPI {
     uuid: string
     displayName: string
     isHiddenIfNotOwned: boolean
-    themeUuid: string
+    themeUuid: ThemeUuid|string
     displayIcon: string
     smallArt: string
     wideArt: string
@@ -105,7 +116,7 @@ export namespace ExternalAPI {
   export interface Skin {
     uuid: SkinUUID,
     contentTierUuid: string,
-    themeUuid: string,
+    themeUuid: ThemeUuid|string,
     displayName: string,
     displayIcon: string,
     wallpaper? : string,
@@ -126,7 +137,7 @@ export namespace ExternalAPI {
     uuid: string
     displayName: string
     category: string
-    themeUuid: string
+    themeUuid: ThemeUuid|string
     displayIcon: string
     fullIcon: string
     fullTransparentIcon: string
@@ -295,7 +306,7 @@ export namespace ClientAPI {
     RP = 'e59aa87c-4cbf-517a-5983-6e81511be9b7'
   }
 
-  export interface DiscountCosts {
+  export interface Costs {
     [CostType.VP]?: number,
     [CostType.RP]?: number,
   }
@@ -304,7 +315,7 @@ export namespace ClientAPI {
     BonusOfferID: string,
     Offer: Offer,
     DiscountPercent: number,
-    DiscountCosts: DiscountCosts,
+    DiscountCosts: Costs,
     IsSeen: boolean
   }
 
@@ -336,7 +347,7 @@ export namespace ClientAPI {
     OfferID: string,
     IsDirectPurchase: boolean,
     StartDate: string,
-    Cost: any,
+    Cost: Costs,
     Rewards: OfferReward[]
   }
 }
