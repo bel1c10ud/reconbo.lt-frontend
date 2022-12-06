@@ -114,7 +114,10 @@ export default function ItemsLayout(props: ItemsLayoutProps) {
 
   useEffect(() => setLimit(pageSize), [itemType, filter]);
   useEffect(() => setLimit(props.limit && props.limit>pageSize ? props.limit : pageSize), []);
-  useEffect(() => { router.push({ query: query }, undefined, { scroll: false }); }, [query]);
+  useEffect(() => { 
+    if(router.query.type) router.push({ query: query }, undefined, { scroll: false });
+    else router.replace({ query: query }, undefined, { scroll: false });
+  }, [query]);
 
   return (
     <>
