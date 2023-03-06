@@ -37,13 +37,3 @@ export function isValidAuth(authObj: Omit<AuthObjType, 'isValid'>): boolean {
 
   return true;
 }
-
-const swrFetcher = (key: any) => fetch(key).then(res => res.json());
-
-export const swr = {
-  fetcher: swrFetcher,
-  options: {
-    revalidateOnFocus: false,
-  },
-  test: () => {}
-}

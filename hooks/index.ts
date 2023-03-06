@@ -3,13 +3,14 @@ import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 
 import { authObjAtom, languageAtom, regionAtom } from "../recoil";
-import { isValidAuth, swr } from "../utility";
+import { isValidAuth } from "../utility";
 
 import { ClientAPI, ExternalAPI, LanguageCode } from "../type";
 import axios from "axios";
 
 const swrConfig = {
   revalidateOnFocus: false,
+  revalidateIfStale: false
 }
 
 const endpoint = {
@@ -159,7 +160,7 @@ export function useExternalAPI<T>(key: keyof typeof ExternalAPI.Endpoint) {
   const lang = useRecoilValue(languageAtom);
   const endpoint = ExternalAPI.Endpoint[key];
 
-  const {data, error} = useSWR<T>([endpoint, lang ?? 'en-US'], ExternalAPIFetcher, swr.options);
+  const {data, error} = useSWR<T>([endpoint, lang ?? 'en-US'], ExternalAPIFetcher, swrConfig);
 
   if(!error && !data) 
     return { data: undefined, error: undefined, isLoading: true }
