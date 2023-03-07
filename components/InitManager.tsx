@@ -5,42 +5,16 @@ import { RegionOption, regionOptions, languageOptions } from '../options';
 
 import { authObjAtom, languageAtom, regionAtom } from '../recoil';
 
-import type { CookieType, LanguageCode } from '../type';
-import { useAuth } from '../hooks';
+import type { LanguageCode } from '../type';
+import { Fetcher } from '../hooks';
+import useSWR from 'swr';
 
-export default function InitManager(props: {
-  cookies: CookieType[];
-}) {
+export default function InitManager() {
   const [authObj, setAuthObj] = useRecoilState(authObjAtom);
   const [region, setRegion] = useRecoilState(regionAtom);
   const [language, setLanguage] = useRecoilState(languageAtom);
 
-  useEffect(function initAuth() {
-    const accessTokenCookie: CookieType|undefined = props.cookies && props.cookies.find(cookie => cookie.name === 'access_token');
-    const expiryTimestampCookie: CookieType|undefined = props.cookies && props.cookies.find(cookie => cookie.name === 'expiry_timestamp');
-    const regionCodeCookie: CookieType|undefined = props.cookies && props.cookies.find(cookie => cookie.name === 'region_code');
-
-    if(
-      (accessTokenCookie && accessTokenCookie.value !== authObj.access_token) 
-      && (expiryTimestampCookie && Number(expiryTimestampCookie.value) !== authObj.expiry_timestamp)
-      && (expiryTimestampCookie && Number(expiryTimestampCookie.value) > Date.now())
-    ) {
-      setAuthObj({
-        isInit: true,
-        access_token: accessTokenCookie.value,
-        expiry_timestamp: Number(expiryTimestampCookie.value)
-      })
-    } else {
-      setAuthObj({ ...authObj, isInit: true });
-    }
-
-    if(
-      (regionCodeCookie && regionOptions.find((option: RegionOption) => option.value === regionCodeCookie.value))
-      && (expiryTimestampCookie && Number(expiryTimestampCookie.value) > Date.now())
-    ) {
-      setRegion(regionCodeCookie.value as RegionCode)
-    }
-  }, []);
+  const reqCookie = useSWR('/api/cookie', Fetcher,);
 
   useEffect(function initLang() {
     const langs = languageOptions.map(lang => lang.value);
@@ -65,6 +39,43 @@ export default function InitManager(props: {
       }
     }
   }, [])
+
+  useEffect(function initAuth() {
+    if(reqCookie.error) {
+      // ... error
+    } else if(reqCookie.data) {
+      if(!authObj.isInit) {
+        const accessToken = reqCookie.data && reqCookie.data.hasOwnProperty('access_token') ? reqCookie.data['access_token'] : undefined;
+        const expiryTimestamp = reqCookie.data && reqCookie.data.hasOwnProperty('expiry_timestamp') ? reqCookie.data['expiry_timestamp'] : undefined;
+        const regionCode = reqCookie.data && reqCookie.data.hasOwnProperty('region_code') ? reqCookie.data['region_code'] : undefined;
+
+        if(
+          (accessToken && accessToken !== authObj.access_token) 
+          && (expiryTimestamp && Number(expiryTimestamp) !== authObj.expiry_timestamp)
+          && (expiryTimestamp && Number(expiryTimestamp) > Date.now())
+        ) {
+          setAuthObj({
+            isInit: true,
+            access_token: accessToken,
+            expiry_timestamp: Number(expiryTimestamp)
+          })
+        } else {
+          setAuthObj({ ...authObj, isInit: true });
+        }
+
+        if(
+          (regionCode && regionOptions.find((option: RegionOption) => option.value === regionCode))
+          && (expiryTimestamp && Number(expiryTimestamp) > Date.now())
+        ) {
+          setRegion(regionCode as RegionCode)
+        }
+      }
+
+      
+    } else {
+      // .. loading
+    }
+  }, [reqCookie]);
 
   return null
 }

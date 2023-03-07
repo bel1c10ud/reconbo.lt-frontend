@@ -47,6 +47,12 @@ const endpoint = {
   }
 };
 
+export function Fetcher(url: string) {
+  return axios({
+    url: url
+  }).then(res => res.data);
+}
+
 function ClientAPIFetcher(...args: ['GET'|'POST', string, string, string]) {
   const [method, url, access_token, entitlements] = args;
 

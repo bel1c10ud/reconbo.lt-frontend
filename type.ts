@@ -1,9 +1,4 @@
 // frontend Type
-export interface CookieType {
-  name: string,
-  value: string
-}
-
 export interface AuthObjType {
   isInit?: boolean,
   access_token: undefined|string
