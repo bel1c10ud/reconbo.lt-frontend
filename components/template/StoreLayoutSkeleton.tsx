@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import style from './StoreLayoutSkeleton.module.css';
 import Hr from '../Hr';
+import Header from '../Header';
 
 export default function StoreLayoutSkeleton() {
   return (
@@ -8,6 +9,7 @@ export default function StoreLayoutSkeleton() {
       <Head>
         <title>Reconbo.lt | Store</title>
       </Head>
+      <Header />
       <div className={style['self']}>
         <>
           <div className={style['headline']}>

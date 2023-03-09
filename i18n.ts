@@ -68,6 +68,11 @@ export const i18nMessage = {
     'en-US' : 'Login is required.',
     'ko-KR' : '로그인이 필요합니다.',
     'ja-JP' : 'ログインが必要です。',
+  },  
+  'DO_YOU_WANT_TO_LOGOUT': {
+    'en-US' : 'Do you want to Logout?',
+    'ko-KR' : '로그아웃 하시겠습니까?',
+    'ja-JP' : 'ログアウトしますか？',
   },
   'GET_ADDITIONAL_INFORMATION' : {
     'en-US' : 'Login is required to get additional information.',

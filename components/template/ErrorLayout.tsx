@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { i18nMessage } from '../../i18n';
 import { languageAtom } from '../../recoil';
 import Button from '../Button';
+import Header from '../Header';
 import style from './ErrorLayout.module.css';
 
 interface ErrorLayoutProps {
@@ -18,6 +19,7 @@ export default function ErrorLayout(props: ErrorLayoutProps) {
       <Head>
         <title>Reconbo.lt | Bundle Error</title>
       </Head>
+      <Header />
       <div className={style['self']}>
         <div className={style['title']}>ERROR!</div>
         <div className={style['headline']}>

@@ -16,6 +16,7 @@ import Price from '../Price';
 
 import style from './SkinDetailLayout.module.css';
 import { RequiredLoginCallout } from '../Callout';
+import Header from '../Header';
 
 interface SkinDetailLayoutProps {
   auth: AuthObjType,
@@ -58,6 +59,7 @@ export default function SkinDetailLayout(props: SkinDetailLayoutProps) {
       <Head>
         <title>Reconbo.lt | Skin Detail</title>
       </Head>
+      <Header />
       <div className={style['self']} data-tier={props.data.contentTier?.devName}>
         <div className={style['title']}>SKIN DETAIL</div>
         <div className={style['headline']}>
@@ -90,9 +92,6 @@ export default function SkinDetailLayout(props: SkinDetailLayoutProps) {
           <div className={style['option-label']}>LEVEL</div>
           <Levels data={props.data.externalAPISkin.levels} setFunc={setLevelIndex} selectedIndex={levelIndex} />
         </div>
-        <Hr />
-        <LanguageSelect />
-        <LoginButton />
         <Footer />
       </div>
     </>

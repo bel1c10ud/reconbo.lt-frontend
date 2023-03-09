@@ -20,6 +20,7 @@ import ItemCardError from '../ItemCards/ItemCardError';
 import { IsNotAccurate } from '../Callout';
 import Price from '../Price';
 import Button from '../Button';
+import Header from '../Header';
 
 interface BundleDetailLayoutProps {
   auth: AuthObjType,
@@ -49,6 +50,7 @@ export default function BundleDetailLayout(props: BundleDetailLayoutProps) {
       <Head>
         <title>Reconbo.lt | Bundle Detail</title>
       </Head>
+      <Header />
       <div className={style['self']}>
         <div className={style['title']}>BUNDLE DETAIL</div>
         <div className={style['headline']}>
@@ -85,9 +87,6 @@ export default function BundleDetailLayout(props: BundleDetailLayoutProps) {
             <RequiredLoginCallout />
 ) }
         </div>
-        <Hr />
-        <LanguageSelect />
-        <LoginButton />
         <Footer />
       </div>
     </>

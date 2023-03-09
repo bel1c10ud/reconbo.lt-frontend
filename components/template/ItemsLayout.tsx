@@ -18,6 +18,7 @@ import LoginButton from '../LoginButton';
 import Footer from '../Footer';
 import { useRouter } from 'next/router';
 import Bleed from '../Bleed';
+import Header from '../Header';
 
 const categoryOption: { label: string, value: keyof typeof ExternalAPI.Endpoint }[] = [
   { label: 'Weapon Skin', value: 'weapons' }, 
@@ -124,6 +125,7 @@ export default function ItemsLayout(props: ItemsLayoutProps) {
       <Head>
         <title>Reconbo.lt | Items</title>
       </Head>
+      <Header />
       <div className={style['self']}>
         <div className={style['title']}>ITEMS</div>
         <Select name='category' options={categoryOption} value={itemType} placeholder='Category' onChange={updateItemType} />
@@ -154,9 +156,6 @@ export default function ItemsLayout(props: ItemsLayoutProps) {
 ) : null }
           </div>
         </Bleed>
-        <Hr />
-        <LanguageSelect />
-        <LoginButton />
         <Footer />
       </div>
     </>

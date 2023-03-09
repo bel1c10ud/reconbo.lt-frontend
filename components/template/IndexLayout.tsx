@@ -11,6 +11,7 @@ import LoginButton from '../LoginButton';
 import Hr from '../Hr';
 import { RequiredLoginCallout } from '../Callout';
 import { i18nMessage } from '../../i18n';
+import Header from '../Header';
 
 export default function IndexLayout() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function IndexLayout() {
       <Head>
         <title>Reconbo.lt</title>
       </Head>
+      <Header />
       <div className={style['self']}>
         <Intro language={lang?? 'en-US'} />
 { auth.isInit && auth.isValid ? (
@@ -30,17 +32,13 @@ export default function IndexLayout() {
           <div className={style['anchor']} onClick={() => router.push('/store')}>{'> '}{i18nMessage['GO_TO_STORE'][lang ?? 'en-US']}</div>
           <div className={style['anchor']} onClick={() => router.push('/items')}>{'> '}{i18nMessage['LIST_OF_ITEMS'][lang ?? 'en-US']}</div>
         </div>
-        <Hr />
+
       </>
         ) : (
       <>
         <RequiredLoginCallout />
       </>
 )}
-        <div className={style['options']}>
-          <LanguageSelect />
-        </div>
-        <LoginButton />
         <Footer />
       </div>
     </>

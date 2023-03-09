@@ -17,6 +17,8 @@ import { i18nMessage } from '../../i18n';
 import Head from 'next/head';
 import LanguageSelect from '../LanguageSelect';
 import TextInput from '../TextInput';
+import Header from '../Header';
+import Footer from '../Footer';
 
 export default function AuthorizationLayout() {
   const router = useRouter();
@@ -151,6 +153,7 @@ export default function AuthorizationLayout() {
     <Head>
       <title>Reconbo.lt | {i18nMessage['LOGIN'][language]}</title>
     </Head>
+    <Header />
     <div className={style.self}>
       <div className={style.headline}>
         {i18nMessage['LOGIN'][language]}
@@ -196,9 +199,7 @@ export default function AuthorizationLayout() {
           {i18nMessage['CONFIRM'][language]}
         </Button>
       </form>
-      <div className={style['language']}>
-        <LanguageSelect />
-      </div>
+      <Footer />
     </div>
   </>
   )

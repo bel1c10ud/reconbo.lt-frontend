@@ -9,6 +9,7 @@ import Footer from '../Footer';
 import IsWrongStoreInfomation from '../IsWrongStoreInfomation';
 import Head from 'next/head';
 import Hr from '../Hr';
+import Header from '../Header';
 
 interface StoreLayoutProps {
   data: ClientAPI.Store
@@ -20,6 +21,7 @@ export default function StoreLayout(props: StoreLayoutProps) {
       <Head>
         <title>Reconbo.lt | Store</title>
       </Head>
+      <Header />
       <div className={style['self']}>
         <FeaturedBundle data={props.data.FeaturedBundle} />
 { props.data.BonusStore && props.data.BonusStore.BonusStoreOffers?.length !== 0 && (
@@ -31,9 +33,6 @@ export default function StoreLayout(props: StoreLayoutProps) {
         <Hr />
         <SkinsPanel data={props.data.SkinsPanelLayout} />
         <IsWrongStoreInfomation />
-        <Hr />
-        <LanguageSelect />
-        <LoginButton />
         <Footer />
       </div>
     </>

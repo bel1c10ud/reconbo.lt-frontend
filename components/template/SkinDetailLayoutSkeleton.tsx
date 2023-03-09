@@ -1,6 +1,7 @@
 import style from './SkinDetailLayoutSkeleton.module.css';
 import Head from "next/head";
 import Hr from '../Hr';
+import Header from '../Header';
 
 export default function SkinDetailLayoutSkeleton() {
   return (
@@ -8,6 +9,7 @@ export default function SkinDetailLayoutSkeleton() {
       <Head>
         <title>Reconbo.lt | Skin Detail</title>
       </Head>
+      <Header />
       <div className={style['self']}>
         <div className={style['title']}>SKIN DETAIL</div>
         <div className={style['headline']}>
