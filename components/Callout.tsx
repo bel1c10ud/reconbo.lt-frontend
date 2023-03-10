@@ -49,3 +49,24 @@ export function IsNotAccurate() {
     </Callout>
   )
 }
+
+export function ThisProjectUnofficial() {
+  const lang = useRecoilValue(languageAtom);
+
+  return (
+    <Callout>
+      <CalloutTitle>ℹ️ { i18nMessage['THIS_PROJECT_IS_UNOFFICIAL'][lang ?? 'en-US'] }</CalloutTitle>
+    </Callout>
+  )
+}
+
+export function LegalNotice() {
+  const lang = useRecoilValue(languageAtom);
+
+  return (
+    <Callout>
+      <CalloutTitle>ℹ️ { i18nMessage['LEGAL_NOTICE'][lang ?? 'en-US'] }</CalloutTitle>
+    </Callout>
+  )
+}
+

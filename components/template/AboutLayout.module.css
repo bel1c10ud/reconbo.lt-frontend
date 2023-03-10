@@ -11,9 +11,34 @@
   flex-direction: column;
 
   gap: 1rem;
+
 }
 
-.self a {
+.about {
+  font-size: .925rem;
+  font-weight: 500;
+}
+
+.about p {
+  
+}
+
+.about a {
   color: var(--anchor-color);
   font-weight: 700;
+}
+
+.about ul {
+  margin: .5rem 0 1.5rem 0;
+  padding: 0 1.25rem;
+}
+
+.about h1,
+.about h2,
+.about h3,
+.about h4,
+.about h5 {
+  font-weight: 900;
+  margin: 0;
+  margin: 1.5em 0 .5em 0
 }

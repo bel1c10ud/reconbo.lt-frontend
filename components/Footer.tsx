@@ -1,7 +1,12 @@
 import style from './Footer.module.css';
 import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { languageAtom } from '../recoil';
+import { i18nMessage } from '../i18n';
 
 export default function Footer() {
+  const lang = useRecoilValue(languageAtom);
+
   return (
     <div className={style['self']}>
       <div className={style['items']}>
@@ -19,7 +24,9 @@ export default function Footer() {
           </a>
         </div>
       </div>
-
+      <div className={style['legal-notice']}>
+        {i18nMessage['LEGAL_NOTICE'][lang ?? 'en-US']}
+      </div>
     </div>
   )
 }
