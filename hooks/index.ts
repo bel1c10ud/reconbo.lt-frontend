@@ -5,7 +5,7 @@ import { useRecoilValue } from "recoil";
 import { authObjAtom, languageAtom, regionAtom } from "../recoil";
 import { isValidAuth } from "../utility";
 
-import { ClientAPI, ExternalAPI, LanguageCode } from "../type";
+import { ClientAPI, ExternalAPI, LanguageCode, ValorantOfficialWeb } from "../type";
 import axios from "axios";
 
 const swrConfig = {
@@ -185,5 +185,17 @@ export function useAuth() {
   }
 
   return obj
+}
+
+export function useActData() {
+  const lang = useRecoilValue(languageAtom);
+  const reqPageData = useSWR<ValorantOfficialWeb.LatestEpisodeOrAct>(`/api/latestEpisodeOrAct?lang=${lang ?? 'en-US'}`, Fetcher, swrConfig);
+
+  if(!reqPageData.error && !reqPageData.data) 
+    return { data: undefined, error: undefined, isLoading: true }
+  else if(reqPageData.error) 
+    return { data: undefined, error: reqPageData.error, isLoading: false }
+  else 
+    return { data: reqPageData.data, error: undefined, isLoading: false }
 }
 

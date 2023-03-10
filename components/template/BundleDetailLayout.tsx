@@ -87,8 +87,8 @@ export default function BundleDetailLayout(props: BundleDetailLayoutProps) {
             <RequiredLoginCallout />
 ) }
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   )
 }

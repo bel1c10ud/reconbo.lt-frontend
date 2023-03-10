@@ -92,8 +92,8 @@ export default function SkinDetailLayout(props: SkinDetailLayoutProps) {
           <div className={style['option-label']}>LEVEL</div>
           <Levels data={props.data.externalAPISkin.levels} setFunc={setLevelIndex} selectedIndex={levelIndex} />
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   )
 }

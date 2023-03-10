@@ -33,8 +33,8 @@ export default function StoreLayout(props: StoreLayoutProps) {
         <Hr />
         <SkinsPanel data={props.data.SkinsPanelLayout} />
         <IsWrongStoreInfomation />
-        <Footer />
       </div>
+      <Footer />
     </>
   )
 }

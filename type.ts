@@ -347,6 +347,52 @@ export namespace ClientAPI {
   }
 }
 
+// valorant official website
+
+export namespace ValorantOfficialWeb {
+  export interface PageData {
+    componentChunkName: string,
+    path: string,
+    result: PageDataResult,
+    staticQueryHashes: string[]
+  }
+
+  export interface PageDataResult {
+    data: PageDataResultData,
+    pageContext: PageDataResultPageContext
+  }
+
+  export interface PageDataResultData {
+    allContentstackArticles: object,
+    contentstackHomepage: ContentstackHomepage,
+    contentstackMetadata: object,
+  }
+
+  export interface ContentstackHomepage {
+    agentsModule: object,
+    gameplayModule: object,
+    headerModule: object,
+    latestEpisodeOrAct: LatestEpisodeOrAct,
+    local: string,
+    mapsModule: object,
+    news: object,
+    uid: string
+  }
+
+  export interface LatestEpisodeOrAct {
+    background: { url?: string },
+    cta: object,
+    subtitle: string,
+    title: string
+  }
+
+  export interface PageDataResultPageContext {
+    environment: string,
+    i18n: object,
+    language: string,
+  }
+}
+
 // etc
 
 export interface RiotTokenResponseType {

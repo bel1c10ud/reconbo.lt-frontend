@@ -19,13 +19,40 @@ export default function MenuPopup() {
           </button>
         </div>
         <ul className={style['pages']}>
-          <li onClick={() => {router.push('/');setIsPopup(false)}}>Home</li>
-          <li onClick={() => {router.push('/store');setIsPopup(false)}}>Store</li>
-          <li onClick={() => {router.push('/items');setIsPopup(false)}}>Items</li>
+          <li>
+            <span className={style['page']} onClick={() => {router.push('/');setIsPopup(false)}}>
+              <img className={style['icon']} src='/home.svg' />
+              <span>Home</span>
+            </span>
+          </li>
+          <li>
+            <span className={style['page']} onClick={() => {router.push('/store');setIsPopup(false)}}>
+              <img className={style['icon']} src='/cart.svg' />
+              <span>Store</span>
+            </span>
+          </li>
+          <li>
+            <span className={style['page']} onClick={() => {router.push('/items');setIsPopup(false)}}>
+              <img className={style['icon']} src='/category.svg' />
+              <span>Items</span>
+            </span>
+          </li>
         </ul>
-        <ul className={style['ref']}>
-          <li onClick={() => {router.push('/about');setIsPopup(false)}}>About</li>
-          <li onClick={() => {router.push('');setIsPopup(false)}}>Github</li>
+        <ul className={style['refs']}>
+          <li>
+            <span className={style['ref']} 
+            onClick={() => {router.push('/about');setIsPopup(false)}}
+            >
+              About
+            </span>
+          </li>
+          <li>
+            <span className={style['ref']} 
+            onClick={() => {router.push('https://github.com/bel1c10ud/valorant-store');setIsPopup(false)}}
+            >
+              Github
+            </span>
+          </li>
         </ul>
       </div>
     </div>

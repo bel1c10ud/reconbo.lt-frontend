@@ -34,20 +34,45 @@
   }
 }
 
-ul.pages {
+.pages {
   display: flex;
   flex-direction: column;
   gap: .75rem;
   padding: 0;
 }
 
-ul.pages li {
+.pages li,
+.refs li {
   list-style-type: none;
+  display: flex;
+}
+
+.pages .page {
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+  align-items: center;
   font-size: 1.5rem;
   font-weight: 500;
 }
 
-ul.ref {
+.pages .page .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .pages .page .icon {
+    filter: invert();
+  }
+}
+
+.pages .page:hover,
+.refs .ref:hover {
+  cursor: pointer;
+}
+
+.refs {
   display: flex;
   flex-direction: column;
   gap: .75rem;
@@ -55,9 +80,9 @@ ul.ref {
   margin-top: 2rem;
 }
 
-ul.ref li {
-  list-style-type: none;
+.refs .ref {
   font-size: .925rem;
   color: var(--grey400);
   font-weight: 500;
 }
+

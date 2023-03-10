@@ -68,6 +68,7 @@ function LanguageSelector() {
   return (
     <fieldset className={style['language-selector']}>
       <select value={language} onChange={onChangeSelect}>
+        <option disabled>Language</option>
 { languageOptions.map(lang => (
         <option key={lang.value} value={lang.value}>{lang.label}</option>
 ))}      

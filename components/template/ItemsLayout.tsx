@@ -156,8 +156,8 @@ export default function ItemsLayout(props: ItemsLayoutProps) {
 ) : null }
           </div>
         </Bleed>
-        <Footer />
       </div>
+      <Footer />
     </>
   )
 }

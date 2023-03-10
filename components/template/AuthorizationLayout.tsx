@@ -199,8 +199,8 @@ export default function AuthorizationLayout() {
           {i18nMessage['CONFIRM'][language]}
         </Button>
       </form>
-      <Footer />
     </div>
+    <Footer />
   </>
   )
 }
