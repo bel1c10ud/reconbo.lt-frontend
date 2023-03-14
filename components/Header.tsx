@@ -39,7 +39,7 @@ export default function Header(props: HeaderProps) {
           <button className={style['hamburger']}
           onClick={() => {setPopupComponent(()=><MenuPopup />);setIsPopup(true);}}
           >
-            <img src='/menu.svg' alt='menu' />
+            <img src='/svg/menu.svg' alt='menu' />
           </button>
         </div>
         <div className={style['right']}>
@@ -74,7 +74,7 @@ function LanguageSelector() {
 ))}      
       </select>
       <div className={style['overlay']}>
-        <img className={style['icon']} src='/language.svg' alt='language' />
+        <img className={style['icon']} src='/svg/language.svg' alt='language' />
       </div>
     </fieldset>
   )

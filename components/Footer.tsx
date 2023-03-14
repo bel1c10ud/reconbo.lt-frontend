@@ -9,6 +9,9 @@ export default function Footer() {
 
   return (
     <div className={style['self']}>
+      <div className={style['logo']}>
+        <img src='/svg/wifi_tethering.svg' alt='logo' /> 
+      </div>
       <div className={style['items']}>
         <div className={style['item']}>
           <Link href="/about">About</Link>

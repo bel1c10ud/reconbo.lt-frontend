@@ -9,7 +9,13 @@ export default function Intro(props: {
   return (
     <div className={style.self}>
       <div className={style.headline}>Introduce</div>
-      <div className={style.description}>{i18nMessage['INTRODUCTION_RECONBOLT'][props.language]}</div>
+      <div className={style.description}>
+        <p>
+          {i18nMessage['INTRODUCTION_RECONBOLT'][props.language]}
+          {' '}
+          <Link href='/about'>{`${i18nMessage['DETAIL'][props.language].toLowerCase()}`}</Link>
+        </p>
+      </div>
     </div>
   )
 }

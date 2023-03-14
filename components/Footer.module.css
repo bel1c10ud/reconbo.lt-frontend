@@ -1,17 +1,29 @@
 .self {
   display: flex;
   flex-direction: column;
-  gap: .75rem;
-  margin: 1rem auto;
+  align-items: center;
+  gap: .5rem;
+  margin: 0 auto 2rem auto;
   width: 100%;
   max-width: var(--global-max-width);
   padding: var(--global-padding);
 }
 
+.logo img {
+  width: 4rem;
+  filter: opacity(0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo img {
+    filter: invert() opacity(0.1);
+  }
+  
+}
+
 .items {
   display: flex;
-  justify-content: center;
-  gap: .75rem;
+  gap: .5rem;
 }
 
 .item {

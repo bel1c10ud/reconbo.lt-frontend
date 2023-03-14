@@ -40,9 +40,13 @@ export default function Slider(props: SliderProps) {
 { props.children?.length ? props.children[index] : props.skelethon }
       </div>
       <div className={style['buttons']}>
-        <button className={style['prev-button']} onClick={() => updateIndex('prev', length)}>◂</button>
+        <button className={style['prev-button']} onClick={() => updateIndex('prev', length)}>
+          <img src='/svg/before.svg' alt='before button' />
+        </button>
         <button className={style['index']}>{index+1} <span className={style['divider']}>/</span> {length}</button>
-        <button className={style['next-button']} onClick={() => updateIndex('next', length)}>▸</button>
+        <button className={style['next-button']} onClick={() => updateIndex('next', length)}>
+          <img src='/svg/next.svg' alt='next button' />
+        </button>
       </div>
     </div>
   )
