@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { usePlayValPageData } from '../hooks';
 import style from './LatestNews.module.css';
 import { AsyncData, ValorantOfficialWeb } from '../type';
+import Callout, { CalloutBody, CalloutTitle } from './Callout';
 
 export default function LatestNews() {
   const pageData = usePlayValPageData();
@@ -71,7 +72,7 @@ function LatestNewsArticle(props: {
         <picture className={style['article-image']}>
           <img alt='' src={props.data.banner?.url} />
         </picture>
-        <div className={style['title']}>{props.data.title}</div>
+        <div className={style['article-title']}>{props.data.title}</div>
       </a>
     </div>
   )
@@ -80,8 +81,7 @@ function LatestNewsArticle(props: {
 function LatestNewsArticleSkeleton() {
   return (
     <div className={style['article']}>
-      <div className={style['article-image-skeleton']}>
-      </div>
+      <div className={style['article-image-skeleton']}></div>
       <div className={style['article-title-skeleton']}></div>
     </div>
   )
@@ -100,15 +100,14 @@ function LatestNewsSkeleton() {
   )
 }
 
-function LatestNewsError(props: any) {
+function LatestNewsError(props: { error: Error }) {
   return (
     <div className={style['self']}>
       <h2>LATEST NEWS</h2>
-      <div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <Callout>
+        <CalloutTitle>{props.error.message?? 'unkown error!'}</CalloutTitle>
+        <CalloutBody>{props.error.stack?? ''}</CalloutBody>
+      </Callout>
     </div>
   )
 }
