@@ -199,3 +199,15 @@ export function useActData() {
     return { data: reqPageData.data, error: undefined, isLoading: false }
 }
 
+export function usePlayValPageData() {
+  const lang = useRecoilValue(languageAtom);
+  const reqPageData = useSWR<ValorantOfficialWeb.PageDataResult>(`/api/playvalorant-page-data?lang=${lang ?? 'en-US'}`, Fetcher, swrConfig);
+
+  if(!reqPageData.error && !reqPageData.data) 
+    return { data: undefined, error: undefined, isLoading: true }
+  else if(reqPageData.error) 
+    return { data: undefined, error: reqPageData.error, isLoading: false }
+  else 
+    return { data: reqPageData.data, error: undefined, isLoading: false }
+}
+

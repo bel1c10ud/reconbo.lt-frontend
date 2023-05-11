@@ -363,9 +363,13 @@ export namespace ValorantOfficialWeb {
   }
 
   export interface PageDataResultData {
-    allContentstackArticles: object,
+    allContentstackArticles: AllContentstackArticles,
     contentstackHomepage: ContentstackHomepage,
     contentstackMetadata: object,
+  }
+
+  export interface AllContentstackArticles {
+    nodes: Article[]
   }
 
   export interface ContentstackHomepage {
@@ -375,8 +379,44 @@ export namespace ValorantOfficialWeb {
     latestEpisodeOrAct: LatestEpisodeOrAct,
     local: string,
     mapsModule: object,
-    news: object,
+    news: HomepageNews,
     uid: string
+  }
+
+  export interface Article {
+    id: string,
+    data: string,
+    article_type: ArticleType,
+    title: string,
+    external_link: string,
+    banner?: ArticleBanner
+    url?: ArticleUrl
+  }
+
+  export enum ArticleType {
+    EXTERNAL_LINK = 'External Link',
+    NORMAL_ARTICLE = 'Normal article'
+  }
+
+  export interface ArticleBanner {
+    content_type: string,
+    dimension: object,
+    file_size: string,
+    filename: string,
+    url: string
+  }
+
+  export interface ArticleUrl {
+    url: string
+  }
+
+  export interface HomepageNews {
+    headline: string,
+    cta: { href: string, title: string },
+    content_type: string,
+    articles_select: Article[],
+    category_select: any[],
+    tag_select: any[]
   }
 
   export interface LatestEpisodeOrAct {

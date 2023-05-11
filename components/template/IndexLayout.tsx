@@ -9,6 +9,7 @@ import { i18nMessage } from '../../i18n';
 import Header from '../Header';
 import LatestEpisodeOrAct from '../LatestEpisodeOrAct';
 import { ThisProjectUnofficial } from '../Callout';
+import LatestNews from '../LatestNews';
 
 export default function IndexLayout() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function IndexLayout() {
           <div className={style['anchor']} onClick={() => router.push('/items')}>{'> '}{i18nMessage['LIST_OF_ITEMS'][lang ?? 'en-US']}</div>
         </div>
         <LatestEpisodeOrAct />
+        <LatestNews />
       </div>
       <Footer />
     </>
