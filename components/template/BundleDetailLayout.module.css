@@ -6,27 +6,16 @@
   margin-left: auto;
   margin-right: auto;
   padding: var(--global-padding);
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 900;
-  line-height: 1.5em;
-  margin: 0;
-}
 
-.headline {
-  font-size: 1.75rem;
-  font-weight: 900;
-  margin-bottom: .5em;
 }
 
 .display-name {
   font-size: 1.75rem;
   font-weight: 900;
-  line-height: 1.5em;
-  margin: 0;
 }
 
 .preview {
@@ -60,14 +49,20 @@
 }
 
 .bundle-info-title {
-  font-size: 1.75rem;
+  font-size: 1.2rem;
   font-weight: 900;
 }
 
-.bundle-price > div {
+.bundle-price {
   display: flex;
   justify-content: center;
-  gap: 0.25rem;
+  gap: .25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 1rem 0;
+  color: var(--grey900);
+  background-color: var(--grey200);
+  border: .25rem solid var(--grey400);
 }
 
 .bundle-components {

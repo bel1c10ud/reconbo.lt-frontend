@@ -6,12 +6,16 @@ import { useRecoilValue } from 'recoil';
 import { i18nMessage } from '../../i18n';
 import Hr from '../Hr';
 import Footer from '../Footer';
+import Head from 'next/head';
 
 export default function AboutLayout() {
   const lang = useRecoilValue(languageAtom);
 
   return (
     <>
+      <Head>
+        <title>Reconbo.lt | About</title>
+      </Head>
       <Header />
       <div className={style['self']}>
         <div className={style['about']}>

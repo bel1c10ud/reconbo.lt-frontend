@@ -29,26 +29,25 @@
   top: 0;
   width: 100%;
   height: 100%;
-  padding: var(--global-padding);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: .5rem;
   color: var(--white);
-  text-shadow: 0 0 2px black;
+  text-shadow: 0 0 5px var(--blackOpacity900);
 }
 
 .title {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 900;
 }
 
-.sub-title {
-  /* font-weight: 400; */
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
 .extra-desc {
   font-size: 0.75rem;
-}
-
-.detail-button {
-  position: absolute;
-  bottom: var(--global-padding);
-  right: var(--global-padding);
+  line-height: 1.5em;
 }

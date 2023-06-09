@@ -1,22 +1,16 @@
+import style from './Bundle.module.css';
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { ClientAPI, ExternalAPI } from '../../type';
+import { useClientAPI, useExternalAPI } from '../../hooks';
 import { useRecoilValue } from 'recoil';
 import { languageAtom } from '../../recoil';
-import { useRouter } from 'next/router';
-
-import { ClientAPI, ExternalAPI } from '../../type';
-
-import style from './Bundle.module.css';
-import { useClientAPI, useExternalAPI } from '../../hooks';
-import { i18nMessage } from '../../i18n';
-import Button from '../Button';
 
 interface BundleComponentProps {
   uuid: string
-  detailButton?: boolean
 }
 
 export default function Bundle(props: BundleComponentProps) {
-
   const clientAPIStore = useClientAPI<ClientAPI.Store>('store');
 
   const externalAPIBundles = useExternalAPI<ExternalAPI.Bundle[]>('bundles');
@@ -32,10 +26,9 @@ export default function Bundle(props: BundleComponentProps) {
   }, [props.uuid, clientAPIStore])
   
 
-
   if(externalAPIBundle && clientAPIBundleData) 
     return (
-      <BundleLayout externalAPIBundleData={externalAPIBundle} clientAPIBundleData={clientAPIBundleData} detailButton={props.detailButton} />
+      <BundleLayout externalAPIBundleData={externalAPIBundle} clientAPIBundleData={clientAPIBundleData} />
     )
   else return <BundleSkeleton />
 }
@@ -43,12 +36,10 @@ export default function Bundle(props: BundleComponentProps) {
 interface BundleLayoutCompomentProps {
   externalAPIBundleData: ExternalAPI.Bundle,
   clientAPIBundleData: ClientAPI.Bundle,
-  detailButton?: boolean
 }
 
 function BundleLayout(props: BundleLayoutCompomentProps) {
   const router = useRouter();
-
   const lang = useRecoilValue(languageAtom);
 
   function goBundleDetail(uuid: string) {
@@ -58,25 +49,20 @@ function BundleLayout(props: BundleLayoutCompomentProps) {
   return (
     <div className={style['self']}>
       <div className={style['ratio']}></div>
-      <div className={style['wrap']}>
+      <div className={style['wrap']} onClick={() => goBundleDetail(props.externalAPIBundleData.uuid)}>
         <img src={props.externalAPIBundleData.displayIcon} alt={props.externalAPIBundleData.description} />
         <div className={style['overlay']}>
           <div className={style['title']}>{props.externalAPIBundleData.displayName}</div>
 { props.externalAPIBundleData.displayNameSubText?.length ? (
-          <div className={style['sub-title']}>{props.externalAPIBundleData.displayNameSubText}</div>
+          <div className={style['subtitle']}>
+            <span lang={lang?? 'en-US'}>{props.externalAPIBundleData.displayNameSubText}</span>
+          </div>
 ) : null}
 { props.externalAPIBundleData.extraDescription?.length ? (
-          <div className={style['extra-desc']}>{props.externalAPIBundleData.extraDescription}</div>
+          <div className={style['extra-desc']}>
+            <span lang={lang?? 'en-US'}>{props.externalAPIBundleData.extraDescription}</span>
+          </div>
 ) : null}
-{ props.detailButton && (
-            <div className={style['detail-button']}>
-              <Button secondary small
-              onClick={() => goBundleDetail(props.externalAPIBundleData.uuid)}>
-                { i18nMessage['DETAIL'][lang?? 'en-US'] }
-              </Button>
-            </div>
-)}
-
         </div>
       </div>
     </div>

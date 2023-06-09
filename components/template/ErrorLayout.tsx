@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { i18nMessage } from '../../i18n';
 import { languageAtom } from '../../recoil';
-import Button from '../Button';
 import Footer from '../Footer';
 import Header from '../Header';
 import style from './ErrorLayout.module.css';
@@ -32,7 +31,7 @@ export default function ErrorLayout(props: ErrorLayoutProps) {
           <div className={style['stack-body']}>{props.error.stack ?? '...'}</div>
         </div>
 ): null }
-        <Button primary large onClick={() => { router.push('/')}}>{i18nMessage['CLOSE'][lang?? 'en-US']}</Button>
+        <button className={style['close-button']} onClick={() => { router.push('/')}}>{i18nMessage['CLOSE'][lang?? 'en-US']}</button>
       </div>
       <Footer />
     </>

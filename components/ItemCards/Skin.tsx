@@ -198,7 +198,7 @@ function SkinLayout(props: SkinLayoutProps) {
     data-tier={props.data.contentTier?.devName} 
     data-category={category}
     onClick={onClickSkin}>
-      <Link href={detailURI ?? '/'}><a>
+      <Link href={detailURI ?? '/'}>
       <div className={style.ratio}>
         <div className={style.content}>
           <div className={style.image}>
@@ -224,7 +224,7 @@ function SkinLayout(props: SkinLayoutProps) {
           </div>
         </div>
       </div>
-      </a></Link>
+      </Link>
     </div>
   )
 }

@@ -7,11 +7,7 @@ import { AsyncData, AuthObjType, ClientAPI, ExternalAPI } from '../../type';
 
 import Head from 'next/head';
 import VideoPopup from '../VideoPopup';
-import LanguageSelect from '../LanguageSelect';
-import LoginButton from '../LoginButton';
 import Footer from '../Footer';
-import Hr from '../Hr';
-import Button from '../Button';
 import Price from '../Price';
 
 import style from './SkinDetailLayout.module.css';
@@ -57,33 +53,32 @@ export default function SkinDetailLayout(props: SkinDetailLayoutProps) {
   return (
     <>
       <Head>
-        <title>Reconbo.lt | Skin Detail</title>
+        <title>{props.data.externalAPISkin.displayName}</title>
       </Head>
       <Header />
       <div className={style['self']} data-tier={props.data.contentTier?.devName}>
-        <div className={style['title']}>SKIN DETAIL</div>
-        <div className={style['headline']}>
+        <div className={style['title']}>
           <div className={style['content-tier']}>
             <ContentTier data={props.data.contentTier} />
           </div>
-          <div className={style['display-name']}>{props.data.externalAPISkin.displayName}</div>
+          <div className={style['display-name']}>
+            {props.data.externalAPISkin.displayName}
+          </div>
         </div>
         <div className={style['preview']}>
           <PreviewImage src={previewImage?.uri} />
           <PreviewDescription>{previewImage?.description}</PreviewDescription>
         </div>
-        <Hr />
         <div className={style['option']}>
           <div className={style['option-label']}>PRICE</div>
 { props.auth.isValid ? (
-          <Button className={style['price']} secondary medium>
+          <div className={style['price']}>
             <Price offer={props.data.offer} />
-          </Button>
+          </div>
         ) : (
           <RequiredLoginCallout />
 ) }
         </div>
-        <Hr />
         <div className={style['option']}>
           <div className={style['option-label']}>CHROMA</div>
           <Chromas data={props.data.externalAPISkin.chromas} setFunc={setChromaIndex} selectedIndex={chromaIndex} />
@@ -273,5 +268,5 @@ interface ContentTierProps {
 
 function ContentTier(props: ContentTierProps) {
   if(props.data) return <img src={props.data.displayIcon} alt={props.data.devName} />
-  else return <span>❔</span>
+  else return <img src='/svg/question-mark.svg' alt='unknown tier' />
 }

@@ -1,26 +1,20 @@
 import style from './BundleDetailLayout.module.css';
 
+import ItemCardSkeleton from '../ItemCards/ItemCardSkeleton';
+import ItemCardError from '../ItemCards/ItemCardError';
 import Buddy from '../ItemCards/Buddy';
 import PlayerCard from '../ItemCards/PlayerCard';
 import PlayerTitle from '../ItemCards/PlayerTitle';
 import Skin from '../ItemCards/Skin';
 import Spray from '../ItemCards/Spray';
+import Price from '../Price';
+import Header from '../Header';
+import Head from 'next/head';
+import Footer from '../Footer';
+import { IsNotAccurate } from '../Callout';
 
 import { AuthObjType, ClientAPI, ExternalAPI } from '../../type';
 import { RequiredLoginCallout } from '../Callout';
-import Head from 'next/head';
-import Footer from '../Footer';
-import LanguageSelect from '../LanguageSelect';
-import LoginButton from '../LoginButton';
-import Hr from '../Hr';
-import { useMemo } from 'react';
-
-import ItemCardSkeleton from '../ItemCards/ItemCardSkeleton';
-import ItemCardError from '../ItemCards/ItemCardError';
-import { IsNotAccurate } from '../Callout';
-import Price from '../Price';
-import Button from '../Button';
-import Header from '../Header';
 
 interface BundleDetailLayoutProps {
   auth: AuthObjType,
@@ -30,30 +24,14 @@ interface BundleDetailLayoutProps {
 }
 
 export default function BundleDetailLayout(props: BundleDetailLayoutProps) {
-  const price = useMemo(() => {
-    let sum = 0;
-
-    if(props.clientAPIBundleData?.Items) {
-      props.clientAPIBundleData.Items.forEach(item => {
-        if(item.CurrencyID === ClientAPI.CurrencyType.VP) {
-          sum = sum + item.DiscountedPrice
-        }
-      })
-    }
-
-    if(sum) return { currencyType: "VP" as keyof typeof ClientAPI.CurrencyType, value: sum }
-    else return undefined
-  }, [props.clientAPIBundleData?.Items])
-
   return (
     <>
       <Head>
-        <title>Reconbo.lt | Bundle Detail</title>
+        <title>{props.externalAPIBundleData.displayName}</title>
       </Head>
       <Header />
       <div className={style['self']}>
-        <div className={style['title']}>BUNDLE DETAIL</div>
-        <div className={style['headline']}>
+        <div className={style['title']}>
           <div className={style['display-name']}>{props.externalAPIBundleData.displayName}</div>
         </div>
         <div className={style['preview']}>
@@ -64,21 +42,19 @@ export default function BundleDetailLayout(props: BundleDetailLayoutProps) {
             { props.externalAPIBundleData.description }
           </div>
         </div>
-        <Hr />
         <div className={style['bundle-info']}>
           <div className={style['bundle-info-title']}>PRICE</div>
 { props.auth.isValid ? (
           <>
             <IsNotAccurate />
-            <Button className={style['bundle-price']} secondary medium>
+            <div className={style['bundle-price']}>
               <Price bundleOffers={props.clientAPIBundleData?.Items} />
-            </Button>
+            </div>
           </>
         ) : (
             <RequiredLoginCallout />
 ) }
         </div>
-        <Hr />
         <div className={style['bundle-info']}>
           <div className={style['bundle-info-title']}>COMPONENTS</div>
 { props.auth.isValid ? (

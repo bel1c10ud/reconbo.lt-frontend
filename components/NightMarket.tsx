@@ -1,4 +1,3 @@
-// import style from './NightMarket.module.css';
 import style from './SkinsPanel.module.css';
 import { ClientAPI } from '../type';
 import Skin from './ItemCards/Skin';

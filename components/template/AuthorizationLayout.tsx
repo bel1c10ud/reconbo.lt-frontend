@@ -9,13 +9,11 @@ import style from './AuthorizationLayout.module.css';
 import { authObjAtom, regionAtom, languageAtom, showSpinnerAtom } from '../../recoil';
 
 import Input from '../Input';
-import Button from '../Button';
 import RegionSelect from '../RegionSelect';
 import Callout, { CalloutTitle, CalloutBody } from '../Callout';
 import { RegionCode } from '../../type';
 import { i18nMessage } from '../../i18n';
 import Head from 'next/head';
-import LanguageSelect from '../LanguageSelect';
 import TextInput from '../TextInput';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -176,13 +174,12 @@ export default function AuthorizationLayout() {
         onChange={e => setPassword(e.target.value)}
         disabled={isProcess}
         />
-        <Button 
+        <button className={style['submit-button']}
         onClick={onClickAuth} 
         disabled={isProcess || username.trim().length === 0 || password.trim().length === 0 || region === undefined}
-        primary large
         >
            {i18nMessage['LOGIN'][language]}
-        </Button>
+        </button>
       </form>
       <form className={!(process === 'MULTI') ? style.hidden: undefined} onSubmit={e => e.preventDefault()} >
         <Callout>
@@ -192,12 +189,11 @@ export default function AuthorizationLayout() {
         value={code} 
         onChange={e => setCode(e.target.value)} 
         />
-        <Button onClick={onClickMulti} 
+        <button className={style['submit-button']} onClick={onClickMulti} 
         disabled={prevSession.trim().length === 0 || code.trim().length === 0 }
-        primary large
         >
           {i18nMessage['CONFIRM'][language]}
-        </Button>
+        </button>
       </form>
     </div>
     <Footer />

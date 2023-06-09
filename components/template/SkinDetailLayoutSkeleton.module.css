@@ -1,31 +1,18 @@
 .self {
   width: 100%;
   max-width: var(--global-max-width);
-
   margin-left: auto;
   margin-right: auto;
-
   padding: var(--global-padding);
-
   display: flex;
   flex-direction: column;
-
-  gap: 1rem;
-
-  font-family: inherit;
+  gap: 2rem;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 900;
-  line-height: 1.5em;
-  margin: 0;
-}
-
-.headline {
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: .75rem;
 }
 
 .content-tier {
@@ -35,14 +22,14 @@
 }
 
 .display-name {
-  width: 10rem;
-  height: 2.625rem;
+  width: 15rem;
+  height: calc(1.75rem * 1.5);
   background-color: var(--grey200);
 }
 
 .preview {
   width: 100%;
-  height: 16rem;
+  height: 12rem;
   background-color: var(--grey200);
 }
 
@@ -53,13 +40,61 @@
 }
 
 .option-label {
-  width: 10rem;
-  height: 1.5rem;
-  background-color: var(--grey200);
+  font-weight: 900;
+  font-size: 1.2rem;
+  line-height: 1em;
 }
 
 .option-item {
-  width: 100%;
-  height: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  color: var(--grey900);
   background-color: var(--grey200);
+  border: .25rem solid var(--grey400);
+}
+
+.price-value {
+  width: 7rem;
+  height: 1.25rem;
+  background-color: var(--greyOpacity200);
+}
+
+.chroma {
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+  background-color: var(--grey200);
+  border: .25rem solid var(--grey400);
+}
+
+.level {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 10rem;
+  padding: .5rem 1rem;
+  background-color: var(--grey200);
+  border: .25rem solid var(--grey400);
+}
+
+.level-title,
+.level-type {
+  width: 5rem;
+  height: 1rem;
+  margin: 0.156rem 0;
+}
+
+.level-title {
+  background-color: var(--greyOpacity400);
+}
+
+.level-type {
+  background-color: var(--greyOpacity200);
 }

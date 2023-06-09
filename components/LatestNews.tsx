@@ -1,11 +1,13 @@
-import { useMemo } from 'react';
-import { usePlayValPageData } from '../hooks';
 import style from './LatestNews.module.css';
-import { AsyncData, ValorantOfficialWeb } from '../type';
+import { useMemo, useRef } from 'react';
+import { usePlayValPageData } from '../hooks';
 import Callout, { CalloutBody, CalloutTitle } from './Callout';
+import { AsyncData, ValorantOfficialWeb } from '../type';
+import Slider, { ScrollBar } from './Slider';
 
 export default function LatestNews() {
   const pageData = usePlayValPageData();
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const selectedArticlesData = useMemo(() => {
     const result: AsyncData<ValorantOfficialWeb.Article[]> = { isLoading: false, error: undefined, data: undefined };
@@ -40,12 +42,13 @@ export default function LatestNews() {
   else if(newsData.error || !newsData.data) return <LatestNewsError error={newsData.error?? new Error('not found newsData!')} />
   return (
     <div className={style['self']}>
-      <h2>LATEST NEWS</h2>
-      <div className={style['articles']}>
+      <h2 className={style['title']}>LATEST NEWS</h2>
+      <div className={style['articles']} ref={contentRef}>
 { newsData.data.map(news => (
         <LatestNewsArticle key={news.id} data={news} />
 ))}
       </div>
+      <ScrollBar contentRef={contentRef} />
     </div>
   )
 }
@@ -72,7 +75,9 @@ function LatestNewsArticle(props: {
         <picture className={style['article-image']}>
           <img alt='' src={props.data.banner?.url} />
         </picture>
-        <div className={style['article-title']}>{props.data.title}</div>
+        <div className={style['article-title']}>
+          {props.data.title}
+        </div>
       </a>
     </div>
   )

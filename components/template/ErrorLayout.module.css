@@ -43,3 +43,23 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+.close-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 3.5rem;
+  color: var(--white);
+  border: 0.25rem solid var(--whiteOpacity300);
+  background: var(--primary-color);
+}
+
+.close-button:hover {
+  cursor: pointer;
+  transition: 250ms;
+  filter: grayscale(0.1);
+}

@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M11.25 38.75H18V26h12v12.75h6.75V19.6L24 10.05 11.25 19.6ZM7.3 42.7V17.65L24 5.1l16.75 12.55V42.7h-14.4V29.65h-4.7V42.7ZM24 24.4Z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+

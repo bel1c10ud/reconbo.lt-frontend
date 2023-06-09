@@ -29,7 +29,6 @@ export default function StorePage() {
     }
   }, [auth]);
 
-
   if(auth.isInit && !auth.isValid) return <StoreLayoutSkeleton />
   else if(clientAPIStore.error) return <ErrorLayout error={clientAPIStore.error} />
   else if(clientAPIStore.isLoading) return <StoreLayoutSkeleton />

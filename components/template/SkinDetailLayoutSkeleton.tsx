@@ -1,7 +1,7 @@
 import style from './SkinDetailLayoutSkeleton.module.css';
 import Head from "next/head";
-import Hr from '../Hr';
 import Header from '../Header';
+import Footer from '../Footer';
 
 export default function SkinDetailLayoutSkeleton() {
   return (
@@ -11,18 +11,36 @@ export default function SkinDetailLayoutSkeleton() {
       </Head>
       <Header />
       <div className={style['self']}>
-        <div className={style['title']}>SKIN DETAIL</div>
-        <div className={style['headline']}>
+        <div className={style['title']}>
           <div className={style['content-tier']}></div>
           <div className={style['display-name']}></div>
         </div>
         <div className={style['preview']}></div>
-        <Hr />
         <div className={style['option']}>
-          <div className={style['option-label']}></div>
-          <div className={style['option-item']}></div>
+          <div className={style['option-label']}>PRICE</div>
+          <div className={style['option-item']}>
+            <div className={style['price']}>
+              <div className={style['price-value']}></div>
+            </div>
+          </div>
+        </div>
+        <div className={style['option']}>
+          <div className={style['option-label']}>CHROMA</div>
+          <div className={style['option-item']}>
+            <div className={style['chroma']}></div>
+          </div>
+        </div>
+        <div className={style['option']}>
+          <div className={style['option-label']}>LEVEL</div>
+          <div className={style['option-item']}>
+            <div className={style['level']}>
+              <div className={style['level-title']}></div>
+              <div className={style['level-type']}></div>
+            </div>
+          </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

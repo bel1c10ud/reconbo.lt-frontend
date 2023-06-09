@@ -1,56 +1,68 @@
 .self {
-  /* display: flex; */
+
 }
 
-.buttons {
+.pages {
   display: flex;
-  margin-top: .5rem;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
 }
 
-.prev-button, .next-button, .index {
-  appearance: none;
-  border: 0;
-  background: 0;
-  margin: 0;
-  padding: 0;
-
-  padding: 1rem;
-  font-family: inherit;
-  font-weight: 600;
-  color: var(--grey900);
+.self[data-hint=true] .pages {
+    gap: .5rem;
 }
 
-.prev-button, .next-button {
+.pages::-webkit-scrollbar {
+  display: none;
+}
+
+.page {
+  min-width: 100%;
+  scroll-snap-align: start;
+}
+
+.self[data-hint=true] .page {
+  min-width: calc(100% - 3rem);
+}
+
+.scroll-bar {
+  position: relative;
+}
+
+.scroll-bar-track,
+.scroll-bar-thumb { 
   display: flex;
   align-items: center;
-  color: var(--grey900);
-  background-color: var(--grey50);
-  border: .15rem solid var(--greyOpacity100);
-  border-radius: 1rem;
+  height: 1rem;
 }
 
-.prev-button img, 
-.next-button img {
-  width: 1rem;
+.scroll-bar-track {
+  width: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  .prev-button, .next-button {
-    background-color: var(--grey200);
-    border: .125rem solid rgba(128, 128, 128, 0);
-  }
-
-  .prev-button img, 
-  .next-button img {
-    filter: invert();
-  }
+.scroll-bar-track-line {
+  width: 100%;
+  height: .125rem;
+  /* background-color: var(--greyOpacity200); */
 }
 
-.index {
-  /* padding: 1rem 2rem; */
+.scroll-bar-thumb {
+  position: absolute;
+  top: 0; 
+  min-width: 2rem;
 }
 
-.index .divider {
-  font-size: 0.5rem;
-  margin: 0 .25rem;
+.scroll-bar-thumb:hover {
+  cursor: grab;
+}
+
+.scroll-bar-thumb-handle {
+  width: 100%;
+  height: .35rem;
+  background-color: var(--grey500);
 }

@@ -37,18 +37,6 @@
   opacity: 0.5;
 }
 
-.test1 {
-  width: 500px;
-  height: 500px;
-  background-color: red;
-}
-
-.test2 {
-  width: 400px;
-  height: 400px;
-  background-color: blue;
-}
-
 .spinner {
   border-radius: 50%;
   width: 5rem;

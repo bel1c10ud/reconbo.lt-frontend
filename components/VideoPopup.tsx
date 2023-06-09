@@ -1,6 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isPopupAtom, languageAtom } from '../recoil';
-import Button from './Button';
 import style from './VideoPopup.module.css';
 import { i18nMessage } from './../i18n';
 
@@ -13,7 +12,7 @@ export default function VideoPopup(props : {
   return (
     <div className={style['self']}>
 { isPopup && <video src={props.src} controls onClick={(e) => e.stopPropagation()} /> }
-      <Button large secondary onClick={() => setIsPopup(false)}>{i18nMessage['CLOSE'][lang ?? 'en-US']}</Button>
+      <button className={style['button']} onClick={() => setIsPopup(false)}>{i18nMessage['CLOSE'][lang ?? 'en-US']}</button>
     </div>
   )
 }

@@ -39,6 +39,11 @@ export const i18nMessage = {
     'ko-KR': '에러',
     'ja-JP': 'ERROR'
   },
+  'MAIN': {
+    'en-US': 'Main',
+    'ko-KR': '메인',
+    'ja-JP': '主要'
+  },
   'STORE': {
     'en-US': 'Store',
     'ko-KR': '상점',
@@ -47,7 +52,12 @@ export const i18nMessage = {
   'GO_TO_STORE': {
     'en-US' : 'Go to Store',
     'ko-KR' : '상점으로 이동',
-    'ja-JP' : '店に行きます',
+    'ja-JP' : '店に行く',
+  },
+  'GO_TO_LOGIN': {
+    'en-US' : 'Go to Login',
+    'ko-KR' : '로그인하러 가기',
+    'ja-JP' : 'ログインに行く',
   },
   'LIST_OF_ITEMS': {
     'en-US' : 'List of Items',
@@ -77,7 +87,7 @@ export const i18nMessage = {
   'IS_WRONG_STORE_INFORMATION': {
     'en-US': 'Is there something wrong with the store information?',
     'ko-KR': '상점 정보에 이상이 있나요?',
-    'ja-JP': '店舗情報に問題がありますか？'
+    'ja-JP': '店舗情報に異常がありますか？'
   },
   'LOGIN_IS_REQUIRED': {
     'en-US' : 'Login is required.',
@@ -128,5 +138,67 @@ export const i18nMessage = {
     'en-US' : 'Where Headless Browser and Rewrite are used',
     'ko-KR' : 'Headless Browser 및 Rewrite가 사용되는 곳',
     'ja-JP' : 'Headless BrowserとRewriteが使用される場所',
+  },
+  'TODAYS_STORE': {
+    'en-US' : "Today's Store",
+    'ko-KR' : '오늘의 상점',
+    'ja-JP' : '今日のお店',
+  },
+  'TODAYS_STORE_ROTATION': {
+    'en-US' : "Today's Store Rotation",
+    'ko-KR' : '오늘의 상점 로테이션',
+    'ja-JP' : '今日のショップローテーション',
+  },
+  'CHECK_TODAYS_STORE_ROTATION_AFTER_LOGIN': {
+    'en-US' : "Login now to see today's store rotation",
+    'ko-KR' : '지금 로그인하고 오늘의 상점 로테이션을 확인하세요',
+    'ja-JP' : '今すぐログインし、今日の店舗ローテーションを確認してください',
+  },
+  'CHECK_TODAYS_STORE_ROTATION': {
+    'en-US' : "Check out today's store rotation",
+    'ko-KR' : '오늘의 상점 로테이션을 확인하세요',
+    'ja-JP' : '今日のお店のローテーションをチェックしてください',
   }
 }
+
+export const i18nFeatures = [
+  {
+    'symbol': '/svg/device-desktop-off.svg',
+    'accent': {
+      'en-US' : 'Without starting Valorant',
+      'ko-KR' : '발로란트 실행 없이',
+      'ja-JP' : 'Valorantを起動せずに',
+    },
+    'paragraph': {
+      'en-US' : 'Login to check the store rotation',
+      'ko-KR' : '로그인만으로 상점 로테이션 확인',
+      'ja-JP' : 'ログインだけでショップローテーションを確認',
+    }
+  },
+  {
+    'symbol': '/svg/brand-github.svg',
+    'accent': {
+      'en-US' : 'Open Source',
+      'ko-KR' : '오픈 소스',
+      'ja-JP' : 'オープンソース',
+    },
+    'paragraph': {
+      'en-US' : 'The source code is transparently disclosed.',
+      'ko-KR' : '소스 코드가 투명하게 공개되어 있습니다.',
+      'ja-JP' : 'ソースコードは透明に開示されています。',
+    }
+  },
+  {
+    'symbol': '/svg/brightness-half.svg',
+    'accent': {
+      'en-US' : 'Dark Mode Support',
+      'ko-KR' : '다크 모드 지원',
+      'ja-JP' : 'ダークモードのサポート',
+    },
+    'paragraph': {
+      'en-US' : 'No glare even in the dark',
+      'ko-KR' : '어두운 곳에서도 눈부심 없이',
+      'ja-JP' : '暗闇でも眩しさがありません',
+    }
+  }
+]

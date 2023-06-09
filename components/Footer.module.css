@@ -30,8 +30,8 @@
   display: flex;
   line-height: 1em;
   font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--grey600);
+  font-weight: 700;
+  color: var(--grey500);
 }
 .item::before {
   content: '·';

@@ -70,3 +70,22 @@ export function LegalNotice() {
   )
 }
 
+export function CalloutSkeleton() {
+  return (
+    <Callout>
+      <CalloutTitle>ℹ️ </CalloutTitle>
+    </Callout>
+  )
+}
+
+export function IsWrongStoreInfomation() {
+  const language = useRecoilValue(languageAtom);
+  return (
+    <Callout>
+      <CalloutTitle>ℹ️ {i18nMessage['IS_WRONG_STORE_INFORMATION'][language?? 'en-US']}</CalloutTitle>
+      <CalloutBody>
+        {i18nMessage['IF_REGION_INCORRECT'][language?? 'en-US']}
+      </CalloutBody>
+    </Callout>
+  )
+}

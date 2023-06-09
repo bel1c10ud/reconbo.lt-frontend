@@ -1,12 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isPopupAtom, popupComponentAtom, showSpinnerAtom } from '../recoil';
 import style from './Overlay.module.css';
+import { useRouter } from 'next/router';
 
 export default function Overlay() {
-  const isPopup = useRecoilValue(isPopupAtom);
+  // const isPopup = useRecoilValue(isPopupAtom);
+  const [isPopup, setIsPopup] = useRecoilState(isPopupAtom);
   const popupComponent = useRecoilValue(popupComponentAtom);
   const showSpinner = useRecoilValue(showSpinnerAtom);
+  const router = useRouter();
+
+  useEffect(() => { 
+    if(isPopup) { setIsPopup(false) }
+  }, [router])
 
   const show = useMemo(() => {
     if((isPopup || showSpinner)) return true;

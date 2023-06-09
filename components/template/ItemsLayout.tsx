@@ -10,11 +10,8 @@ import Skin from '../ItemCards/Skin';
 import Buddy from '../ItemCards/Buddy';
 import PlayerCard from '../ItemCards/PlayerCard';
 import PlayerTitle from '../ItemCards/PlayerTitle';
-import Button from '../Button';
 import Select from '../Select';
 import Hr from '../Hr';
-import LanguageSelect from '../LanguageSelect';
-import LoginButton from '../LoginButton';
 import Footer from '../Footer';
 import { useRouter } from 'next/router';
 import Bleed from '../Bleed';
@@ -151,7 +148,7 @@ export default function ItemsLayout(props: ItemsLayoutProps) {
 }) : null }
 { (data.data?.length ?? 0) > limit ? (
             <div className={style['limit']}>
-              <Button onClick={() => setLimit(limit+pageSize)} large>{limit} / {data.data?.length ?? '?'}</Button>
+              <button onClick={() => setLimit(limit+pageSize)}>{limit} / {data.data?.length ?? '?'}</button>
             </div>
 ) : null }
           </div>
