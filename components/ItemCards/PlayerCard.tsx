@@ -5,11 +5,12 @@ import { Discount } from './ItemCard';
 import Price from '../Price';
 import ItemCardSkeleton from './ItemCardSkeleton';
 import SlideText from '../SlideText';
-import { ExternalAPI, ClientAPI } from '../../type';
+import { ExternalAPI, ClientAPI, AsyncData } from '../../type';
 
 interface PlayerCardProps {
   uuid: string,
-  bundleOffer?: ClientAPI.Item
+  bundleOffer?: ClientAPI.Item,
+  offer?: ClientAPI.Offer
 }
 
 export default function PlayerCard(props: PlayerCardProps) {
@@ -27,15 +28,23 @@ export default function PlayerCard(props: PlayerCardProps) {
     }
     return { ...obj, error: new Error('Not found player card') }
   }, [props.uuid, externalAPIPlayerCards])
+  const clientAPIOffer = useMemo(() => {
+    const obj = { data: undefined, error: undefined, isLoading: false };
+    if(props.offer)
+      return { ...obj, data: props.offer };
+    else 
+      return { ...obj, error: new Error('unknown') };
+  }, [props.offer]);
 
   if(externalAPIPlayerCard.error) return <div>error</div>
   else if(externalAPIPlayerCard.isLoading || !externalAPIPlayerCard.data) return <ItemCardSkeleton />
-  else return <PlayerCardLayout data={externalAPIPlayerCard.data} bundleOffer={props.bundleOffer} />
+  else return <PlayerCardLayout data={externalAPIPlayerCard.data} offer={clientAPIOffer} bundleOffer={props.bundleOffer} />
 }
 
 interface PlayerCardLayoutProps {
   data: ExternalAPI.PlayerCard,
-  bundleOffer?: ClientAPI.Item
+  bundleOffer?: ClientAPI.Item,
+  offer?: AsyncData<ClientAPI.Offer>
 }
 
 function PlayerCardLayout(props: PlayerCardLayoutProps) {
@@ -50,7 +59,7 @@ function PlayerCardLayout(props: PlayerCardLayoutProps) {
           <div className={style.info}>
             <SlideText>{props.data.displayName}</SlideText>
             <div className={style['value']}>
-              <Price bundleOffer={props.bundleOffer} />
+              <Price offer={props.offer} bundleOffer={props.bundleOffer} />
             </div>
           </div>
           <Discount bundleOffer={props.bundleOffer} />

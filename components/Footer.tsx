@@ -17,7 +17,7 @@ export default function Footer() {
           <Link href="/about">About</Link>
         </div>
         <div className={style['item']}>
-          <a href="https://github.com/bel1c10ud/valorant-store" target='_blank' rel='noreferrer'>
+          <a href="https://github.com/bel1c10ud/reconbo.lt-frontend" target='_blank' rel='noreferrer'>
             Github
           </a>
         </div>        

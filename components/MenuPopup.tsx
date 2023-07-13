@@ -49,7 +49,7 @@ export default function MenuPopup() {
             <li>
               <span className={style['ref']}>
                 <img className={style['icon']} src='/svg/brand-github.svg' alt='github' />
-                <a href='https://github.com/bel1c10ud/valorant-store' target='_blank' rel='noreferrer'>Github</a>
+                <a href='https://github.com/bel1c10ud/reconbo.lt-frontend' target='_blank' rel='noreferrer'>Github</a>
               </span>
             </li>
           </ul>

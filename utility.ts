@@ -1,5 +1,4 @@
-import { RiotTokenResponseType, AuthObjType, RegionCode, ExternalAPI, LanguageCode } from './type';
-
+import { RiotTokenResponseType, AuthObjType } from './type';
 
 export function GetRiotTokenFromURI(uri: string): Partial<RiotTokenResponseType> {
   let riotToken: Partial<RiotTokenResponseType> = {};

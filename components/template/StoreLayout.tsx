@@ -8,6 +8,7 @@ import { IsWrongStoreInfomation } from '../Callout';
 import Head from 'next/head';
 import Hr from '../Hr';
 import Header from '../Header';
+import AccessoryStore from '../AccessoryStore';
 
 interface StoreLayoutProps {
   data: ClientAPI.Store
@@ -30,6 +31,8 @@ export default function StoreLayout(props: StoreLayoutProps) {
 )}
         <Hr />
         <SkinsPanel data={props.data.SkinsPanelLayout} />
+        <Hr />
+        <AccessoryStore data={props.data.AccessoryStore} />
         <IsWrongStoreInfomation />
       </div>
       <Footer />

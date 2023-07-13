@@ -6,11 +6,11 @@ import { AsyncData, ClientAPI } from "../type";
 import { useAuth } from "../hooks";
 
 interface PriceProps {
+  data?: { value: number }
   offer?: AsyncData<ClientAPI.Offer>
   bonusStoreOffer?: ClientAPI.BonusStoreOffer
   bundleOffer?: ClientAPI.Item
   bundleOffers?: ClientAPI.Item[]
-  data?: { value: number }
 }
 
 export default function Price(props: PriceProps) {
@@ -42,17 +42,22 @@ export default function Price(props: PriceProps) {
     else if(props.offer.error) return <span>error{props.offer.error instanceof Error ? `: ${props.offer.error.message}` : null}</span>
     else if(props.offer.isLoading) return <span>...</span>
     else if(props.offer.data) {
-      if(props.offer.data.Cost['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741']) {
-        if(props.bonusStoreOffer?.DiscountCosts && props.bonusStoreOffer.DiscountCosts['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741']) {
-          return (
-            <>
-              <del>{props.offer.data.Cost['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741']}</del>
-              <span>{props.offer.data.Cost['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741'] - props.bonusStoreOffer.DiscountCosts['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741']}</span>
-              <span>VP</span>
-            </>
-          )
-        } else return <><span>{props.offer.data.Cost['85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741']}</span><span>VP</span></>
-      } else return <span>unknown</span>
+      const costs = Object.entries(props.offer?.data?.Cost);
+      const CurrencyTypeID = costs[0][0];
+      const CurrencyCost = costs[0][1];
+      const findCurrencyType = Object.entries(ClientAPI.CurrencyType).find(el => el[1] === CurrencyTypeID);
+      const CurrencyLabel = findCurrencyType ? findCurrencyType[0] : undefined;
+
+      if(costs.length === 1) {
+        return (
+          <>
+            <span>{CurrencyCost}</span>
+            <span>{CurrencyLabel?? 'unknown'}</span>
+          </>
+        )
+      } else {
+        return <span>unknown</span>
+      }
     }
     else return <span>unknown</span>
   }

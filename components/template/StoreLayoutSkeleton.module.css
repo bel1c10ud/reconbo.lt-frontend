@@ -27,13 +27,13 @@
   background-color: var(--greyOpacity200);
 }
 
-.skins {
+.items {
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
 }
 
-.skin {
+.item {
   flex: calc(100% / 2 - 1rem);
   overflow: hidden;
   background-color: var(--grey50);

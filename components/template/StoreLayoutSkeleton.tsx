@@ -26,11 +26,24 @@ export default function StoreLayoutSkeleton() {
             <div className={style['market-title']}></div>
             <div className={style['countdown']}></div>
           </div>
-          <div className={style['skins']}>
-            <div className={style['skin']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
-            <div className={style['skin']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
-            <div className={style['skin']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
-            <div className={style['skin']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+          <div className={style['items']}>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+          </div>
+        </>
+        <Hr />
+        <>
+          <div className={style['headline']}>
+            <div className={style['market-title']}></div>
+            <div className={style['countdown']}></div>
+          </div>
+          <div className={style['items']}>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
+            <div className={style['item']}><div className={style['ratio']}><div className={style['info']}></div></div></div>
           </div>
         </>
       </div>

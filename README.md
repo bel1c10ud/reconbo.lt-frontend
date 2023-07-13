@@ -1,4 +1,4 @@
-> Backend source code is [Here](https://github.com/bel1c10ud/valorant-store-backend)
+> Backend source code is [Here](https://github.com/bel1c10ud/reconbo.lt-backend)
 
 ## Introduce
 

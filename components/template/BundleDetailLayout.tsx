@@ -94,15 +94,15 @@ function BundleComponents(props: BundleComponentsProps) {
         }
 
         switch(item.Item.ItemTypeID) {
-          case 'e7c63390-eda7-46e0-bb7a-a6abdacd2433':
+          case ClientAPI.ItemTypeID.SkinLevelTypeID:
             return <Skin key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-          case 'd5f120f8-ff8c-4aac-92ea-f2b5acbe9475':
+          case ClientAPI.ItemTypeID.SprayTypeID:
             return <Spray key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-          case 'dd3bf334-87f3-40bd-b043-682a57a8dc3a':
+          case ClientAPI.ItemTypeID.BuddyTypeID:
             return <Buddy key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-          case '3f296c07-64c3-494c-923b-fe692a4fa1bd':
+          case ClientAPI.ItemTypeID.PlayerCardTypeID:
             return <PlayerCard key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />;
-          case 'de7caa6b-adf7-4588-bbd1-143831e786c6':
+          case ClientAPI.ItemTypeID.PlayerTitleTypeID:
             return <PlayerTitle key={item.Item.ItemID} uuid={item.Item.ItemID} />
           default:
             return <ItemCardError key={item.Item.ItemID} error={new Error('Unknown type item')} />

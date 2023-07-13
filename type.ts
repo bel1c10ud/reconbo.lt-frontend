@@ -291,26 +291,17 @@ export namespace ClientAPI {
     SingleItemOffersRemainingDurationInSeconds: number
   }
 
-  export enum CostType {
-    VP = '85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741',
-    RP = 'e59aa87c-4cbf-517a-5983-6e81511be9b7'
-  }
-
   export enum CurrencyType {
     VP = '85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741',
-    RP = 'e59aa87c-4cbf-517a-5983-6e81511be9b7'
-  }
-
-  export interface Costs {
-    [CostType.VP]?: number,
-    [CostType.RP]?: number,
+    RP = 'e59aa87c-4cbf-517a-5983-6e81511be9b7',
+    KC = '85ca954a-41f2-ce94-9b45-8ca3dd39a00d'
   }
 
   export interface BonusStoreOffer {
     BonusOfferID: string,
     Offer: Offer,
     DiscountPercent: number,
-    DiscountCosts: Costs,
+    DiscountCosts: Cost,
     IsSeen: boolean
   }
 
@@ -318,9 +309,21 @@ export namespace ClientAPI {
     BonusStoreOffers: BonusStoreOffer[]
   }
 
+  export interface AccessoryStoreOffer {
+    ContractID: string,
+    Offer: Offer
+  }
+
+  export interface AccessoryStore {
+    AccessoryStoreOffers: AccessoryStoreOffer[],
+    AccessoryStoreRemainingDurationInSeconds: number,
+    StorefrontID: string
+  }
+
   export interface Store {
     FeaturedBundle:  FeaturedBundle,
     SkinsPanelLayout: SkinsPanelLayout,
+    AccessoryStore: AccessoryStore,
     BonusStore?: BonusStore
   }
 
@@ -334,15 +337,15 @@ export namespace ClientAPI {
     Offers: Offer[]
   }
 
-  export interface Cost {
-    // [Key in ClientAPI.CurrencyType]: number
+  export type Cost = {
+    [Key in CurrencyType]: number
   }
 
   export interface Offer {
     OfferID: string,
     IsDirectPurchase: boolean,
     StartDate: string,
-    Cost: Costs,
+    Cost: Cost,
     Rewards: OfferReward[]
   }
 }
@@ -444,11 +447,6 @@ export interface RiotTokenResponseType {
   "session_state": string,
   "expires_in": string,
   "requestedDate": string
-}
-
-export enum CurrencyID {
-  RP = '85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741'
-  
 }
 
 export type LanguageCode = 'en-US'|'ko-KR'|'ja-JP';
