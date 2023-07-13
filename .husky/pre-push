@@ -1,0 +1,33 @@
+#!/bin/sh
+
+current_remote="$1"
+url="$2"
+protect_remote="live"
+
+RESET="\033[0m"
+BOLD="\033[1m"
+RED='\033[31m'
+
+message="$(echo -e "$BOLD$RED[!]$RESET Pushing to "$protect_remote" remote, are you sure? (y/n) ")";
+ask_again="$(echo -e "$BOLD$RED[!]$RESET Are you sure? (y/n) ")";
+
+if [ "$current_remote" = "$protect_remote" ]
+	then
+		read -p "$message" response1 < /dev/tty
+		if [[ "$response1" =~ ^([yY][eE][sS]|[yY])$ ]]
+			then
+				read -p "$ask_again" response2 < /dev/tty
+				if [[ "$response2" =~ ^([yY][eE][sS]|[yY])$ ]]
+					then
+						exit 0
+					else
+						echo >&2 "Cancelling push"
+						exit 1
+				fi
+			else
+				echo >&2 "Cancelling push"
+				exit 1
+		fi
+	else
+		exit 0
+fi
