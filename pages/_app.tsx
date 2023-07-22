@@ -1,12 +1,12 @@
 import '../styles/globals.css'
 import App from 'next/app'
+import InitManager from '../components/InitManager';
+import Overlay from '../components/Overlay';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { RecoilRoot} from 'recoil';
+import { gtag } from '../components/GoogleAnalytics';
 import type { AppContext, AppProps } from 'next/app'
-import InitManager from '../components/InitManager';
-import Overlay from '../components/Overlay';
-import * as gtag from './../gtag';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
