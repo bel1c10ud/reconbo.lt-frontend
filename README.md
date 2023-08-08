@@ -2,6 +2,9 @@
 
 ## Introduce
 
+![demo](/public/img/demo.gif)
+![darkmode](/public/img/darkmode.png)
+
 > This project is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc
 
 This project is a web service that allows you to check the rotation of the valorant store without running the game client.
