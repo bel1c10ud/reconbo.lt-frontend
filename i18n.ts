@@ -37,7 +37,12 @@ export const i18nMessage = {
   'ERROR': {
     'en-US': 'ERROR',
     'ko-KR': '에러',
-    'ja-JP': 'ERROR'
+    'ja-JP': 'エラー'
+  },
+  'UNKNOWN_ERROR': {
+    'en-US': 'Unknown Error',
+    'ko-KR': '알 수 없는 에러',
+    'ja-JP': '不明なエラー'
   },
   'MAIN': {
     'en-US': 'Main',
