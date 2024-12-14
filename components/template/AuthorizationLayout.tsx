@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRouter } from 'next/router';
 
-import axios, { AxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 import style from './AuthorizationLayout.module.css';
 
@@ -88,7 +88,13 @@ export default function AuthorizationLayout() {
       }
 
     } catch(error) {
-      alert((error as AxiosError).response?.data.message);
+      if(isAxiosError(error)) {
+        alert(error.response?.data.message);
+      } else if(error instanceof Error) {
+        alert(`${error.name}\n${error.message}`);
+      } else {
+        alert(i18nMessage['UNKNOWN_ERROR'][language])
+      }
     }
     setIsprocess(false);
   }
@@ -119,7 +125,13 @@ export default function AuthorizationLayout() {
       }
 
     } catch(error) {
-      alert((error as AxiosError).response?.data.message);
+      if(isAxiosError(error)) {
+        alert(error.response?.data.message);
+      } else if(error instanceof Error) {
+        alert(`${error.name}\n${error.message}`);
+      } else {
+        alert(i18nMessage['UNKNOWN_ERROR'][language])
+      }
       setPrevSession('');
       if(window.confirm("2fa fail, try again?")) {
         setCode('');
