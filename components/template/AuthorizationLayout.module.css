@@ -19,6 +19,25 @@
   color: var(--grey900);
 }
 
+.description {
+  white-space: pre;
+  line-height: 1.5em;
+}
+
+.login-link {
+  display: inline-block;
+  font-weight: 700;
+  margin: .5rem 0;
+}
+
+.login-video {
+  max-width: 100%;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
 .self > form {
   display: flex;
   flex-direction: column;

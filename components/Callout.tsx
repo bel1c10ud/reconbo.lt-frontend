@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { useRecoilValue } from 'recoil';
 import { languageAtom } from '../recoil';
 import { i18nMessage } from '../i18n';
@@ -15,7 +15,7 @@ export default function Callout(props: {
 }
 
 export function CalloutTitle(props: {
-  children?: string|string[]
+  children?: ReactNode | ReactNode[]
 }) {
   return (
     <div className={style['callout-title']}>{props.children}</div>
@@ -23,7 +23,7 @@ export function CalloutTitle(props: {
 }
 
 export function CalloutBody(props: {
-  children?: string|string[]
+  children?: ReactNode | ReactNode[]
 }) {
   return (
     <div className={style['callout-body']}>{props.children}</div>

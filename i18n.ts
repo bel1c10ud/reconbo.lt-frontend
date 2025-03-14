@@ -163,7 +163,62 @@ export const i18nMessage = {
     'en-US' : "Check out today's store rotation",
     'ko-KR' : '오늘의 상점 로테이션을 확인하세요',
     'ja-JP' : '今日のお店のローテーションをチェックしてください',
-  }
+  },  
+  'FOLLOWING_THE_DESCRIPTION_AND_IMAGE': {
+    'en-US' : "Please log in by following the description and image below",
+    'ko-KR' : '아래 설명과 이미지를 따라 로그인을 진행해주세요',
+    'ja-JP' : '以下の説明と画像に従ってログインしてください',
+  },  
+  'PASTE_THE_REDIRECTED_ADDRESS_INTO_THE_URL_FIELD': {
+    'en-US' : "Please click the login link below to log in,\nthen paste the redirected address into the 'URL' field below",
+    'ko-KR' : "아래 로그인 링크를 눌러 로그인을 진행하고,\n리다이렉트된 주소를 아래 'URL' 입력란에 붙여넣어주세요",
+    'ja-JP' : '下のログインリンクをクリックしてログインを進め、\nリダイレクトされたアドレスを下の「URL」フィールドに貼り付けてください',
+  },  
+  'LOGIN_LINK': {
+    'en-US' : "Login Link",
+    'ko-KR' : "로그인 링크",
+    'ja-JP' : 'ログインリンク',
+  },
+  'THIS_METHOD_IS_NOT_ALLOWED': {
+    'en-US' : "This method is not allowed",
+    'ko-KR' : "허용되지 않은 메서드입니다",
+    'ja-JP' : '許可されていないメソッドです',
+  },
+  'INVALID_VALUE': {
+    'en-US' : "This is an invalid value",
+    'ko-KR' : "잘못된 값입니다",
+    'ja-JP' : '間違った値です',
+  },
+  'INVALID_TOKEN': {
+    'en-US' : "Invalid token",
+    'ko-KR' : "유효하지 않은 토큰입니다",
+    'ja-JP' : '無効なトークンです',
+  },  
+  'INVALID_INPUT_VALUE': {
+    'en-US' : "Invalid input value",
+    'ko-KR' : "올바르지 않은 입력 값입니다",
+    'ja-JP' : '無効な入力値です',
+  },
+  'NOT_FOUND_TOKEN': {
+    'en-US' : "Not Found Token",
+    'ko-KR' : "토큰을 찾을 수 없습니다",
+    'ja-JP' : 'トークンが見つかりません',
+  },
+  'NOT_FOUND_PREV_SESSION': {
+    'en-US' : "Not Found Previous Session information",
+    'ko-KR' : "이전 세션 정보를 찾을 수 없습니다",
+    'ja-JP' : '前回のセッション情報が見つかりません',
+  },
+  '2FA_FAILED': {
+    'en-US' : "2FA failed, Would you like to try again?",
+    'ko-KR' : "2단계 인증에 실패했습니다, 다시 시도할까요?",
+    'ja-JP' : '2段階認証に失敗しました、再試行しますか？',
+  },
+  'REQUEST_IS_BEING_PROCESSED': {
+    'en-US' : "Your request is being processed",
+    'ko-KR' : "요청을 처리 중입니다",
+    'ja-JP' : 'リクエストを処理中です',
+  },  
 }
 
 export const i18nFeatures = [

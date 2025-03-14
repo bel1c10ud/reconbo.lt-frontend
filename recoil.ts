@@ -5,7 +5,21 @@ import { AuthObjType, LanguageCode, RegionCode } from './type';
 
 export const languageAtom = atom<undefined|LanguageCode>({
   key: 'languageAtom',
-  default: undefined
+  default: undefined,  
+  effects: [
+    ({ setSelf, onSet}) => {
+      setSelf((prevValue) => {
+        if (prevValue) {
+          document.cookie = `language=${prevValue};`;
+        }
+        return prevValue;
+      });
+
+      onSet((newValue) => {
+        document.cookie = `language=${newValue};`;
+      });
+    },
+  ],
 });
 
 export const regionAtom = atom<undefined|RegionCode>({
