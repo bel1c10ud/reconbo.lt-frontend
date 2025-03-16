@@ -29,7 +29,7 @@ export function cookieStrParser(str: string): object[] {
 export function isValidAuth(authObj: Omit<AuthObjType, 'isValid'>): boolean {
   const now = Date.now();
 
-  if(authObj.access_token === undefined) return false;
+  if(!authObj.access_token) return false;
   if(authObj.access_token.trim().length<1) return false;
   if(authObj.expiry_timestamp === undefined) return false;
   if(authObj.expiry_timestamp<= now) return false;

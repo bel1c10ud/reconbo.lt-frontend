@@ -18,7 +18,24 @@ interface SkinProps {
 }
 
 export default function Skin(props: SkinProps) {
-  const clientAPIOffers = useClientAPI<ClientAPI.Offers>('offers');
+  const clientAPIStore = useClientAPI<ClientAPI.Store>('store');
+
+  const clientAPISkinOfferData = useMemo(() => {
+    const obj = { data: undefined, error: undefined, isLoading: false };
+
+    if(clientAPIStore.error) return { ...obj, error: clientAPIStore.error }
+    else if(clientAPIStore.isLoading) return { ...obj, isLoading: true }
+    if(clientAPIStore.data && clientAPIStore.data?.SkinsPanelLayout.SingleItemStoreOffers) {
+      const data = clientAPIStore.data.SkinsPanelLayout.SingleItemStoreOffers.find(
+        (offer) => 
+          offer.OfferID === props.uuid 
+          || (offer.Rewards.length === 1 && offer.Rewards.find(reward => reward.ItemID === props.uuid))
+      );
+
+      return data ? { ...obj, data: data } : {...obj, error: new Error('Not found offers')};
+    }
+  }, [props.uuid, clientAPIStore]);
+
   const externalAPISkins = useExternalAPI<ExternalAPI.Skin[]>('skins');
   const externalAPIcontentTiers = useExternalAPI<ExternalAPI.ContentTier[]>('contentTiers');
   const externalAPISkin = useMemo(() => {
@@ -76,32 +93,7 @@ export default function Skin(props: SkinProps) {
     } else {
       return { ...obj, error: new Error('Not found content tier')}
     }
-  }, [externalAPIcontentTiers, externalAPISkin])
-  const clientAPIOffer = useMemo(() => {
-    const obj = { data: undefined, error: undefined, isLoading: false };
-
-    if(clientAPIOffers.error) return { ...obj, error: clientAPIOffers.error }
-    else if(clientAPIOffers.isLoading) return { ...obj, isLoading: true }
-    else if(clientAPIOffers.data) {
-      if(externalAPISkin.error) return { ...obj, error: externalAPISkin.error }
-      else if(externalAPISkin.isLoading) return { ...obj, isLodaing: true }
-      else if(externalAPISkin.data) {
-        const uuid = externalAPISkin.data.externalAPISkin?.levels[externalAPISkin.data.levelIndex ?? 0].uuid;
-        const data = clientAPIOffers.data.Offers.find((offer: ClientAPI.Offer) => {
-          if(offer.OfferID === uuid ) 
-            return true
-          else {
-            const reward = offer.Rewards.find(reward => reward.ItemID === uuid);
-            if(reward && offer.Rewards.length === 1) return true
-          }
-        });
-
-        return { ...obj, data: data }
-      }
-      else return { ...obj, error: new Error('Not found skin from External API') }
-    }
-    return { ...obj, error: new Error('Not found offers from Client API') }
-  }, [props.uuid, clientAPIOffers, externalAPISkin.data]);
+  }, [externalAPIcontentTiers, externalAPISkin]);
 
   if(externalAPISkin.error) return <ItemCardError error={externalAPISkin.error} />
   else if(externalAPISkin.isLoading || !externalAPISkin.data) return <ItemCardSkeleton />
@@ -110,7 +102,7 @@ export default function Skin(props: SkinProps) {
       <SkinLayout data={{
         ...externalAPISkin.data,
         contentTier: externalAPIContentTier.data,
-        offer: clientAPIOffer,
+        offer: clientAPISkinOfferData,
         bonusStoreOffer: props.bonusStoreOffer,
         bundleOffer: props.bundleOffer
         }}  

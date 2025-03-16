@@ -55,7 +55,7 @@ export default function AuthorizationLayout() {
     try {
       const res = await axios({
         method: 'POST',
-        url: `/rewrite/${region}/api/auth`,
+        url: `/rewrite-backend/${region}/api/auth`,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -105,7 +105,7 @@ export default function AuthorizationLayout() {
     try {
       const res = await axios({
         method: 'POST',
-        url: `/rewrite/${region}/api/auth`,
+        url: `/rewrite-backend/${region}/api/auth`,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -160,7 +160,7 @@ export default function AuthorizationLayout() {
 
       await axios({
         method: 'GET',
-        url: `/rewrite/${region}/auth-riotgames/userinfo`,
+        url: `/rewrite/userinfo`,
         headers: {
           'Authorization': `Bearer ${res.data.authObj.access_token}`
         },

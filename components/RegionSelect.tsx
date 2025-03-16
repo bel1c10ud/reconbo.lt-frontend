@@ -32,7 +32,7 @@ async function reqRegion(regionCode: RegionCode) {
   try {
     const res = await axios({
       method: 'POST',
-      url: '/rewrite/api/region',
+      url: '/api/region',
       data: { 
         type: 'update',
         regionCode: regionCode 

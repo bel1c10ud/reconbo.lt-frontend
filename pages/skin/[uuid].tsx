@@ -12,7 +12,7 @@ export default function SkinDetail() {
 
   const auth = useAuth();
 
-  const offers = useClientAPI<ClientAPI.Offers>('offers');
+  const clientAPIStore = useClientAPI<ClientAPI.Store>('store');
   const externalAPISkins = useExternalAPI<ExternalAPI.Skin[]>('skins');
   const externalAPIContentTiers = useExternalAPI<ExternalAPI.ContentTier[]>('contentTiers')
 
@@ -60,21 +60,24 @@ export default function SkinDetail() {
 
   const offer = useMemo(() => {
     const obj = { data: undefined, error: undefined, isLoading: false };
-    if(externalAPISkin.error) return { ...obj, error: externalAPISkin.error }
-    else if(externalAPISkin.isLoading) return { ...obj, isLoading: true }
-    else if(externalAPISkin.data) {
-      if(offers.error) return { ...obj, error: offers.error }
-      else if(offers.isLoading) return { ...obj, isLoading: true }
-      else if(offers.data) {
-        return { 
-          ...obj, 
-          data: offers.data.Offers.find((offer: any) => offer.OfferID == externalAPISkin.data.skin.levels[0].uuid)
-        }
-      }
-      else return { ...obj, error: new Error('Not found offer from Client API') }
+
+    
+    
+    if(externalAPISkin.error || clientAPIStore.error) return { ...obj, error: externalAPISkin.error || clientAPIStore.error }
+    else if(externalAPISkin.isLoading || clientAPIStore.isLoading) return { ...obj, isLoading: true }
+    else if(
+        externalAPISkin.data?.skin.levels.length 
+        && clientAPIStore.data?.SkinsPanelLayout.SingleItemStoreOffers
+    ) {
+      const data = clientAPIStore.data.SkinsPanelLayout.SingleItemStoreOffers.find(
+        (offer) => 
+          offer.OfferID === externalAPISkin.data.skin.levels[0].uuid 
+          || (offer.Rewards.length === 1 && offer.Rewards.find(reward => reward.ItemID === externalAPISkin.data.skin.levels[0].uuid))
+      );
+
+      return data ? { ...obj, data: data } : {...obj, error: new Error('Not found offers')};
     }
-    else return { ...obj, error: new Error('Not found skin from External API') }
-  }, [externalAPISkin, offers])
+  }, [clientAPIStore, externalAPISkin])
 
   if(typeof uuid === 'undefined') return <div>not found uuid!</div>
 

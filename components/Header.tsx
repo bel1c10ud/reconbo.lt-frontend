@@ -25,7 +25,7 @@ export default function Header(props: HeaderProps) {
   function onClickLogin() {
     if(auth.isValid) {
       if(window.confirm(i18nMessage['DO_YOU_WANT_TO_LOGOUT'][language?? 'en-US'])) {
-        router.push(`/rewrite/${region ?? 'kr'}/api/clear`)
+        router.push(`/api/clear`)
       }
     } else {
       router.push(`/authorization`)

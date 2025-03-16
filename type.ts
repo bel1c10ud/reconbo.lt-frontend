@@ -23,7 +23,8 @@ export namespace ExternalAPI {
     playerCards = 'https://valorant-api.com/v1/playercards',
     bundles = 'https://valorant-api.com/v1/bundles',
     buddies = 'https://valorant-api.com/v1/buddies',
-    weapons = 'https://valorant-api.com/v1/weapons'
+    weapons = 'https://valorant-api.com/v1/weapons',
+    version = 'https://valorant-api.com/v1/version'
   }
 
   export enum ThemeUuid {
@@ -230,11 +231,11 @@ export namespace ExternalAPI {
 export namespace ClientAPI {
   export enum Key {
     'store',
-    'offers'
   }
   export enum Endpoint {
-    store = '/rewrite/${region}/riot-pvp/${region}/storefront/${puuid}',
-    offers = '/rewrite/${region}/riot-pvp/${region}/offers',
+    userinfo = '/rewrite/userinfo',
+    entitlements = '/rewrite/entitlements',
+    store = '/rewrite/storefront/${region}/${puuid}'
   }
 
 
@@ -288,7 +289,8 @@ export namespace ClientAPI {
 
   export interface SkinsPanelLayout {
     SingleItemOffers: string[],
-    SingleItemOffersRemainingDurationInSeconds: number
+    SingleItemOffersRemainingDurationInSeconds: number,
+    SingleItemStoreOffers: Offer[]
   }
 
   export enum CurrencyType {

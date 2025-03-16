@@ -21,8 +21,6 @@ export default function IndexLayout() {
           <Hero />
         </div>
         <Features />
-        <LatestNews />
-        <LatestEpisodeOrAct />
       </div>
       <Footer />
     </>

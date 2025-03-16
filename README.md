@@ -23,5 +23,6 @@ In this project, login API was implemented in an unauthorized manner, and some f
 
 ## Special Thanks
 
+- [techchrism/valorant-api-docs](https://github.com/techchrism/valorant-api-docs)
 - [HeyM1ke/ValorantClientAPI](https://github.com/HeyM1ke/ValorantClientAPI)
 - [valorant-api.com](https://valorant-api.com/)

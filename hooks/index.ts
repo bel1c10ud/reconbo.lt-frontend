@@ -6,7 +6,7 @@ import { authObjAtom, languageAtom, regionAtom } from "../recoil";
 import { isValidAuth } from "../utility";
 
 import { ClientAPI, ExternalAPI, LanguageCode, ValorantOfficialWeb } from "../type";
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 
 const swrConfig = {
   revalidateOnFocus: false,
@@ -14,35 +14,29 @@ const swrConfig = {
 }
 
 const endpoint = {
-  puuid: {
+  userinfo: {
     method: 'GET',
-    url: '/rewrite/${region}/auth-riotgames/userinfo',
+    url: '/rewrite/userinfo',
     headers: {
-      'Authorization': 'Bearer ${access_token}'
+      'Authorization': 'Bearer ${access_token}',
     }
   },
   entitlements: {
     method: 'POST',
-    url: 'https://entitlements.auth.riotgames.com/api/token/v1',
+    url: '/rewrite/entitlements',
     headers: {
       'Authorization': 'Bearer ${access_token}',
       'Content-Type': 'application/json'
     }
   },
   store: {
-    method: 'GET',
-    url: '/rewrite/${region}/riot-pvp/${region}/storefront/${puuid}',
+    method: 'POST',
+    url: '/rewrite/storefront/${region}/${puuid}',
     headers: {
+      'X-Riot-ClientPlatform': '${client_platform}',
+      'X-Riot-ClientVersion': '${client_version}',
       'X-Riot-Entitlements-JWT': '${entitlements}',
-      'Authorization': 'Bearer ${access_token}'
-    }
-  },
-  offers: {
-    method: 'GET',
-    url: '/rewrite/${region}/riot-pvp/${region}/offers',
-    headers: {
-      'X-Riot-Entitlements-JWT': '${entitlements}',
-      'Authorization': 'Bearer ${access_token}'
+      'Authorization': 'Bearer ${access_token}',
     }
   }
 };
@@ -53,20 +47,14 @@ export function Fetcher(url: string) {
   }).then(res => res.data);
 }
 
-function ClientAPIFetcher(...args: ['GET'|'POST', string, string, string]) {
-  const [method, url, access_token, entitlements] = args;
-
-  let headers: {} = {  };
-
-  if(access_token)
-    headers = { ...headers, 'Authorization': `Bearer ${access_token}` }
-  if(entitlements)
-    headers = { ...headers, 'X-Riot-Entitlements-JWT': entitlements }
+function ClientAPIFetcher(...args: ['GET'|'POST', string, AxiosHeaders]) {
+  const [method, url, headers] = args;
 
   return axios({
     method: method,
     url: url,
     headers: headers,
+    data: {},
     ...(method === 'POST' ? { data: {} } : {})
   }).then(res => res.data)
 }
@@ -85,33 +73,37 @@ export function useClientAPI<T>(key: keyof typeof ClientAPI.Key) {
   const region = useRecoilValue(regionAtom);
   const authObj = useRecoilValue(authObjAtom);
 
-  const reqPuuid = useSWR(() => {
-    if(!region)
-      return false
-    else if(!isValidAuth(authObj) || !authObj.access_token)
+  const reqUserinfo = useSWR(() => {
+    if(!isValidAuth(authObj) || !authObj.access_token)
       return false
     else
-      return ['GET', `/rewrite/${region}/auth-riotgames/userinfo`, authObj.access_token];
+      return [
+        endpoint['userinfo'].method, 
+        endpoint['userinfo'].url, 
+        JSON.parse(
+          JSON.stringify(endpoint['userinfo'].headers).replaceAll('${access_token}', authObj.access_token)
+        )
+      ]
   }, ClientAPIFetcher, swrConfig);
 
   const reqEntitlements = useSWR(() => {
     if(!isValidAuth(authObj) || !authObj.access_token)
       return false
     else 
-      return ['POST', 'https://entitlements.auth.riotgames.com/api/token/v1', authObj.access_token];
+      return [
+      endpoint['entitlements'].method, 
+      endpoint['entitlements'].url, 
+      JSON.parse(
+        JSON.stringify(endpoint['entitlements'].headers).replaceAll('${access_token}', authObj.access_token)
+      )
+    ];
   }, ClientAPIFetcher, swrConfig);
 
-  const puuid = useMemo(() => {
-    if(reqPuuid.data?.hasOwnProperty('sub')) {
-      return reqPuuid.data.sub;
-    }
-  }, [reqPuuid]);
+  const reqClientVersion = useSWR([ExternalAPI.Endpoint['version'], 'en-US'], ExternalAPIFetcher, swrConfig);
 
-  const entitlements = useMemo(() => {
-    if(reqEntitlements.data?.hasOwnProperty('entitlements_token')) {
-      return reqEntitlements.data.entitlements_token
-    }
-  }, [reqEntitlements])
+  const puuid = useMemo(() => reqUserinfo.data?.sub, [reqUserinfo]);
+  const entitlements = useMemo(() => reqEntitlements.data?.entitlements_token, [reqEntitlements]);
+  const clientVersion = useMemo(() => reqClientVersion.data?.riotClientVersion, [reqClientVersion]);
 
   const { data, error } = useSWR<T>(() => {
     let objStr = JSON.stringify(endpoint[key]);
@@ -144,13 +136,23 @@ export function useClientAPI<T>(key: keyof typeof ClientAPI.Key) {
         return false
     }
 
+    if(objStr.includes('${client_platform}')) {
+      const clientPlatform = "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9";
+      objStr = objStr.replace(new RegExp(/\$\{client_platform\}/, 'gim'), clientPlatform);
+    }
+
+    if(objStr.includes('${client_version}')) {
+      if(clientVersion)
+        objStr = objStr.replace(new RegExp(/\$\{client_version\}/, 'gim'), clientVersion);
+      else 
+        return false;
+    }
+
     if(objStr.includes('${') && objStr.includes('}')) {
       return false
     } else {
       const obj = JSON.parse(objStr);
-      const access_token = obj.headers['Authorization'].replace('Bearer ', '');
-
-      return [obj.method, obj.url, access_token, obj.headers['X-Riot-Entitlements-JWT']]
+      return [obj.method, obj.url, obj.headers]
     }
   }, ClientAPIFetcher, swrConfig);
 
