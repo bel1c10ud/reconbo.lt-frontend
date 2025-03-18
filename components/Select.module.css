@@ -1,4 +1,5 @@
-.self, .select-tag {
+.self,
+.select-tag {
   appearance: none;
   background: none;
   border: 0;
@@ -38,7 +39,8 @@
   padding-bottom: 0;
 }
 
-.label, .placeholder .arrow {
+.label,
+.placeholder .arrow {
   color: var(--grey600);
 }
 
@@ -48,7 +50,8 @@
   font-size: 0.75rem;
 }
 
-.placeholder, .arrow {
+.placeholder,
+.arrow {
   display: flex;
   align-items: center;
 }
@@ -63,30 +66,47 @@
   text-align: right;
 }
 
-
 /* 기본상태 */
-.select-tag { color: rgba(0, 0, 0, 0); }
-.label { opacity: 0;}
-.placeholder { 
+.select-tag {
+  color: rgba(0, 0, 0, 0);
+}
+.label {
+  opacity: 0;
+}
+.placeholder {
   opacity: 1;
   color: var(--grey400);
 }
 
 /* 포커스 되었을 때 */
-.select-tag:focus ~ .overlay .label { opacity: 1; }
+.select-tag:focus ~ .overlay .label {
+  opacity: 1;
+}
 
 /* 값 없음, 포커스 되었을 때 */
-.select-tag[data-not-selected]:focus { color: var(--grey900); }
-.select-tag[data-not-selected]:focus option { background-color: var(--grey100); }
-.select-tag[data-not-selected]:focus option[disabled] { color: var(--grey400); }
-.select-tag[data-not-selected]:focus ~ .overlay .placeholder { opacity: 0;}
+.select-tag[data-not-selected]:focus {
+  color: var(--grey900);
+}
+.select-tag[data-not-selected]:focus option {
+  background-color: var(--grey100);
+}
+.select-tag[data-not-selected]:focus option[disabled] {
+  color: var(--grey400);
+}
+.select-tag[data-not-selected]:focus ~ .overlay .placeholder {
+  opacity: 0;
+}
 
 /* 값이 선택되었을때 */
-.select-tag[data-selected] { color: var(--grey900); }
-.select-tag[data-selected] option { background-color: var(--grey100); }
-.select-tag[data-selected] ~ .overlay .placeholder { opacity: 0; }
-.select-tag[data-selected] ~ .overlay .label { opacity: 1; }
-
-
-
-
+.select-tag[data-selected] {
+  color: var(--grey900);
+}
+.select-tag[data-selected] option {
+  background-color: var(--grey100);
+}
+.select-tag[data-selected] ~ .overlay .placeholder {
+  opacity: 0;
+}
+.select-tag[data-selected] ~ .overlay .label {
+  opacity: 1;
+}

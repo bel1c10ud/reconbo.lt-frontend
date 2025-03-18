@@ -39,9 +39,7 @@ function CountdownLayout(props: { seconds: number }) {
     }
   });
 
-  times = times.map((el, i) =>
-    i !== 0 ? el.toString().padStart(2, "0") : el.toString()
-  );
+  times = times.map((el, i) => (i !== 0 ? el.toString().padStart(2, "0") : el.toString()));
 
   return <span>{times.join(":")}</span>;
 }

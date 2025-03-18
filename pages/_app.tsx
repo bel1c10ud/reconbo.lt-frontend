@@ -1,25 +1,26 @@
-import '../styles/globals.css'
-import App from 'next/app'
-import InitManager from '../components/InitManager';
-import Overlay from '../components/Overlay';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { RecoilRoot} from 'recoil';
-import { gtag } from '../components/GoogleAnalytics';
-import type { AppContext, AppProps } from 'next/app'
+import App from "next/app";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { RecoilRoot } from "recoil";
+import type { AppContext, AppProps } from "next/app";
+import { gtag } from "@/components/GoogleAnalytics";
+import InitManager from "@/components/InitManager";
+import Overlay from "@/components/Overlay";
+
+import "@/styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
     const handleRouteChange = (url: any) => {
-      gtag.pageview(url)
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
+      gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events])
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <RecoilRoot>
@@ -27,13 +28,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
       <Overlay />
     </RecoilRoot>
-  )
+  );
 }
-
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
-  return { ...appProps }
-}
+  return { ...appProps };
+};
 
-export default MyApp
+export default MyApp;

@@ -39,7 +39,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: .75rem;
+  padding: 0.75rem;
 
   display: flex;
   flex-direction: column;
@@ -53,13 +53,13 @@
 
 .name {
   height: 1rem;
-  margin: .125rem 0;
+  margin: 0.125rem 0;
   width: 10rem;
   background-color: var(--grey400);
 }
 
 .value {
-  height: .875rem;
+  height: 0.875rem;
   margin: calc((1.25rem - 0.875rem) / 2) 0;
   width: 5rem;
   background-color: var(--grey400);

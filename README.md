@@ -17,7 +17,8 @@ This project is a web service that allows you to check the rotation of the valor
 In this project, login API was implemented in an unauthorized manner, and some functions use Headless Browser and Next.js rewrite function to operate normally in a web browser environment.
 
 #### Where Headless Browser and Rewrite are used
-- Login API 
+
+- Login API
 - Player UUID API request
 - Player Store API request
 

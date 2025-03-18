@@ -4,7 +4,6 @@
   gap: 1rem;
 }
 
-
 .headline {
   display: flex;
   flex-wrap: wrap;
@@ -25,7 +24,7 @@
 .skins {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .skins > div {

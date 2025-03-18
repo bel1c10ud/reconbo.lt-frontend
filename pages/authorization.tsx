@@ -1,11 +1,8 @@
-import type { NextPage } from 'next'
-
-import AuthorizationLayout from '../components/template/AuthorizationLayout';
+import type { NextPage } from "next";
+import AuthorizationLayout from "@/components/template/AuthorizationLayout";
 
 const AuthorizationPage: NextPage = (props) => {
-  return (
-    <AuthorizationLayout />
-  )
-}
+  return <AuthorizationLayout />;
+};
 
-export default AuthorizationPage
+export default AuthorizationPage;

@@ -10,12 +10,12 @@
 
 .articles {
   display: flex;
-  overflow-x: auto;  
+  overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   scroll-snap-stop: normal;
   scroll-snap-type: x mandatory;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .articles::-webkit-scrollbar {
@@ -52,12 +52,12 @@
 .article-title {
   font-weight: 700;
   word-break: break-word;
-  margin: .25rem 0 0 0;
+  margin: 0.25rem 0 0 0;
 }
 
 .article-title-skeleton {
   width: 100%;
   height: 1rem;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   background-color: var(--grey300);
 }

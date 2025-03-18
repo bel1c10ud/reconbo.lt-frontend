@@ -1,12 +1,12 @@
-import style from './IndexLayout.module.css';
-import Footer from '../Footer';
-import Head from 'next/head';
-import Header from '../Header';
-import LatestEpisodeOrAct from '../LatestEpisodeOrAct';
-import { ThisProjectUnofficial } from '../Callout';
-import LatestNews from '../LatestNews';
-import Hero from '../Hero';
-import Features from '../Features';
+import Head from "next/head";
+import { ThisProjectUnofficial } from "@/components/Callout";
+import Features from "@/components/Features";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import LatestEpisodeOrAct from "@/components/LatestEpisodeOrAct";
+import LatestNews from "@/components/LatestNews";
+import style from "@/components/template/IndexLayout.module.css";
 
 export default function IndexLayout() {
   return (
@@ -15,8 +15,8 @@ export default function IndexLayout() {
         <title>Reconbo.lt</title>
       </Head>
       <Header />
-      <div className={style['self']}>
-        <div className={style['intro']}>
+      <div className={style["self"]}>
+        <div className={style["intro"]}>
           <ThisProjectUnofficial />
           <Hero />
         </div>
@@ -24,5 +24,5 @@ export default function IndexLayout() {
       </div>
       <Footer />
     </>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 .self {
   width: 100%;
   border: 0;
-  border-bottom: .125rem solid var(--greyOpacity200);
+  border-bottom: 0.125rem solid var(--greyOpacity200);
 }

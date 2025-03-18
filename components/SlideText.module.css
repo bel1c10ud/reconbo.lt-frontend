@@ -7,7 +7,7 @@
   white-space: nowrap;
 }
 
-.text[data-slide='true'] {
+.text[data-slide="true"] {
   animation-name: slide;
   animation-timing-function: linear;
   animation-iteration-count: infinite;

@@ -1,11 +1,8 @@
-import type { NextPage } from 'next'
-
-import IndexLayout from '../components/template/IndexLayout'
+import type { NextPage } from "next";
+import IndexLayout from "@/components/template/IndexLayout";
 
 const Home: NextPage = (props) => {
-  return (
-    <IndexLayout />
-  )
-}
+  return <IndexLayout />;
+};
 
-export default Home
+export default Home;

@@ -1,4 +1,5 @@
-.self, .input-tag {
+.self,
+.input-tag {
   appearance: none;
   background: none;
   border: 0;
@@ -22,7 +23,9 @@
   padding: var(--input-padding);
 }
 
-.input-tag::placeholder { opacity: 0; }
+.input-tag::placeholder {
+  opacity: 0;
+}
 
 .overlay {
   position: absolute;
@@ -45,23 +48,28 @@
   font-size: 0.75rem;
 }
 
-.placeholder, .clear {
+.placeholder,
+.clear {
   display: flex;
 }
 
-.placeholder {  
+.placeholder {
   display: flex;
   align-items: center;
   height: 100%;
   width: 100%;
-  font-size: 1.125rem ;
+  font-size: 1.125rem;
   line-height: 1.75em;
   color: var(--grey400);
 }
 
 /* 기본값 */
-.label { opacity: 1;}
-.placeholder { opacity: 0;}
+.label {
+  opacity: 1;
+}
+.placeholder {
+  opacity: 0;
+}
 
 /* 입력값이 없고 포커스 되지 않았을 때 */
 .input-tag[value=""] ~ .overlay .label {
@@ -78,4 +86,3 @@
 .input-tag:focus ~ .overlay .placeholder {
   opacity: 0;
 }
-

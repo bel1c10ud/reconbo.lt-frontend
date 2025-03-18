@@ -1,7 +1,5 @@
-import style from './Hr.module.css';
+import style from "@/components/Hr.module.css";
 
 export default function Hr() {
-  return (
-    <hr className={style['self']} />
-  )
+  return <hr className={style["self"]} />;
 }

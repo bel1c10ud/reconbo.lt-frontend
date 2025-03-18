@@ -1,11 +1,8 @@
-import type { NextPage } from 'next'
-
-import AboutLayout from '../components/template/AboutLayout'
+import type { NextPage } from "next";
+import AboutLayout from "@/components/template/AboutLayout";
 
 const AboutPage: NextPage = (props) => {
-  return (
-    <AboutLayout />
-  )
-}
+  return <AboutLayout />;
+};
 
-export default AboutPage
+export default AboutPage;
