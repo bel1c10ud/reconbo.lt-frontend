@@ -76,7 +76,7 @@ export function ScrollBar(props: { contentRef: RefObject<HTMLDivElement> }) {
   const [isDragging, setIsDragging] = useState<Boolean>(false);
 
   const resizeHandler = useCallback(
-    (e) => {
+    (e: ResizeObserverEntry) => {
       if (e.target) {
         const contentScrollWidth = e.target.scrollWidth;
         const contentWidth = e.target.clientWidth;
@@ -88,7 +88,7 @@ export function ScrollBar(props: { contentRef: RefObject<HTMLDivElement> }) {
   );
 
   const scrollHandler = useCallback(
-    (e) => {
+    (e: Event) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -103,7 +103,7 @@ export function ScrollBar(props: { contentRef: RefObject<HTMLDivElement> }) {
   );
 
   const trackClickHandler = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -113,7 +113,7 @@ export function ScrollBar(props: { contentRef: RefObject<HTMLDivElement> }) {
 
       if (thumbEl && trackEl && contentEl) {
         const clickX = e.clientX;
-        const relativeX = clickX - e.target.getBoundingClientRect().left;
+        const relativeX = clickX - trackEl.getBoundingClientRect().left;
         const ratio = (relativeX - thumbEl.clientWidth / 2) / trackEl.clientWidth;
         contentEl.scrollTo({
           left: ratio * contentEl.scrollWidth,
@@ -125,7 +125,7 @@ export function ScrollBar(props: { contentRef: RefObject<HTMLDivElement> }) {
   );
 
   const thumbDrageStartHandler = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -139,7 +139,7 @@ export function ScrollBar(props: { contentRef: RefObject<HTMLDivElement> }) {
   );
 
   const thumbDraggingHandler = useCallback(
-    (e) => {
+    (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -160,7 +160,7 @@ export function ScrollBar(props: { contentRef: RefObject<HTMLDivElement> }) {
   );
 
   const thumbDragEndHandler = useCallback(
-    (e) => {
+    (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
