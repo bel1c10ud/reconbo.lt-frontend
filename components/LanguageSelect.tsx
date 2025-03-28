@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import React from "react";
 import Select from "@/components/Select";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { languageOptions } from "@/options";
 import type { LanguageCode } from "@/type";
 
 export default function LanguageSelect() {
-  const [language, setLanguage] = useRecoilState(languageAtom);
+  const language = useLanguageStore((state) => state.language);
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   function updateLanguage(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.currentTarget.value) {

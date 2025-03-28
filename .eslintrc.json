@@ -58,7 +58,7 @@
             "position": "after"
           },
           {
-            "pattern": "@/recoil{,/**}",
+            "pattern": "@/store{,/**}",
             "group": "internal",
             "position": "after"
           },

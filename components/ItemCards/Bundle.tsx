@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { useRecoilValue } from "recoil";
 import { useClientAPI, useExternalAPI } from "@/hooks";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import type { ClientAPI, ExternalAPI } from "@/type";
 import style from "@/components/ItemCards/Bundle.module.css";
 
@@ -45,7 +44,7 @@ interface BundleLayoutCompomentProps {
 
 function BundleLayout(props: BundleLayoutCompomentProps) {
   const router = useRouter();
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   function goBundleDetail(uuid: string) {
     router.push(`/bundle/${uuid}`);

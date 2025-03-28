@@ -1,14 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useState, useMemo } from "react";
-import { useRecoilState } from "recoil";
 import type { MouseEvent, MouseEventHandler } from "react";
 import { RequiredLoginCallout } from "@/components/Callout";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Price from "@/components/Price";
 import VideoPopup from "@/components/VideoPopup";
-import { isPopupAtom, popupComponentAtom } from "@/recoil";
+import { usePopupStore } from "@/store";
 import type { AsyncData, AuthObjType, ClientAPI } from "@/type";
 import { ExternalAPI } from "@/type";
 import style from "@/components/template/SkinDetailLayout.module.css";
@@ -232,8 +231,8 @@ interface LevelProps {
 }
 
 function Level(props: LevelProps) {
-  const [isPopup, setIsPopup] = useRecoilState(isPopupAtom);
-  const [popupComponent, setPopupComponent] = useRecoilState(popupComponentAtom);
+  const popup = usePopupStore((state) => state.popup);
+  const setPopup = usePopupStore((state) => state.setPopup);
 
   const levelItemType = useMemo(() => {
     const typeStr: string | undefined | null = props.data.levelItem;
@@ -258,16 +257,19 @@ function Level(props: LevelProps) {
       props.onClick(e);
     }
 
-    if (isPopup) {
-      setPopupComponent(undefined);
+    if (popup.visiable) {
+      setPopup({
+        ...popup,
+        component: undefined,
+      });
     }
 
     if (props.data.streamedVideo) {
-      setPopupComponent(() => <VideoPopup src={props.data.streamedVideo} />);
-      setIsPopup(true);
+      setPopup({
+        visiable: true,
+        component: <VideoPopup src={props.data.streamedVideo} />,
+      });
     }
-
-    return "";
   }
 
   return (

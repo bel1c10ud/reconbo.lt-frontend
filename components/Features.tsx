@@ -1,10 +1,9 @@
-import { useRecoilValue } from "recoil";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { i18nFeatures } from "@/i18n";
 import style from "@/components/Features.module.css";
 
 export default function Features() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   return (
     <section className={style["self"]}>

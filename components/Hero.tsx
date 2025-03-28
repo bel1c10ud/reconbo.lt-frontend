@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
-import { authObjAtom, languageAtom } from "@/recoil";
+import { useAuthObjStore, useLanguageStore } from "@/store";
 import { isValidAuth } from "@/utility";
 import { i18nMessage } from "@/i18n";
 import style from "@/components/Hero.module.css";
 
 export default function Hero() {
-  const lang = useRecoilValue(languageAtom);
-  const auth = useRecoilValue(authObjAtom);
+  const lang = useLanguageStore((state) => state.language);
+  const auth = useAuthObjStore((state) => state.authObj);
 
   return (
     <section className={style["self"]}>

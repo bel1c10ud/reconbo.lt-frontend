@@ -75,6 +75,7 @@
   }
 }
 
+.header .close-button:hover,
 .pages .page:hover,
 .refs .ref:hover {
   cursor: pointer;

@@ -1,7 +1,6 @@
 import App from "next/app";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { RecoilRoot } from "recoil";
 import type { AppContext, AppProps } from "next/app";
 import { gtag } from "@/components/GoogleAnalytics";
 import InitManager from "@/components/InitManager";
@@ -23,11 +22,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <RecoilRoot>
+    <>
       <InitManager />
       <Component {...pageProps} />
       <Overlay />
-    </RecoilRoot>
+    </>
   );
 }
 

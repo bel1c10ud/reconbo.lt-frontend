@@ -1,9 +1,16 @@
+import type { ReactNode } from "react";
+
 // frontend Type
 export interface AuthObjType {
   isInit?: boolean;
   access_token: undefined | string;
   expiry_timestamp: undefined | number;
   isValid: boolean;
+}
+
+export interface PopupType {
+  visiable: boolean;
+  component: ReactNode;
 }
 
 export interface AsyncData<Type> {

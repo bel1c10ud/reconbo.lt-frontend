@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useRecoilState, useRecoilValue } from "recoil";
 import MenuPopup from "@/components/MenuPopup";
 import { useAuth } from "@/hooks";
-import { isPopupAtom, languageAtom, popupComponentAtom, regionAtom } from "@/recoil";
+import { useLanguageStore, usePopupStore } from "@/store";
 import { languageOptions } from "@/options";
 import { i18nMessage } from "@/i18n";
 import type { LanguageCode } from "@/type";
@@ -15,11 +14,8 @@ export default function Header(props: HeaderProps) {
   const router = useRouter();
 
   const auth = useAuth();
-  const language = useRecoilValue(languageAtom);
-  const region = useRecoilValue(regionAtom);
-
-  const [isPopup, setIsPopup] = useRecoilState(isPopupAtom);
-  const [popupComponent, setPopupComponent] = useRecoilState(popupComponentAtom);
+  const language = useLanguageStore((state) => state.language);
+  const setPopup = usePopupStore((state) => state.setPopup);
 
   function onClickLogin() {
     if (auth.isValid) {
@@ -38,8 +34,10 @@ export default function Header(props: HeaderProps) {
           <button
             className={style["hamburger"]}
             onClick={() => {
-              setPopupComponent(() => <MenuPopup />);
-              setIsPopup(true);
+              setPopup({
+                visiable: true,
+                component: <MenuPopup />,
+              });
             }}
           >
             <Image src="/svg/menu.svg" width={24} height={24} alt="menu" />
@@ -61,7 +59,8 @@ export default function Header(props: HeaderProps) {
 }
 
 function LanguageSelector() {
-  const [language, setLanguage] = useRecoilState(languageAtom);
+  const language = useLanguageStore((state) => state.language);
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   function onChangeSelect(e: React.ChangeEvent<HTMLSelectElement>) {
     if (languageOptions.find((lang) => lang.value === e.target.value)) {

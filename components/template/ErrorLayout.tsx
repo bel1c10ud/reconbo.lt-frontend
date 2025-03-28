@@ -1,9 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useRecoilValue } from "recoil";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import style from "@/components/template/ErrorLayout.module.css";
 
@@ -13,7 +12,7 @@ interface ErrorLayoutProps {
 
 export default function ErrorLayout(props: ErrorLayoutProps) {
   const router = useRouter();
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
   return (
     <>
       <Head>

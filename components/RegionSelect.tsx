@@ -1,14 +1,14 @@
 import axios from "axios";
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
 import Select from "@/components/Select";
-import { authObjAtom, regionAtom } from "@/recoil";
+import { useAuthObjStore, useRegionStore } from "@/store";
 import { regionOptions } from "@/options";
 import type { RegionCode } from "@/type";
 
 export default function RegionSelect(props: { disabled?: boolean }) {
-  const [region, setRegion] = useRecoilState(regionAtom);
-  const authObj = useRecoilValue(authObjAtom);
+  const region = useRegionStore((state) => state.region);
+  const setRegion = useRegionStore((state) => state.setRegion);
+  const authObj = useAuthObjStore((state) => state.authObj);
 
   function updateRegion(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.currentTarget.value && e.currentTarget.value.length > 0) {

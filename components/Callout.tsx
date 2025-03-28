@@ -1,6 +1,5 @@
-import { useRecoilValue } from "recoil";
 import type { ReactElement, ReactNode } from "react";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import style from "@/components/Callout.module.css";
 
@@ -17,7 +16,7 @@ export function CalloutBody(props: { children?: ReactNode | ReactNode[] }) {
 }
 
 export function RequiredLoginCallout() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   return (
     <Callout>
@@ -27,7 +26,7 @@ export function RequiredLoginCallout() {
 }
 
 export function IsNotAccurate() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   return (
     <Callout>
@@ -39,7 +38,7 @@ export function IsNotAccurate() {
 }
 
 export function ThisProjectUnofficial() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   return (
     <Callout>
@@ -49,7 +48,7 @@ export function ThisProjectUnofficial() {
 }
 
 export function LegalNotice() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   return (
     <Callout>
@@ -67,13 +66,11 @@ export function CalloutSkeleton() {
 }
 
 export function IsWrongStoreInfomation() {
-  const language = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
   return (
     <Callout>
-      <CalloutTitle>
-        ℹ️ {i18nMessage["IS_WRONG_STORE_INFORMATION"][language ?? "en-US"]}
-      </CalloutTitle>
-      <CalloutBody>{i18nMessage["IF_REGION_INCORRECT"][language ?? "en-US"]}</CalloutBody>
+      <CalloutTitle>ℹ️ {i18nMessage["IS_WRONG_STORE_INFORMATION"][lang ?? "en-US"]}</CalloutTitle>
+      <CalloutBody>{i18nMessage["IF_REGION_INCORRECT"][lang ?? "en-US"]}</CalloutBody>
     </Callout>
   );
 }

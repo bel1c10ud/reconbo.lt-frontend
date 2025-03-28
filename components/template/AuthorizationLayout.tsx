@@ -3,14 +3,13 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 import Callout, { CalloutTitle, CalloutBody } from "@/components/Callout";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import RegionSelect from "@/components/RegionSelect";
 import TextInput from "@/components/TextInput";
-import { authObjAtom, regionAtom, languageAtom, showSpinnerAtom } from "@/recoil";
+import { useAuthObjStore, useLanguageStore, useRegionStore, useShowSpinnerStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import type { RegionCode } from "@/type";
 import style from "@/components/template/AuthorizationLayout.module.css";
@@ -27,11 +26,11 @@ export default function AuthorizationLayout() {
   const [process, setProcess] = useState<"AUTH" | "MULTI" | "MANUAL">("MANUAL");
   const [isProcess, setIsprocess] = useState(false);
 
-  const region = useRecoilValue(regionAtom);
-  const language = useRecoilValue(languageAtom) ?? "en-US";
+  const region = useRegionStore((state) => state.region);
+  const language = useLanguageStore((state) => state.language) ?? "en-US";
 
-  const setShowSpinner = useSetRecoilState(showSpinnerAtom);
-  const setAuthObj = useSetRecoilState(authObjAtom);
+  const setShowSpinner = useShowSpinnerStore((state) => state.setShowSpinner);
+  const setAuthObj = useAuthObjStore((state) => state.setAuthObj);
 
   useEffect(() => {
     const regionEl: HTMLSelectElement | null = document.querySelector('select[name="region"]');

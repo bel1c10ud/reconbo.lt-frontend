@@ -1,33 +1,32 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isPopupAtom, popupComponentAtom, showSpinnerAtom } from "@/recoil";
+import { useEffect, useMemo } from "react";
+import { usePopupStore, useShowSpinnerStore } from "@/store";
 import style from "@/components/Overlay.module.css";
 
 export default function Overlay() {
-  const [isPopup, setIsPopup] = useRecoilState(isPopupAtom);
-  const popupComponent = useRecoilValue(popupComponentAtom);
-  const showSpinner = useRecoilValue(showSpinnerAtom);
   const router = useRouter();
+  const popup = usePopupStore((state) => state.popup);
+  const setPopup = usePopupStore((state) => state.setPopup);
+  const showSpinner = useShowSpinnerStore((state) => state.showSpinner);
 
   useEffect(() => {
-    if (isPopup) {
-      setIsPopup(false);
+    if (popup.visiable) {
+      setPopup({ ...popup, visiable: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const show = useMemo(() => {
-    if (isPopup || showSpinner) return true;
+    if (popup.visiable || showSpinner) return true;
     else return false;
-  }, [isPopup, showSpinner]);
+  }, [popup, showSpinner]);
 
   return (
     <div className={style["self"]} {...{ [show ? "data-layer-show" : "data-layer-hide"]: "" }}>
-      {isPopup && (
+      {popup.visiable && (
         <div className={style["layer"]}>
           <Background />
-          {popupComponent}
+          {popup.component}
         </div>
       )}
       {showSpinner && (

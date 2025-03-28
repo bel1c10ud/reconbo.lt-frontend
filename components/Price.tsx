@@ -1,6 +1,5 @@
-import { useRecoilValue } from "recoil";
 import { useAuth } from "@/hooks";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import type { AsyncData } from "@/type";
 import { ClientAPI } from "@/type";
@@ -15,7 +14,7 @@ interface PriceProps {
 
 export default function Price(props: PriceProps) {
   const auth = useAuth();
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   if (props.data)
     return (

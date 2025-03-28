@@ -1,15 +1,14 @@
 import Head from "next/head";
-import { useRecoilValue } from "recoil";
 import { LegalNotice } from "@/components/Callout";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hr from "@/components/Hr";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import style from "@/components/template/AboutLayout.module.css";
 
 export default function AboutLayout() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   return (
     <>

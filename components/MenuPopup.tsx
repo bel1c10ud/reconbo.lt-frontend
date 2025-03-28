@@ -1,21 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { isPopupAtom, languageAtom } from "@/recoil";
+import { useLanguageStore, usePopupStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import style from "@/components/MenuPopup.module.css";
 
 export default function MenuPopup() {
   const router = useRouter();
-  const [isPopup, setIsPopup] = useRecoilState(isPopupAtom);
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
+  const closePopup = usePopupStore((state) => state.closePopup);
 
   return (
     <div className={style["self"]}>
       <div className={style["wrap"]}>
         <div className={style["header"]}>
-          <button className={style["close-button"]} onClick={() => setIsPopup(false)}>
+          <button className={style["close-button"]} onClick={closePopup}>
             <Image src="/svg/x.svg" width={24} height={24} alt="close button icon" />
           </button>
         </div>
@@ -26,7 +25,7 @@ export default function MenuPopup() {
                 className={style["page"]}
                 onClick={() => {
                   router.push("/");
-                  setIsPopup(false);
+                  closePopup();
                 }}
               >
                 <Image
@@ -44,7 +43,7 @@ export default function MenuPopup() {
                 className={style["page"]}
                 onClick={() => {
                   router.push("/store");
-                  setIsPopup(false);
+                  closePopup();
                 }}
               >
                 <Image
@@ -62,7 +61,7 @@ export default function MenuPopup() {
                 className={style["page"]}
                 onClick={() => {
                   router.push("/items");
-                  setIsPopup(false);
+                  closePopup();
                 }}
               >
                 <Image

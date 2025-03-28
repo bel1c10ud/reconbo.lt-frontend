@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useMemo } from "react";
-import { useRecoilValue } from "recoil";
 import useSWR from "swr";
-import { authObjAtom, languageAtom, regionAtom } from "@/recoil";
+import { useAuthObjStore, useLanguageStore, useRegionStore } from "@/store";
 import { isValidAuth } from "@/utility";
 import type { AxiosHeaders } from "axios";
 import type { ClientAPI, LanguageCode, ValorantOfficialWeb } from "@/type";
@@ -70,8 +69,8 @@ function ExternalAPIFetcher(url: string, lang: LanguageCode) {
 }
 
 export function useClientAPI<T>(key: keyof typeof ClientAPI.Key) {
-  const region = useRecoilValue(regionAtom);
-  const authObj = useRecoilValue(authObjAtom);
+  const region = useRegionStore((state) => state.region);
+  const authObj = useAuthObjStore((state) => state.authObj);
 
   const reqUserinfo = useSWR(
     () => {
@@ -176,7 +175,7 @@ export function useClientAPI<T>(key: keyof typeof ClientAPI.Key) {
 }
 
 export function useExternalAPI<T>(key: keyof typeof ExternalAPI.Endpoint) {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
   const endpoint = ExternalAPI.Endpoint[key];
 
   const { data, error } = useSWR<T>([endpoint, lang ?? "en-US"], ExternalAPIFetcher, swrConfig);
@@ -187,7 +186,7 @@ export function useExternalAPI<T>(key: keyof typeof ExternalAPI.Endpoint) {
 }
 
 export function useAuth() {
-  const authObj = useRecoilValue(authObjAtom);
+  const authObj = useAuthObjStore((state) => state.authObj);
 
   const obj = {
     ...authObj,
@@ -198,7 +197,7 @@ export function useAuth() {
 }
 
 export function useActData() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
   const reqPageData = useSWR<ValorantOfficialWeb.LatestEpisodeOrAct>(
     `/api/latestEpisodeOrAct?lang=${lang ?? "en-US"}`,
     Fetcher,
@@ -213,7 +212,7 @@ export function useActData() {
 }
 
 export function usePlayValPageData() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
   const reqPageData = useSWR<ValorantOfficialWeb.PageDataResult>(
     `/api/playvalorant-page-data?lang=${lang ?? "en-US"}`,
     Fetcher,

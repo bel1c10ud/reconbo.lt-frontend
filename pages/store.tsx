@@ -1,18 +1,17 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
-import { useRecoilValue } from "recoil";
 import ErrorLayout from "@/components/template/ErrorLayout";
 import StoreLayout from "@/components/template/StoreLayout";
 import StoreLayoutSkeleton from "@/components/template/StoreLayoutSkeleton";
 import { useAuth, useClientAPI } from "@/hooks";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import type { ClientAPI } from "@/type";
 
 export default function StorePage() {
   const router = useRouter();
   const auth = useAuth();
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
   const clientAPIStore = useClientAPI<ClientAPI.Store>("store");
 
   let count = useRef(0);

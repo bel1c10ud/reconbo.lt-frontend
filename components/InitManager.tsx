@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
 import useSWR from "swr";
 import { Fetcher } from "@/hooks";
-import { authObjAtom, languageAtom, regionAtom } from "@/recoil";
+import { useAuthObjStore, useLanguageStore, useRegionStore } from "@/store";
 import { regionOptions, languageOptions } from "@/options";
 import type { RegionOption } from "@/options";
 import type { RegionCode, LanguageCode } from "@/type";
 
 export default function InitManager() {
-  const [authObj, setAuthObj] = useRecoilState(authObjAtom);
-  const [region, setRegion] = useRecoilState(regionAtom);
-  const [language, setLanguage] = useRecoilState(languageAtom);
+  const authObj = useAuthObjStore((state) => state.authObj);
+  const setAuthObj = useAuthObjStore((state) => state.setAuthObj);
+  const setRegion = useRegionStore((state) => state.setRegion);
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   const reqCookie = useSWR("/api/cookie", Fetcher);
 

@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
-import { languageAtom } from "@/recoil";
+import { useLanguageStore } from "@/store";
 import { i18nMessage } from "@/i18n";
 import style from "@/components/Footer.module.css";
 
 export default function Footer() {
-  const lang = useRecoilValue(languageAtom);
+  const lang = useLanguageStore((state) => state.language);
 
   return (
     <div className={style["self"]}>
