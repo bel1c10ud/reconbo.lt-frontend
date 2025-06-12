@@ -69,9 +69,8 @@ export default function SkinDetail() {
 
     if (externalAPISkin.error || clientAPIStore.error)
       return { ...obj, error: externalAPISkin.error || clientAPIStore.error };
-    else if (externalAPISkin.isLoading || clientAPIStore.isLoading)
-      return { ...obj, isLoading: true };
-    else if (
+    if (externalAPISkin.isLoading || clientAPIStore.isLoading) return { ...obj, isLoading: true };
+    if (
       externalAPISkin.data?.skin.levels.length &&
       clientAPIStore.data?.SkinsPanelLayout.SingleItemStoreOffers
     ) {
@@ -84,8 +83,24 @@ export default function SkinDetail() {
             )),
       );
 
-      return data ? { ...obj, data: data } : { ...obj, error: new Error("Not found offers") };
+      if (data) return { ...obj, data };
     }
+    if (
+      externalAPISkin.data?.skin.levels.length &&
+      clientAPIStore.data?.BonusStore?.BonusStoreOffers
+    ) {
+      const data = clientAPIStore.data.BonusStore.BonusStoreOffers.find(
+        (bounsStoreOffer) =>
+          bounsStoreOffer.Offer.OfferID === externalAPISkin.data.skin.levels[0].uuid ||
+          (bounsStoreOffer.Offer.Rewards.length === 1 &&
+            bounsStoreOffer.Offer.Rewards.find(
+              (reward) => reward.ItemID === externalAPISkin.data.skin.levels[0].uuid,
+            )),
+      );
+
+      if (data) return { ...obj, data: data.Offer };
+    }
+    return { ...obj, error: new Error("Not found offers") };
   }, [clientAPIStore, externalAPISkin]);
 
   if (typeof uuid === "undefined") return <div>not found uuid!</div>;

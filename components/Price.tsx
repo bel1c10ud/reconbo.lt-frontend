@@ -23,7 +23,29 @@ export default function Price(props: PriceProps) {
         <span>VP</span>
       </>
     );
-  else if (props.bundleOffers) {
+  else if (props.bonusStoreOffer) {
+    const baseCosts = Object.entries(props.bonusStoreOffer.Offer.Cost);
+    const baseCostCurrencyTypeID = baseCosts[0][0] as ClientAPI.CurrencyType;
+    const baseCost = props.bonusStoreOffer.Offer.Cost[baseCostCurrencyTypeID];
+    const baseCostCurrencyLabel =
+      Object.entries(ClientAPI.CurrencyType)
+        .find((el) => el[1] === baseCostCurrencyTypeID)
+        ?.shift() ?? "unknown";
+
+    const discountedCost = props.bonusStoreOffer.DiscountCosts[baseCostCurrencyTypeID];
+
+    if (baseCostCurrencyTypeID && baseCost && discountedCost) {
+      return (
+        <>
+          <del>{baseCost}</del>
+          <span>{discountedCost}</span>
+          <span>{baseCostCurrencyLabel}</span>
+        </>
+      );
+    } else {
+      return <span>unknown</span>;
+    }
+  } else if (props.bundleOffers) {
     let vp = 0;
     props.bundleOffers.forEach((offer) => {
       if (offer.CurrencyID === ClientAPI.CurrencyType.VP) vp = vp + offer.DiscountedPrice;

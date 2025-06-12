@@ -65,16 +65,18 @@ export default function SkinDetailLayout(props: SkinDetailLayoutProps) {
           <PreviewImage src={previewImage?.uri} />
           <PreviewDescription>{previewImage?.description}</PreviewDescription>
         </div>
-        <div className={style["option"]}>
-          <div className={style["option-label"]}>PRICE</div>
-          {props.auth.isValid ? (
-            <div className={style["price"]}>
-              <Price offer={props.data.offer} />
-            </div>
-          ) : (
-            <RequiredLoginCallout />
-          )}
-        </div>
+        {props.data.offer?.data && (
+          <div className={style["option"]}>
+            <div className={style["option-label"]}>PRICE</div>
+            {props.auth.isValid ? (
+              <div className={style["price"]}>
+                <Price offer={props.data.offer} />
+              </div>
+            ) : (
+              <RequiredLoginCallout />
+            )}
+          </div>
+        )}
         <div className={style["option"]}>
           <div className={style["option-label"]}>CHROMA</div>
           <Chromas

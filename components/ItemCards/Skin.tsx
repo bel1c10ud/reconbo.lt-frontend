@@ -210,24 +210,42 @@ function SkinLayout(props: SkinLayoutProps) {
             </div>
             <div className={style.overlay}>
               <div className={style.info}>
-                <SlideText>{name}</SlideText>
-                <div className={style["value"]}>
-                  <div className={style["content-tier"]}>
-                    <Image
-                      width={28}
-                      height={28}
-                      alt={`${props.data.contentTier?.devName ?? "unknown"} tier`}
-                      src={props.data.contentTier?.displayIcon ?? "/svg/question-mark.svg"}
-                    />
+                {props.data.offer?.data || props.data.bonusStoreOffer || props.data.bundleOffer ? (
+                  <>
+                    <div className={style["title"]}>
+                      <SlideText>{name}</SlideText>
+                    </div>
+                    <div className={style["value"]}>
+                      <div className={style["content-tier"]}>
+                        <Image
+                          width={28}
+                          height={28}
+                          alt={`${props.data.contentTier?.devName ?? "unknown"} tier`}
+                          src={props.data.contentTier?.displayIcon ?? "/svg/question-mark.svg"}
+                        />
+                      </div>
+                      <div className={style["price"]}>
+                        <Price
+                          offer={props.data.offer}
+                          bonusStoreOffer={props.data.bonusStoreOffer}
+                          bundleOffer={props.data.bundleOffer}
+                        />
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className={style["title"]}>
+                    <div className={style["content-tier"]}>
+                      <Image
+                        width={28}
+                        height={28}
+                        alt={`${props.data.contentTier?.devName ?? "unknown"} tier`}
+                        src={props.data.contentTier?.displayIcon ?? "/svg/question-mark.svg"}
+                      />
+                    </div>
+                    <SlideText>{name}</SlideText>
                   </div>
-                  <div className={style["price"]}>
-                    <Price
-                      offer={props.data.offer}
-                      bonusStoreOffer={props.data.bonusStoreOffer}
-                      bundleOffer={props.data.bundleOffer}
-                    />
-                  </div>
-                </div>
+                )}
               </div>
               <Discount
                 bundleOffer={props.data.bundleOffer}

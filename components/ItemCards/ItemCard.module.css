@@ -94,6 +94,11 @@
   background-color: var(--blackOpacity600);
 }
 
+.title {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .name {
   font-size: 1rem;
   word-break: keep-all;
