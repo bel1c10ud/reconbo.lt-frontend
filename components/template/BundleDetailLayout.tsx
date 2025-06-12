@@ -120,7 +120,13 @@ function BundleComponents(props: BundleComponentsProps) {
                 />
               );
             case ClientAPI.ItemTypeID.PlayerTitleTypeID:
-              return <PlayerTitle key={item.Item.ItemID} uuid={item.Item.ItemID} />;
+              return (
+                <PlayerTitle
+                  key={item.Item.ItemID}
+                  uuid={item.Item.ItemID}
+                  bundleOffer={bundleOffer}
+                />
+              );
             default:
               return (
                 <ItemCardError key={item.Item.ItemID} error={new Error("Unknown type item")} />
