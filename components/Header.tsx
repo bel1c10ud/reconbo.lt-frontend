@@ -8,9 +8,7 @@ import { i18nMessage } from "@/i18n";
 import type { LanguageCode } from "@/type";
 import style from "@/components/Header.module.css";
 
-interface HeaderProps {}
-
-export default function Header(props: HeaderProps) {
+export default function Header() {
   const router = useRouter();
 
   const auth = useAuth();
@@ -28,7 +26,7 @@ export default function Header(props: HeaderProps) {
   }
 
   return (
-    <div className={style["self"]}>
+    <header className={style["self"]}>
       <div className={style["nav"]}>
         <div className={style["left"]}>
           <button
@@ -54,7 +52,7 @@ export default function Header(props: HeaderProps) {
           </button>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 

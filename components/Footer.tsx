@@ -8,7 +8,7 @@ export default function Footer() {
   const lang = useLanguageStore((state) => state.language);
 
   return (
-    <div className={style["self"]}>
+    <footer className={style["self"]}>
       <div className={style["logo"]}>
         <Image src="/svg/wifi_tethering.svg" width={64} height={64} alt="logo" />
       </div>
@@ -36,6 +36,6 @@ export default function Footer() {
         </div>
       </div>
       <div className={style["legal-notice"]}>{i18nMessage["LEGAL_NOTICE"][lang ?? "en-US"]}</div>
-    </div>
+    </footer>
   );
 }
