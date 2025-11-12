@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import { useMemo } from "react";
+import Link from "@/components/Link";
 import { useClientAPI, useExternalAPI } from "@/hooks";
 import { useLanguageStore } from "@/store";
 import type { ClientAPI, ExternalAPI } from "@/type";
@@ -43,38 +43,32 @@ interface BundleLayoutCompomentProps {
 }
 
 function BundleLayout(props: BundleLayoutCompomentProps) {
-  const router = useRouter();
   const lang = useLanguageStore((state) => state.language);
-
-  function goBundleDetail(uuid: string) {
-    router.push(`/bundle/${uuid}`);
-  }
 
   return (
     <div className={style["self"]}>
       <div className={style["ratio"]}></div>
-      <div
-        className={style["wrap"]}
-        onClick={() => goBundleDetail(props.externalAPIBundleData.uuid)}
-      >
-        <img
-          src={props.externalAPIBundleData.displayIcon}
-          alt={props.externalAPIBundleData.description}
-        />
-        <div className={style["overlay"]}>
-          <div className={style["title"]}>{props.externalAPIBundleData.displayName}</div>
-          {props.externalAPIBundleData.displayNameSubText?.length ? (
-            <div className={style["subtitle"]}>
-              <span lang={lang ?? "en-US"}>{props.externalAPIBundleData.displayNameSubText}</span>
-            </div>
-          ) : null}
-          {props.externalAPIBundleData.extraDescription?.length ? (
-            <div className={style["extra-desc"]}>
-              <span lang={lang ?? "en-US"}>{props.externalAPIBundleData.extraDescription}</span>
-            </div>
-          ) : null}
+      <Link href={`/bundle/${props.externalAPIBundleData.uuid}`}>
+        <div className={style["wrap"]}>
+          <img
+            src={props.externalAPIBundleData.displayIcon}
+            alt={props.externalAPIBundleData.description}
+          />
+          <div className={style["overlay"]}>
+            <div className={style["title"]}>{props.externalAPIBundleData.displayName}</div>
+            {props.externalAPIBundleData.displayNameSubText?.length ? (
+              <div className={style["subtitle"]}>
+                <span lang={lang ?? "en-US"}>{props.externalAPIBundleData.displayNameSubText}</span>
+              </div>
+            ) : null}
+            {props.externalAPIBundleData.extraDescription?.length ? (
+              <div className={style["extra-desc"]}>
+                <span lang={lang ?? "en-US"}>{props.externalAPIBundleData.extraDescription}</span>
+              </div>
+            ) : null}
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

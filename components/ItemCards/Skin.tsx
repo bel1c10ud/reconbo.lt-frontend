@@ -1,10 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { Discount } from "@/components/ItemCards/ItemCard";
 import ItemCardError from "@/components/ItemCards/ItemCardError";
 import ItemCardSkeleton from "@/components/ItemCards/ItemCardSkeleton";
+import Link from "@/components/Link";
 import Price from "@/components/Price";
 import SlideText from "@/components/SlideText";
 import { useClientAPI, useExternalAPI } from "@/hooks";
@@ -171,36 +171,12 @@ function SkinLayout(props: SkinLayoutProps) {
     }
   }, [props.data.externalAPISkin]);
 
-  function onClickSkin() {
-    if (props.data?.externalAPISkin) {
-      const queryObj: { [key: string]: number | string | boolean | undefined } = {
-        level: props.data.levelIndex,
-        chroma: props.data.chromaIndex,
-      };
-
-      const queryArray = Object.entries(queryObj).reduce<string[]>((prev, query) => {
-        const [key, value] = query;
-
-        if (value === undefined || value === false || value == 0) return prev;
-        else if (value === true) return prev.concat(key);
-        else return prev.concat(`${key}=${value}`);
-      }, []);
-
-      if (queryArray.length > 0) {
-        return router.push(`/skin/${props.data.externalAPISkin.uuid}?${queryArray.join("&")}`);
-      } else {
-        return router.push(`/skin/${props.data.externalAPISkin.uuid}`);
-      }
-    }
-  }
-
   return (
     <div
       className={style.self}
       data-item-type="skin"
       data-tier={props.data.contentTier?.devName}
       data-category={category}
-      onClick={onClickSkin}
     >
       <Link href={detailURI ?? "/"}>
         <div className={style.ratio}>
