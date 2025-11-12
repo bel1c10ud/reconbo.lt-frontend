@@ -1,6 +1,5 @@
 import Head from "next/head";
 import AccessoryStore from "@/components/AccessoryStore";
-import { IsWrongStoreInfomation } from "@/components/Callout";
 import FeaturedBundle from "@/components/FeaturedBundle";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -33,7 +32,6 @@ export default function StoreLayout(props: StoreLayoutProps) {
         <SkinsPanel data={props.data.SkinsPanelLayout} />
         <Hr />
         <AccessoryStore data={props.data.AccessoryStore} />
-        <IsWrongStoreInfomation />
       </div>
       <Footer />
     </>

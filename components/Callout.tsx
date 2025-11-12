@@ -64,13 +64,3 @@ export function CalloutSkeleton() {
     </Callout>
   );
 }
-
-export function IsWrongStoreInfomation() {
-  const lang = useLanguageStore((state) => state.language);
-  return (
-    <Callout>
-      <CalloutTitle>ℹ️ {i18nMessage["IS_WRONG_STORE_INFORMATION"][lang ?? "en-US"]}</CalloutTitle>
-      <CalloutBody>{i18nMessage["IF_REGION_INCORRECT"][lang ?? "en-US"]}</CalloutBody>
-    </Callout>
-  );
-}

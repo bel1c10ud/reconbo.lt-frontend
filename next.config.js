@@ -12,6 +12,10 @@ module.exports = {
         destination: "https://:region.backend.reconbo.lt/:path*",
       },
       {
+        source: "/rewrite/geo",
+        destination: "https://riot-geo.pas.si.riotgames.com/pas/v1/product/valorant",
+      },
+      {
         source: "/rewrite/userinfo",
         destination: "https://auth.riotgames.com/userinfo",
       },

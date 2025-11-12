@@ -51,6 +51,20 @@ export const useAuthObjStore = create<AuthObjState>()((set) => {
   };
 });
 
+interface IdTokenState {
+  idToken: undefined | string;
+  setIdToken: (idToken: undefined | string) => void;
+}
+
+export const useIdTokenStore = create<IdTokenState>()((set) => {
+  return {
+    idToken: undefined,
+    setIdToken(idToken: undefined | string) {
+      set({ idToken });
+    },
+  };
+});
+
 interface ShowSpinnerState {
   showSpinner: boolean;
   setShowSpinner: (showSpinner: boolean) => void;

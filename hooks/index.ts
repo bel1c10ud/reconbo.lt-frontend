@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useMemo } from "react";
 import useSWR from "swr";
-import { useAuthObjStore, useLanguageStore, useRegionStore } from "@/store";
+import { useAuthObjStore, useIdTokenStore, useLanguageStore } from "@/store";
 import { isValidAuth } from "@/utility";
 import type { AxiosHeaders } from "axios";
 import type { ClientAPI, LanguageCode, ValorantOfficialWeb } from "@/type";
@@ -13,6 +13,16 @@ const swrConfig = {
 };
 
 const endpoint = {
+  geo: {
+    method: "PUT",
+    url: "/rewrite/geo",
+    headers: {
+      Authorization: "Bearer ${access_token}",
+    },
+    data: {
+      id_token: "${id_token}",
+    },
+  },
   userinfo: {
     method: "GET",
     url: "/rewrite/userinfo",
@@ -46,14 +56,14 @@ export function Fetcher(url: string) {
   }).then((res) => res.data);
 }
 
-function ClientAPIFetcher(...args: ["GET" | "POST", string, AxiosHeaders]) {
-  const [method, url, headers] = args;
+function ClientAPIFetcher(...args: ["GET" | "POST", string, AxiosHeaders, Record<string, any>]) {
+  const [method, url, headers, data] = args;
 
   return axios({
     method: method,
     url: url,
     headers: headers,
-    data: {},
+    data: data,
     ...(method === "POST" ? { data: {} } : {}),
   }).then((res) => res.data);
 }
@@ -69,8 +79,28 @@ function ExternalAPIFetcher(url: string, lang: LanguageCode) {
 }
 
 export function useClientAPI<T>(key: keyof typeof ClientAPI.Key) {
-  const region = useRegionStore((state) => state.region);
   const authObj = useAuthObjStore((state) => state.authObj);
+  const idToken = useIdTokenStore((state) => state.idToken);
+
+  const reqGeo = useSWR(
+    () => {
+      if (!isValidAuth(authObj) || !authObj.access_token || !idToken) return false;
+      else
+        return [
+          endpoint["geo"].method,
+          endpoint["geo"].url,
+          JSON.parse(
+            JSON.stringify(endpoint["geo"].headers).replaceAll(
+              "${access_token}",
+              authObj.access_token,
+            ),
+          ),
+          JSON.parse(JSON.stringify(endpoint["geo"].data).replaceAll("${id_token}", idToken)),
+        ];
+    },
+    ClientAPIFetcher,
+    swrConfig,
+  );
 
   const reqUserinfo = useSWR(
     () => {
@@ -116,6 +146,7 @@ export function useClientAPI<T>(key: keyof typeof ClientAPI.Key) {
     swrConfig,
   );
 
+  const region = useMemo(() => reqGeo.data?.affinities.live, [reqGeo]);
   const puuid = useMemo(() => reqUserinfo.data?.sub, [reqUserinfo]);
   const entitlements = useMemo(() => reqEntitlements.data?.entitlements_token, [reqEntitlements]);
   const clientVersion = useMemo(() => reqClientVersion.data?.riotClientVersion, [reqClientVersion]);
@@ -132,6 +163,11 @@ export function useClientAPI<T>(key: keyof typeof ClientAPI.Key) {
       if (objStr.includes("${access_token}")) {
         if (isValidAuth(authObj) && authObj.access_token)
           objStr = objStr.replace(new RegExp(/\$\{access_token\}/, "gim"), authObj.access_token);
+        else return false;
+      }
+
+      if (objStr.includes("${id_token}")) {
+        if (idToken) objStr = objStr.replace(new RegExp(/\$\{id_token\}/, "gim"), idToken);
         else return false;
       }
 

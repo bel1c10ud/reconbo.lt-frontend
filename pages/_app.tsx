@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import type { AppContext, AppProps } from "next/app";
 import { gtag } from "@/components/GoogleAnalytics";
-import InitManager from "@/components/InitManager";
 import Overlay from "@/components/Overlay";
-
+import useInitializationTokensFromCookie from "@/hooks/useInitializationTokensFromCookie";
 import "@/styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+
+  useInitializationTokensFromCookie();
 
   useEffect(() => {
     const handleRouteChange = (url: any) => {
@@ -23,7 +24,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <InitManager />
       <Component {...pageProps} />
       <Overlay />
     </>

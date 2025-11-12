@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { languageOptions, regionOptions } from "@/options";
+import { getExpiryFromJWT } from "@/utility";
+import { languageOptions } from "@/options";
 import { i18nMessage } from "@/i18n";
 import type { RiotTokenResponseType } from "@/type";
 
@@ -24,17 +25,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .send({ type: "error", message: `${i18nMessage["INVALID_VALUE"][language]} (url)` });
   }
 
-  // Region Code 검증
-  if (
-    !req.body.regionCode ||
-    typeof req.body.regionCode !== "string" ||
-    !regionOptions.find((el) => el.value === req.body.regionCode)
-  ) {
-    return res
-      .status(400)
-      .send({ type: "error", message: `${i18nMessage["INVALID_VALUE"][language]}, (region code)` });
-  }
-
   const params = req.body.url.split("#")[1].split("&");
   const requestedDate = new Date().toISOString();
 
@@ -52,21 +42,29 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     !riotToken.hasOwnProperty("access_token") ||
     typeof riotToken.access_token !== "string" ||
     !riotToken.hasOwnProperty("expires_in") ||
-    typeof riotToken.expires_in !== "string"
+    typeof riotToken.expires_in !== "string" ||
+    !riotToken.hasOwnProperty("id_token") ||
+    typeof riotToken.id_token !== "string" ||
+    !getExpiryFromJWT(riotToken.id_token) ||
+    typeof getExpiryFromJWT(riotToken.id_token) !== "number"
   ) {
     return res.status(400).send({ type: "error", message: "Invalid request body!" });
   }
 
+  const idTokenExpiresIn =
+    (getExpiryFromJWT(riotToken.id_token) as number) - Math.floor(Date.now() / 1000);
+
   res.setHeader("set-cookie", [
     `access_token=${riotToken.access_token}; Path=/; Max-Age=${riotToken.expires_in}; HttpOnly; SameSite=Strict;`,
     `expiry_timestamp=${expiryTimestamp}; Path=/; Max-Age=${riotToken.expires_in}; HttpOnly; SameSite=Strict;`,
-    `region_code=${req.body.regionCode ?? ""}; Path=/; Max-age=${riotToken.expires_in}; HttpOnly; SameSite=Strict;`,
+    `id_token=${riotToken.id_token}; Path=/; Max-Age=${idTokenExpiresIn}; HttpOnly; SameSite=Strict;`,
   ]);
 
   return res.status(200).json({
     authObj: {
       access_token: riotToken.access_token,
       expiry_timestamp: expiryTimestamp,
+      id_token: riotToken.id_token,
     },
   });
 }

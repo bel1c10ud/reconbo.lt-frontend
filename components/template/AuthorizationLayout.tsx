@@ -9,7 +9,13 @@ import Header from "@/components/Header";
 import Input from "@/components/Input";
 import RegionSelect from "@/components/RegionSelect";
 import TextInput from "@/components/TextInput";
-import { useAuthObjStore, useLanguageStore, useRegionStore, useShowSpinnerStore } from "@/store";
+import {
+  useAuthObjStore,
+  useIdTokenStore,
+  useLanguageStore,
+  useRegionStore,
+  useShowSpinnerStore,
+} from "@/store";
 import { i18nMessage } from "@/i18n";
 import type { RegionCode } from "@/type";
 import style from "@/components/template/AuthorizationLayout.module.css";
@@ -31,6 +37,7 @@ export default function AuthorizationLayout() {
 
   const setShowSpinner = useShowSpinnerStore((state) => state.setShowSpinner);
   const setAuthObj = useAuthObjStore((state) => state.setAuthObj);
+  const setIdToken = useIdTokenStore((state) => state.setIdToken);
 
   useEffect(() => {
     const regionEl: HTMLSelectElement | null = document.querySelector('select[name="region"]');
@@ -133,7 +140,7 @@ export default function AuthorizationLayout() {
     }
   }
 
-  async function reqManualAuth(url: string, region: RegionCode) {
+  async function reqManualAuth(url: string) {
     setIsprocess(true);
     try {
       const res = await axios({
@@ -141,7 +148,6 @@ export default function AuthorizationLayout() {
         url: `/api/manual-auth`,
         data: {
           url: url,
-          regionCode: region,
         },
       });
 
@@ -162,6 +168,8 @@ export default function AuthorizationLayout() {
         access_token: res.data.authObj["access_token"],
         expiry_timestamp: res.data.authObj["expiry_timestamp"],
       });
+
+      setIdToken(res.data.authObj["id_token"]);
 
       router.push("/");
     } catch (error) {
@@ -203,10 +211,10 @@ export default function AuthorizationLayout() {
   async function onClickManualAuth() {
     if (isProcess) {
       alert(i18nMessage["REQUEST_IS_BEING_PROCESSED"][language]);
-    } else if (url.trim().length === 0 || region === undefined) {
+    } else if (url.trim().length === 0) {
       alert(i18nMessage["INVALID_INPUT_VALUE"][language]);
     } else {
-      reqManualAuth(url, region);
+      reqManualAuth(url);
     }
   }
 
@@ -249,7 +257,6 @@ export default function AuthorizationLayout() {
               />
             </CalloutBody>
           </Callout>
-          <RegionSelect disabled={isProcess} />
           <TextInput
             type="text"
             name="url"
@@ -261,7 +268,7 @@ export default function AuthorizationLayout() {
           <button
             className={style["submit-button"]}
             onClick={onClickManualAuth}
-            disabled={isProcess || url.trim().length === 0 || region === undefined}
+            disabled={isProcess || url.trim().length === 0}
           >
             {i18nMessage["LOGIN"][language]}
           </button>

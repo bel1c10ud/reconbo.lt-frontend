@@ -1,6 +1,6 @@
 import type { RiotTokenResponseType, AuthObjType } from "@/type";
 
-export function GetRiotTokenFromURI(uri: string): Partial<RiotTokenResponseType> {
+export function getRiotTokenFromURI(uri: string): Partial<RiotTokenResponseType> {
   let riotToken: Partial<RiotTokenResponseType> = {};
   const requestedDate = new Date().toISOString();
 
@@ -14,6 +14,25 @@ export function GetRiotTokenFromURI(uri: string): Partial<RiotTokenResponseType>
   });
 
   return { ...riotToken, requestedDate: requestedDate };
+}
+
+export function getExpiryFromJWT(token: string) {
+  const isNode =
+    typeof process !== "undefined" && process.versions != null && process.versions.node != null;
+  const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+
+  const [, payload] = token.split(".");
+  const decodedPaylaod = isBrowser
+    ? JSON.parse(window.atob(payload))
+    : isNode
+      ? JSON.parse(Buffer.from(payload, "base64").toString("utf8"))
+      : {};
+
+  if (decodedPaylaod.hasOwnProperty("exp")) {
+    return Number(decodedPaylaod.exp);
+  }
+
+  return undefined;
 }
 
 export function cookieStrParser(str: string): object[] {
