@@ -6,11 +6,13 @@ import { gtag } from "@/components/GoogleAnalytics";
 import Overlay from "@/components/Overlay";
 import useInitializationTokensFromCookie from "@/hooks/useInitializationTokensFromCookie";
 import "@/styles/globals.css";
+import useInitializationTokensFromHeaders from "@/hooks/useInitializationTokensFromHeaders";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, headers }: AppProps & { headers: Record<string, any> }) {
   const router = useRouter();
 
   useInitializationTokensFromCookie();
+  useInitializationTokensFromHeaders(headers);
 
   useEffect(() => {
     const handleRouteChange = (url: any) => {
@@ -32,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
-  return { ...appProps };
+  return { ...appProps, headers: appContext.ctx.req?.headers };
 };
 
 export default MyApp;
