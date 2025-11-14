@@ -3,6 +3,7 @@ import { RequiredLoginCallout, IsNotAccurate } from "@/components/Callout";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Buddy from "@/components/ItemCards/Buddy";
+import Flex from "@/components/ItemCards/Flex";
 import ItemCardError from "@/components/ItemCards/ItemCardError";
 import ItemCardSkeleton from "@/components/ItemCards/ItemCardSkeleton";
 import PlayerCard from "@/components/ItemCards/PlayerCard";
@@ -126,6 +127,10 @@ function BundleComponents(props: BundleComponentsProps) {
                   uuid={item.Item.ItemID}
                   bundleOffer={bundleOffer}
                 />
+              );
+            case ClientAPI.ItemTypeID.FlexTypeID:
+              return (
+                <Flex key={item.Item.ItemID} uuid={item.Item.ItemID} bundleOffer={bundleOffer} />
               );
             default:
               return (

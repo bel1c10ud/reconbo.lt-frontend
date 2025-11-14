@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hr from "@/components/Hr";
 import Buddy from "@/components/ItemCards/Buddy";
+import Flex from "@/components/ItemCards/Flex";
 import ItemCardError from "@/components/ItemCards/ItemCardError";
 import ItemCardSkeleton from "@/components/ItemCards/ItemCardSkeleton";
 import PlayerCard from "@/components/ItemCards/PlayerCard";
@@ -176,6 +177,7 @@ export default function ItemsLayout(props: ItemsLayoutProps) {
                     return <PlayerCard key={data.uuid} uuid={data.uuid} />;
                   if (itemType === "playerTitles")
                     return <PlayerTitle key={data.uuid} uuid={data.uuid} />;
+                  if (itemType === "flex") return <Flex key={data.uuid} uuid={data.uuid} />;
                 })
               : null}
             {(data.data?.length ?? 0) > limit ? (

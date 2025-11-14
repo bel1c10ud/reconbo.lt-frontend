@@ -1,5 +1,6 @@
 import Countdown from "@/components/Countdown";
 import Buddy from "@/components/ItemCards/Buddy";
+import Flex from "@/components/ItemCards/Flex";
 import ItemCardError from "@/components/ItemCards/ItemCardError";
 import PlayerCard from "@/components/ItemCards/PlayerCard";
 import PlayerTitle from "@/components/ItemCards/PlayerTitle";
@@ -46,6 +47,14 @@ export default function AccessoryStore(props: { data: ClientAPI.AccessoryStore }
             case ClientAPI.ItemTypeID.PlayerTitleTypeID:
               return (
                 <PlayerTitle
+                  key={acc.Offer.Rewards[0].ItemID}
+                  uuid={acc.Offer.Rewards[0].ItemID}
+                  offer={acc.Offer}
+                />
+              );
+            case ClientAPI.ItemTypeID.FlexTypeID:
+              return (
+                <Flex
                   key={acc.Offer.Rewards[0].ItemID}
                   uuid={acc.Offer.Rewards[0].ItemID}
                   offer={acc.Offer}

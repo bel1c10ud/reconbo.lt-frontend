@@ -31,6 +31,7 @@ export namespace ExternalAPI {
     buddies = "https://valorant-api.com/v1/buddies",
     weapons = "https://valorant-api.com/v1/weapons",
     version = "https://valorant-api.com/v1/version",
+    flex = "https://valorant-api.com/v1/flex",
   }
 
   export enum ThemeUuid {
@@ -78,6 +79,14 @@ export namespace ExternalAPI {
     displayName: string;
     titleText: string;
     isHiddenIfNotOwned: boolean;
+    assetPath: string;
+  }
+
+  export interface Flex {
+    uuid: string;
+    displayName: string;
+    displayNameAllCaps: string;
+    displayIcon: string;
     assetPath: string;
   }
 
@@ -260,6 +269,7 @@ export namespace ClientAPI {
     ID12 = "0381b6a6-e901-4225-a30c-b18afc6d0ad4",
     PlayerCardTypeID = "3f296c07-64c3-494c-923b-fe692a4fa1bd",
     PlayerTitleTypeID = "de7caa6b-adf7-4588-bbd1-143831e786c6",
+    FlexTypeID = "03a572de-4234-31ed-d344-ababa488f981",
   }
 
   export interface ItemDataItem {
